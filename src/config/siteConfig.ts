@@ -26,9 +26,9 @@ const pages = resolvePageToggles({
 	// 书签导航页面开关
 	booknav: true,
 	// 哔哩哔哩追番页面开关
-	bilibili: false,
+	bilibili: true,
 	// 番组计划页面开关
-	bangumi: false,
+	bangumi: true,
 	// VNDB页面开关
 	vndb: false,
 	// MyAnimeList页面开关
@@ -42,22 +42,22 @@ const pages = resolvePageToggles({
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "Firefly",
+	title: "Hikari4everSite",
 
 	// 站点副标题
-	subtitle: "Demo site",
+	subtitle: "希咔利小站",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://hikari4ever.com",
 
 	// 站点描述
 	description:
-		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。",
+		"闪光希咔利的个人博客小站",
 
 	// 站点关键词
 	keywords: [
-		"Firefly",
-		"Fuwari",
+		"hikari4ver",
+		"loli",
 		"Astro",
 		"ACGN",
 		"博客",
