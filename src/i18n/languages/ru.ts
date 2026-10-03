@@ -541,4 +541,14 @@ export const ru: Translation = {
 	[Key.exitImmersiveReading]: "Выйти из режима чтения",
 	[Key.tocExpand]: "Развернуть оглавление",
 	[Key.tocCollapse]: "Свернуть оглавление",
+
+	// Настройки отображения: сохранить по умолчанию / сбросить
+	[Key.displaySaveAsDefault]: "Сохранить по умолчанию",
+	[Key.displayRestoreDefault]: "Сбросить настройки",
+	[Key.displaySaveSuccess]: "Сохранено как значение по умолчанию",
+	[Key.displaySaveFailed]:
+		"Не удалось сохранить — функция доступна только в режиме разработки pnpm dev",
+	[Key.displayRestoreConfirm]:
+		"Сбросить настройки? Сохранённые значения по умолчанию будут удалены, а все настройки отображения в этом браузере — сброшены.",
+	[Key.displayRestoreSuccess]: "Восстановлены исходные значения",
 };

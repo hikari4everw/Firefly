@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { getPostUrlBySlug } from "@utils/url-utils";
 import PostCard from "@/components/layout/PostCard.astro";
 import { siteConfig } from "@/config";
+import { resolveDisplayDefaults } from "@/utils/display-defaults";
 
 const { page } = Astro.props;
 
@@ -16,7 +17,8 @@ const masonryEnabled = siteConfig.postListLayout.grid.masonry;
 const columnWidth = siteConfig.postListLayout.grid.columnWidth || 280;
 
 // 根据配置设置初始布局模式，避免闪烁
-const defaultLayout = siteConfig.postListLayout.defaultMode || "list";
+// 默认布局走默认值解析层，否则「保存为默认」保存的列表/网格偏好在首屏会被出厂值覆盖
+const defaultLayout = resolveDisplayDefaults().postListLayout;
 const mobileDefaultLayout =
 	siteConfig.postListLayout.mobileDefaultMode || defaultLayout;
 const initialLayoutClass =

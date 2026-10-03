@@ -32,6 +32,7 @@ import {
 } from "@/constants/constants";
 import { defaultFavicons } from "@/constants/icon";
 import type { Favicon } from "@/types/config";
+import { resolveDisplayDefaults } from "@/utils/display-defaults";
 import { isHomePage } from "@/utils/layout-utils";
 import { getAuthorAvatarUrl, getSiteLogo } from "@/utils/schema-image";
 import { buildSiteGraph, toAbsoluteUrl } from "@/utils/schema-utils";
@@ -76,7 +77,14 @@ const isHomePageCheck = isHomePage(Astro.url.pathname);
 
 // defines global css variables
 // why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
-const configHue = siteConfig.themeColor.hue;
+
+// 显示设置的默认值统一走 display-defaults.ts 解析（覆盖层 → 出厂值），
+// 不再直接读 siteConfig / backgroundWallpaper。
+// 必须这样做：下方 <head> 里有一段防闪烁的内联脚本，它在首屏渲染前同步执行，
+// 如果这里仍读原始配置，用户「保存为默认」写入的覆盖值就不会在首屏生效，
+// 会出现先按出厂值渲染、客户端挂载后再跳变的闪烁。
+const displayDefaults = resolveDisplayDefaults();
+const configHue = displayDefaults.hue;
 
 // 获取导航栏透明模式配置（banner 模式专属）
 const navbarTransparentMode =
@@ -85,7 +93,7 @@ const navbarTransparentMode =
 const shouldShowTopHighlight = navbarTransparentMode === "semifull";
 
 // 全屏壁纸布局：classic 为文档流旧版，hero 为固定首屏新版
-const fullscreenLayout = backgroundWallpaper.fullscreen?.layout ?? "classic";
+const fullscreenLayout = displayDefaults.fullscreenLayout;
 
 // 子菜单 / 浮动面板的毛玻璃模糊度：跟随 navbar.blur，但不受壁纸模式影响，
 // 且带一个最小值 —— 导航栏可以用 blur: 0 关掉毛玻璃，面板则始终保留毛玻璃。
@@ -155,7 +163,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 ---
 
 <!doctype html>
-<html lang={siteLang} class="bg-(--page-bg) text-[14px] md:text-[16px]" data-wallpaper-mode={backgroundWallpaper.mode} data-fullscreen-layout={fullscreenLayout} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
+<html lang={siteLang} class="bg-(--page-bg) text-[14px] md:text-[16px]" data-wallpaper-mode={displayDefaults.wallpaperMode} data-fullscreen-layout={fullscreenLayout} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
   <head>
     <meta charset="UTF-8" />
     <style is:inline>
@@ -253,7 +261,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content={`hsl(${siteConfig.themeColor.hue} 90% 60%)`} />
+    <meta name="theme-color" content={`hsl(${displayDefaults.hue} 90% 60%)`} />
     {
       favicons.map((favicon) => (
         <link
@@ -345,8 +353,8 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
       define:vars={{
         PAGE_WIDTH,
         configHue,
-        defaultMode: siteConfig.themeColor.defaultMode ?? "light",
-        defaultWallpaperMode: backgroundWallpaper.mode,
+        defaultMode: displayDefaults.theme,
+        defaultWallpaperMode: displayDefaults.wallpaperMode,
         isWallpaperSwitchable:
           displaySettingsConfig.wallpaperModeSwitchable,
         isFullscreenLayoutSwitchable:
@@ -354,7 +362,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
         darkTheme: expressiveCodeConfig.darkTheme,
         lightTheme: expressiveCodeConfig.lightTheme,
         baseUrl: import.meta.env.BASE_URL,
-        cardTransparentOpacity: backgroundWallpaper.overlay?.cardOpacity ?? 0.6,
+        cardTransparentOpacity: displayDefaults.overlayCardOpacity,
         fullscreenLayout,
       }}
     >
@@ -535,8 +543,8 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 
     {/* 卡片样式：根据 localStorage 覆盖默认配置 */}
     <script is:inline define:vars={{
-      defaultBorder: siteConfig.card?.border ?? false,
-      defaultFollowTheme: siteConfig.card?.followTheme ?? false,
+      defaultBorder: displayDefaults.cardBorderEnabled,
+      defaultFollowTheme: displayDefaults.cardFollowThemeEnabled,
     }}>
       (function() {
         var stored = localStorage.getItem("cardBorderEnabled");

@@ -521,6 +521,14 @@ enum I18nKey {
 	exitImmersiveReading = "exitImmersiveReading",
 	tocExpand = "tocExpand",
 	tocCollapse = "tocCollapse",
+
+	// 显示设置：保存为默认 / 恢复默认
+	displaySaveAsDefault = "displaySaveAsDefault",
+	displayRestoreDefault = "displayRestoreDefault",
+	displaySaveSuccess = "displaySaveSuccess",
+	displaySaveFailed = "displaySaveFailed",
+	displayRestoreConfirm = "displayRestoreConfirm",
+	displayRestoreSuccess = "displayRestoreSuccess",
 }
 
 export default I18nKey;

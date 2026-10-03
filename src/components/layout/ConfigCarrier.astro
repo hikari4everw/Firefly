@@ -1,11 +1,14 @@
 ---
-import { backgroundWallpaper, siteConfig } from "@/config";
+import { resolveDisplayDefaults } from "@/utils/display-defaults";
+
+// 默认值走统一解析层（覆盖层 → 出厂值），保证服务端渲染与客户端读取一致
+const displayDefaults = resolveDisplayDefaults();
 ---
 
 <!-- 全局配置载体 -->
 <div
   id="config-carrier"
-  data-hue={siteConfig.themeColor.hue}
-  data-wallpaper-mode={backgroundWallpaper.mode}
+  data-hue={displayDefaults.hue}
+  data-wallpaper-mode={displayDefaults.wallpaperMode}
 >
 </div>

@@ -527,4 +527,13 @@ export const zh_CN: Translation = {
 	[Key.exitImmersiveReading]: "退出沉浸阅读",
 	[Key.tocExpand]: "展开目录",
 	[Key.tocCollapse]: "折叠目录",
+
+	// 显示设置：保存为默认 / 恢复默认
+	[Key.displaySaveAsDefault]: "保存为默认",
+	[Key.displayRestoreDefault]: "恢复默认",
+	[Key.displaySaveSuccess]: "已保存为站点默认值",
+	[Key.displaySaveFailed]: "保存失败，该功能仅在 pnpm dev 开发模式下可用",
+	[Key.displayRestoreConfirm]:
+		"确定要恢复默认吗？这会清除已保存的默认值，并重置本浏览器当前的所有显示设置。",
+	[Key.displayRestoreSuccess]: "已恢复为原始默认值",
 };

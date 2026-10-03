@@ -540,4 +540,14 @@ export const en: Translation = {
 	[Key.exitImmersiveReading]: "Exit Immersive Reading",
 	[Key.tocExpand]: "Expand directory",
 	[Key.tocCollapse]: "Collapse directory",
+
+	// Display settings: save as default / restore default
+	[Key.displaySaveAsDefault]: "Save as default",
+	[Key.displayRestoreDefault]: "Restore defaults",
+	[Key.displaySaveSuccess]: "Saved as site default",
+	[Key.displaySaveFailed]:
+		"Save failed — this feature is only available in pnpm dev mode",
+	[Key.displayRestoreConfirm]:
+		"Restore defaults? This clears the saved defaults and resets all display settings in this browser.",
+	[Key.displayRestoreSuccess]: "Restored to original defaults",
 };

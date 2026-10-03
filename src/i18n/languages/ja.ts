@@ -537,4 +537,14 @@ export const ja: Translation = {
 	[Key.exitImmersiveReading]: "没入型リーディングを終了する",
 	[Key.tocExpand]: "目錄を開く",
 	[Key.tocCollapse]: "目錄をたたむ",
+
+	// 表示設定：デフォルトとして保存 / デフォルトに戻す
+	[Key.displaySaveAsDefault]: "デフォルトとして保存",
+	[Key.displayRestoreDefault]: "デフォルトに戻す",
+	[Key.displaySaveSuccess]: "サイトのデフォルトとして保存しました",
+	[Key.displaySaveFailed]:
+		"保存に失敗しました。この機能は pnpm dev 開発モードでのみ利用できます",
+	[Key.displayRestoreConfirm]:
+		"デフォルトに戻しますか？保存済みのデフォルトを削除し、このブラウザの表示設定をすべてリセットします。",
+	[Key.displayRestoreSuccess]: "元のデフォルトに戻しました",
 };

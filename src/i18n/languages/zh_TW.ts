@@ -529,4 +529,13 @@ export const zh_TW: Translation = {
 	[Key.exitImmersiveReading]: "退出沉浸閱讀",
 	[Key.tocExpand]: "展開目錄",
 	[Key.tocCollapse]: "摺疊目錄",
+
+	// 顯示設定：儲存為預設 / 恢復預設
+	[Key.displaySaveAsDefault]: "儲存為預設",
+	[Key.displayRestoreDefault]: "恢復預設",
+	[Key.displaySaveSuccess]: "已儲存為站點預設值",
+	[Key.displaySaveFailed]: "儲存失敗，該功能僅在 pnpm dev 開發模式下可用",
+	[Key.displayRestoreConfirm]:
+		"確定要恢復預設嗎？這會清除已儲存的預設值，並重設本瀏覽器當前的所有顯示設定。",
+	[Key.displayRestoreSuccess]: "已恢復為原始預設值",
 };

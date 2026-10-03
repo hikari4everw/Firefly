@@ -1,6 +1,5 @@
 import {
 	DARK_MODE,
-	DEFAULT_THEME,
 	LIGHT_MODE,
 	SYSTEM_MODE,
 	WALLPAPER_BANNER,
@@ -13,13 +12,13 @@ import type {
 	LIGHT_DARK_MODE,
 	WALLPAPER_MODE,
 } from "@/types/config";
+import { DISPLAY_DEFAULT_KEYS } from "@/types/displayDefaults";
 import {
 	backgroundWallpaper,
 	displaySettingsConfig,
 	expressiveCodeConfig,
-	sakuraConfig,
-	siteConfig,
 } from "../config";
+import { getOverrideValue, resolveDisplayDefault } from "./display-defaults";
 import { isHomePage as checkIsHomePage } from "./layout-utils";
 
 // Declare global functions
@@ -41,9 +40,8 @@ export function getDefaultHue(): number {
 }
 
 export function getDefaultTheme(): LIGHT_DARK_MODE {
-	// 如果配置文件中设置了 defaultMode，使用配置的值
-	// 否则使用 DEFAULT_THEME（向后兼容）
-	return siteConfig.themeColor.defaultMode ?? DEFAULT_THEME;
+	// 默认值来自 display-defaults.json 覆盖层，回退到配置文件
+	return resolveDisplayDefault("theme");
 }
 
 // 获取系统主题
@@ -301,7 +299,7 @@ export function syncBannerHomeTextVisibility(): void {
 }
 
 export function getDefaultFullscreenLayout(): FullscreenWallpaperLayout {
-	return backgroundWallpaper.fullscreen?.layout ?? "classic";
+	return resolveDisplayDefault("fullscreenLayout");
 }
 
 export function getStoredFullscreenLayout(): FullscreenWallpaperLayout {
@@ -504,15 +502,15 @@ function clampNumber(value: number, min: number, max: number): number {
 }
 
 export function getDefaultOverlayOpacity(): number {
-	return backgroundWallpaper.overlay?.opacity ?? 0.8;
+	return resolveDisplayDefault("overlayOpacity");
 }
 
 export function getDefaultOverlayBlur(): number {
-	return backgroundWallpaper.overlay?.blur ?? 0;
+	return resolveDisplayDefault("overlayBlur");
 }
 
 export function getDefaultOverlayCardOpacity(): number {
-	return backgroundWallpaper.overlay?.cardOpacity ?? 0.6;
+	return resolveDisplayDefault("overlayCardOpacity");
 }
 
 export function getStoredOverlayOpacity(): number {
@@ -646,6 +644,9 @@ export function applyStoredOverlaySettingsToDocument(): void {
 
 // Waves animation functions
 export function getDefaultWavesEnabled(): boolean {
+	// 覆盖层优先：保存过 wavesEnabled 时直接使用该值
+	const override = getOverrideValue("wavesEnabled");
+	if (override !== undefined) return override;
 	const wavesConfig = backgroundWallpaper.common?.waves?.enable;
 	if (typeof wavesConfig === "object") {
 		// 如果是分设备配置，检查当前设备
@@ -704,6 +705,9 @@ export function applyWavesEnabledToDocument(enabled: boolean): void {
 
 // Gradient transition functions
 export function getDefaultGradientEnabled(): boolean {
+	// 覆盖层优先：保存过 gradientEnabled 时直接使用该值
+	const override = getOverrideValue("gradientEnabled");
+	if (override !== undefined) return override;
 	const gradientConfig = backgroundWallpaper.common?.gradient?.enable;
 	if (typeof gradientConfig === "object") {
 		const isMobile =
@@ -762,7 +766,7 @@ export function applyGradientEnabledToDocument(enabled: boolean): void {
 
 // Sakura effect functions
 export function getDefaultSakuraEnabled(): boolean {
-	return sakuraConfig?.enable ?? false;
+	return resolveDisplayDefault("sakuraEnabled");
 }
 
 export function getStoredSakuraEnabled(): boolean {
@@ -784,20 +788,29 @@ export function setSakuraEnabled(enabled: boolean): void {
 		return;
 	}
 	localStorage.setItem("sakuraEnabled", String(enabled));
-	document.documentElement.setAttribute("data-sakura-enabled", String(enabled));
+	applySakuraEnabledToDocument(enabled);
 	// 实时切换樱花特效
 	window.dispatchEvent(
 		new CustomEvent("sakuraToggle", { detail: { enabled } }),
 	);
 }
 
+// 应用函数单独抽出，便于保存/恢复默认后重绘；事件派发留在 setter 内，
+// 避免重绘时触发一次多余的 sakuraToggle
+export function applySakuraEnabledToDocument(enabled: boolean): void {
+	if (typeof document === "undefined") {
+		return;
+	}
+	document.documentElement.setAttribute("data-sakura-enabled", String(enabled));
+}
+
 // Banner title functions
 export function getDefaultBannerTitleEnabled(): boolean {
-	return backgroundWallpaper.common?.homeText?.enable ?? true;
+	return resolveDisplayDefault("bannerTitleEnabled");
 }
 
 export function getDefaultBannerCarouselEnabled(): boolean {
-	return backgroundWallpaper.common?.carousel?.enable ?? false;
+	return resolveDisplayDefault("bannerCarouselEnabled");
 }
 
 export function getStoredBannerTitleEnabled(): boolean {
@@ -896,8 +909,20 @@ export function applyBannerCarouselEnabledToDocument(enabled: boolean): void {
 }
 
 // Card border functions
+// 应用函数单独抽出，便于「保存为默认 / 恢复默认」后无刷新重绘而无需写 localStorage
+export function applyCardBorderEnabledToDocument(enabled: boolean): void {
+	if (typeof document === "undefined") {
+		return;
+	}
+	if (enabled) {
+		document.documentElement.classList.add("enable-card-border");
+	} else {
+		document.documentElement.classList.remove("enable-card-border");
+	}
+}
+
 export function getDefaultCardBorderEnabled(): boolean {
-	return siteConfig.card?.border ?? false;
+	return resolveDisplayDefault("cardBorderEnabled");
 }
 
 export function getStoredCardBorderEnabled(): boolean {
@@ -919,16 +944,24 @@ export function setCardBorderEnabled(enabled: boolean): void {
 		return;
 	}
 	localStorage.setItem("cardBorderEnabled", String(enabled));
-	if (enabled) {
-		document.documentElement.classList.add("enable-card-border");
-	} else {
-		document.documentElement.classList.remove("enable-card-border");
-	}
+	applyCardBorderEnabledToDocument(enabled);
 }
 
 // Card follow theme functions
+// 同 applyCardBorderEnabledToDocument，抽出以便保存/恢复后重绘
+export function applyCardFollowThemeEnabledToDocument(enabled: boolean): void {
+	if (typeof document === "undefined") {
+		return;
+	}
+	if (enabled) {
+		document.body.classList.add("card-follow-theme-hue");
+	} else {
+		document.body.classList.remove("card-follow-theme-hue");
+	}
+}
+
 export function getDefaultCardFollowThemeEnabled(): boolean {
-	return siteConfig.card?.followTheme ?? false;
+	return resolveDisplayDefault("cardFollowThemeEnabled");
 }
 
 export function getStoredCardFollowThemeEnabled(): boolean {
@@ -950,9 +983,74 @@ export function setCardFollowThemeEnabled(enabled: boolean): void {
 		return;
 	}
 	localStorage.setItem("cardFollowThemeEnabled", String(enabled));
-	if (enabled) {
-		document.body.classList.add("card-follow-theme-hue");
-	} else {
-		document.body.classList.remove("card-follow-theme-hue");
+	applyCardFollowThemeEnabledToDocument(enabled);
+}
+
+// 清除显示设置面板写入的全部 localStorage 记录
+// 用 DISPLAY_DEFAULT_KEYS 白名单（每个可覆盖键与 localStorage 键名一一对应），
+// 而不是清空整个 localStorage，避免误删其他功能（评论、搜索历史等）的数据
+export function clearStoredDisplaySettings(): void {
+	if (
+		typeof localStorage === "undefined" ||
+		typeof localStorage.removeItem !== "function"
+	) {
+		return;
 	}
+	for (const key of DISPLAY_DEFAULT_KEYS) {
+		localStorage.removeItem(key);
+	}
+}
+
+// ── 保存/恢复默认后的重绘 ────────────────────────────────
+//
+// 显示设置面板「保存为默认」与「恢复默认」都会改动默认值来源，
+// 但当前页面的 DOM 是按旧的 localStorage 值渲染的，需要按新的
+// 存储状态整体重绘一次，让预览立即反映最终结果，无需手动刷新。
+//
+// 顺序说明：先切壁纸模式、再切全屏布局，最后刷新导航栏透明度。
+// applyWallpaperModeToDocument() 会依据当前的 data-fullscreen-layout
+// 决定导航栏透明态与 fullscreen hero 的联动，因此壁纸模式要在布局之前应用。
+export function reapplyDisplayDefaults(): void {
+	if (typeof document === "undefined") return;
+
+	const current = {
+		hue: getHue(),
+		theme: getStoredTheme(),
+		fullscreenLayout: getStoredFullscreenLayout(),
+		wallpaperMode: getStoredWallpaperMode(),
+		cardBorderEnabled: getStoredCardBorderEnabled(),
+		cardFollowThemeEnabled: getStoredCardFollowThemeEnabled(),
+		overlayOpacity: getStoredOverlayOpacity(),
+		overlayBlur: getStoredOverlayBlur(),
+		overlayCardOpacity: getStoredOverlayCardOpacity(),
+		wavesEnabled: getStoredWavesEnabled(),
+		gradientEnabled: getStoredGradientEnabled(),
+		sakuraEnabled: getStoredSakuraEnabled(),
+		bannerTitleEnabled: getStoredBannerTitleEnabled(),
+		bannerCarouselEnabled: getStoredBannerCarouselEnabled(),
+	};
+
+	// 壁纸模式与全屏布局：后者依赖前者建立的状态
+	applyWallpaperModeToDocument(current.wallpaperMode);
+	applyFullscreenLayoutToDocument(current.fullscreenLayout, false);
+
+	// 主题与主题色
+	applyThemeToDocument(current.theme);
+	setHue(current.hue);
+
+	// 卡片样式
+	applyCardBorderEnabledToDocument(current.cardBorderEnabled);
+	applyCardFollowThemeEnabledToDocument(current.cardFollowThemeEnabled);
+
+	// 壁纸参数（overlay 与 fullscreen 共用这三个值）
+	applyOverlayOpacityToDocument(current.overlayOpacity);
+	applyOverlayBlurToDocument(current.overlayBlur);
+	applyOverlayCardOpacityToDocument(current.overlayCardOpacity);
+
+	// 特效与横幅
+	applyWavesEnabledToDocument(current.wavesEnabled);
+	applyGradientEnabledToDocument(current.gradientEnabled);
+	applySakuraEnabledToDocument(current.sakuraEnabled);
+	applyBannerTitleEnabledToDocument(current.bannerTitleEnabled);
+	applyBannerCarouselEnabledToDocument(current.bannerCarouselEnabled);
 }

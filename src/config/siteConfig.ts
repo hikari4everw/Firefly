@@ -51,8 +51,7 @@ export const siteConfig: SiteConfig = {
 	site_url: "https://hikari4ever.com",
 
 	// 站点描述
-	description:
-		"闪光希咔利的个人博客小站",
+	description: "闪光希咔利的个人博客小站",
 
 	// 站点关键词
 	keywords: [

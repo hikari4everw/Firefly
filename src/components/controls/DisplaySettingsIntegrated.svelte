@@ -8,6 +8,7 @@ import {
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import {
+	clearStoredDisplaySettings,
 	getDefaultBannerCarouselEnabled,
 	getDefaultBannerTitleEnabled,
 	getDefaultCardBorderEnabled,
@@ -33,6 +34,7 @@ import {
 	getStoredSakuraEnabled,
 	getStoredWallpaperMode,
 	getStoredWavesEnabled,
+	reapplyDisplayDefaults,
 	setBannerCarouselEnabled,
 	setBannerTitleEnabled,
 	setCardBorderEnabled,
@@ -318,6 +320,146 @@ let overlaySliderItems = $derived<OverlaySliderItem[]>([
 let hasVisibleOverlaySlider = $derived(
 	overlaySliderItems.some((item) => item.enabled),
 );
+
+// ── 保存为默认 / 恢复默认 ─────────────────────────────
+// 保存会把当前 15 项可调参数通过开发环境接口写入
+// src/constants/display-defaults.json，成为站点默认值（只存与出厂值不同的项）
+// 该接口只在 pnpm dev 下存在，生产构建不会产出，故按钮仅开发模式显示
+const canSaveAsDefault = import.meta.env.DEV;
+
+type DefaultsFeedback = { kind: "ok" | "error"; text: string } | null;
+let defaultsFeedback: DefaultsFeedback = $state(null);
+let defaultsSaving = $state(false);
+let feedbackTimer: ReturnType<typeof setTimeout> | undefined;
+
+// reloadAfter: 恢复默认后需要整页刷新。
+// 原因：覆盖层 JSON 是在构建/开发服务器注入时被读入内存的（Layout 的
+// define:vars、ConfigCarrier、PostPage 都用了它），当前页面内存里仍是旧值，
+// 只重绘 DOM 无法拿回原始出厂值，必须重新加载页面才能让整条链路生效。
+function showDefaultsFeedback(
+	kind: "ok" | "error",
+	text: string,
+	reloadAfter = false,
+): void {
+	defaultsFeedback = { kind, text };
+	if (feedbackTimer !== undefined) clearTimeout(feedbackTimer);
+	feedbackTimer = setTimeout(
+		() => {
+			defaultsFeedback = null;
+			if (reloadAfter && typeof window !== "undefined") {
+				window.location.reload();
+			}
+		},
+		reloadAfter ? 900 : 3500,
+	);
+}
+
+// 收集当前 15 项可调参数（与 localStorage 键一一对应）
+function collectCurrentDisplaySettings(): Record<string, unknown> {
+	return {
+		hue,
+		theme: getStoredTheme(),
+		postListLayout: currentLayout,
+		cardBorderEnabled,
+		cardFollowThemeEnabled,
+		wallpaperMode,
+		fullscreenLayout,
+		overlayOpacity,
+		overlayBlur,
+		overlayCardOpacity,
+		wavesEnabled,
+		gradientEnabled,
+		sakuraEnabled,
+		bannerTitleEnabled,
+		bannerCarouselEnabled,
+	};
+}
+
+// 写入接口走 POST + JSON body。
+// 该路由在开发环境是按需渲染的（prerender = !import.meta.env.DEV），
+// 因此能拿到完整请求体；预渲染路由会被 Astro 剥离请求体，无法写入。
+// 剪枝由服务端按出厂值完成，前端只负责提交当前值。
+async function postDisplayDefaults(
+	payload: Record<string, unknown>,
+): Promise<{ ok: boolean; error?: string }> {
+	try {
+		const response = await fetch("/api/display-defaults.json", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+			cache: "no-store",
+		});
+		const result = (await response.json()) as {
+			ok?: boolean;
+			error?: string;
+		};
+		if (!response.ok || result.ok !== true) {
+			return { ok: false, error: result.error };
+		}
+		return { ok: true };
+	} catch (error) {
+		return {
+			ok: false,
+			error: error instanceof Error ? error.message : String(error),
+		};
+	}
+}
+
+async function saveAsDefault(): Promise<void> {
+	if (defaultsSaving) return;
+	defaultsSaving = true;
+	const result = await postDisplayDefaults(collectCurrentDisplaySettings());
+	defaultsSaving = false;
+
+	if (result.ok) {
+		showDefaultsFeedback("ok", i18n(I18nKey.displaySaveSuccess));
+	} else {
+		showDefaultsFeedback("error", i18n(I18nKey.displaySaveFailed));
+	}
+}
+
+// 恢复默认：先清空覆盖文件，再清除本浏览器的显示设置记录并重绘
+// 接口失败时不清理本地状态，保持两者一致，避免只清了一半
+async function restoreDefaults(): Promise<void> {
+	if (defaultsSaving) return;
+	if (typeof window !== "undefined") {
+		const confirmed = window.confirm(i18n(I18nKey.displayRestoreConfirm));
+		if (!confirmed) return;
+	}
+
+	defaultsSaving = true;
+	// 传空对象即清空全部覆盖项（服务端会剪枝成空文件）
+	const result = await postDisplayDefaults({});
+	if (!result.ok) {
+		defaultsSaving = false;
+		showDefaultsFeedback("error", i18n(I18nKey.displaySaveFailed));
+		return;
+	}
+
+	clearStoredDisplaySettings();
+	reapplyDisplayDefaults();
+
+	// 同步面板自身的显示状态，使其反映清除后的默认值
+	hue = getHue();
+	wallpaperMode = getStoredWallpaperMode();
+	fullscreenLayout = getStoredFullscreenLayout();
+	cardBorderEnabled = getStoredCardBorderEnabled();
+	cardFollowThemeEnabled = getStoredCardFollowThemeEnabled();
+	overlayOpacity = getStoredOverlayOpacity();
+	overlayBlur = getStoredOverlayBlur();
+	overlayCardOpacity = getStoredOverlayCardOpacity();
+	wavesEnabled = getStoredWavesEnabled();
+	gradientEnabled = getStoredGradientEnabled();
+	sakuraEnabled = getStoredSakuraEnabled();
+	bannerTitleEnabled = getStoredBannerTitleEnabled();
+	bannerCarouselEnabled = getStoredBannerCarouselEnabled();
+	currentLayout = window.innerWidth < 780 ? mobileDefaultLayout : defaultLayout;
+	requestAnimationFrame(refreshAllRangeProgress);
+
+	defaultsSaving = false;
+	// 恢复默认后整页刷新：内存里的覆盖值需要重新加载才能回到出厂值
+	showDefaultsFeedback("ok", i18n(I18nKey.displayRestoreSuccess), true);
+}
 
 function resetHue() {
 	hue = getDefaultHue();
@@ -1059,6 +1201,37 @@ $effect(() => {
 			</button>
 		</div>
 		{/if}
+	{/if}
+
+	<!-- 保存为默认 / 恢复默认（仅开发模式） -->
+	{#if canSaveAsDefault}
+	<div class="mt-3 pt-3 border-t border-black/5 dark:border-white/10">
+		<div class="flex gap-2">
+			<button
+				class="flex-1 btn-regular rounded-md py-2 px-3 text-sm active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none"
+				disabled={defaultsSaving}
+				onclick={saveAsDefault}
+			>
+				{i18n(I18nKey.displaySaveAsDefault)}
+			</button>
+			<button
+				class="flex-1 btn-regular rounded-md py-2 px-3 text-sm active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none"
+				disabled={defaultsSaving}
+				onclick={restoreDefaults}
+			>
+				{i18n(I18nKey.displayRestoreDefault)}
+			</button>
+		</div>
+		{#if defaultsFeedback}
+			<p
+				class="mt-2 text-xs leading-relaxed"
+				class:text-(--primary)={defaultsFeedback.kind === "ok"}
+				class:text-red-500={defaultsFeedback.kind === "error"}
+			>
+				{defaultsFeedback.text}
+			</p>
+		{/if}
+	</div>
 	{/if}
 </div>
 {/if}

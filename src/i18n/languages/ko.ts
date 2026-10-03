@@ -537,4 +537,14 @@ export const ko: Translation = {
 	[Key.exitImmersiveReading]: "몰입형 읽기 종료",
 	[Key.tocExpand]: "목차 펼치기",
 	[Key.tocCollapse]: "목차 접기",
+
+	// 표시 설정: 기본값으로 저장 / 기본값 복원
+	[Key.displaySaveAsDefault]: "기본값으로 저장",
+	[Key.displayRestoreDefault]: "기본값 복원",
+	[Key.displaySaveSuccess]: "사이트 기본값으로 저장했습니다",
+	[Key.displaySaveFailed]:
+		"저장에 실패했습니다. 이 기능은 pnpm dev 개발 모드에서만 사용할 수 있습니다",
+	[Key.displayRestoreConfirm]:
+		"기본값으로 복원할까요? 저장된 기본값이 삭제되고 이 브라우저의 모든 표시 설정이 초기화됩니다.",
+	[Key.displayRestoreSuccess]: "원래 기본값으로 복원했습니다",
 };
