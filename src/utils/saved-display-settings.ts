@@ -1,23 +1,23 @@
 // 显示设置面板的运行时默认值解析
 //
 // 解析优先级（后者被前者覆盖）：
-//   1. display-defaults.json —— 通过设置面板「保存为默认」写入的覆盖项
+//   1. saved-display-settings.json —— 通过设置面板「保存当前样式」写入的覆盖项
 //   2. 原配置文件（siteConfig / backgroundWallpaper / effectsConfig）—— 出厂值
 //
 // 运行时还有第三层 localStorage（用户的实时预览），那一层由 setting-utils.ts 处理。
 // 本模块只负责「默认值」这一层，因此服务端渲染与客户端都能使用，保持同构。
 //
 // 设计要点：原配置文件始终保持出厂值不被改写，覆盖层只存「与出厂值不同」的差异项。
-// 因此「恢复默认」只要清空覆盖文件即可，永远能回到出厂状态。
+// 因此「恢复出厂设置」只要清空覆盖文件即可，永远能回到出厂状态。
 
 import { DEFAULT_THEME } from "@constants/constants";
-import overridesJson from "@constants/display-defaults.json";
+import savedSettingsJson from "@constants/saved-display-settings.json";
 import { backgroundWallpaper, sakuraConfig, siteConfig } from "@/config";
 import {
-	DISPLAY_DEFAULT_SCHEMA,
-	type DisplayDefaultKey,
+	type DisplaySettingKey,
 	type RuntimeDisplaySettings,
-} from "@/types/displayDefaults";
+	SAVED_SETTINGS_SCHEMA,
+} from "@/types/savedDisplaySettings";
 
 // 判断当前是否为移动端（与 setting-utils.ts 内联脚本的断点保持一致）
 function isMobileViewport(): boolean {
@@ -39,8 +39,8 @@ function resolveDeviceFlag(
 }
 
 // 出厂值：完全来自原配置文件，不含覆盖层
-// 这是「恢复默认」的终点，也是判断某项是否属于差异项的基准
-export function getFactoryDefaults(): Required<RuntimeDisplaySettings> {
+// 这是「恢复出厂设置」的终点，也是判断某项是否属于差异项的基准
+export function getFactorySettings(): Required<RuntimeDisplaySettings> {
 	return {
 		hue: siteConfig.themeColor.hue,
 		// defaultMode 可选，未配置时回退到 DEFAULT_THEME（与 getDefaultTheme() 行为一致）
@@ -70,9 +70,9 @@ export function getFactoryDefaults(): Required<RuntimeDisplaySettings> {
 }
 
 // 判断某个覆盖值是否合法：类型正确且落在允许范围内
-// 读取与写入两侧共用 DISPLAY_DEFAULT_SCHEMA，避免规则漂移
-function isValidOverrideValue(key: DisplayDefaultKey, value: unknown): boolean {
-	const rule = DISPLAY_DEFAULT_SCHEMA[key];
+// 读取与写入两侧共用 SAVED_SETTINGS_SCHEMA，避免规则漂移
+function isValidOverrideValue(key: DisplaySettingKey, value: unknown): boolean {
+	const rule = SAVED_SETTINGS_SCHEMA[key];
 	switch (rule.kind) {
 		case "boolean":
 			return typeof value === "boolean";
@@ -95,14 +95,12 @@ function isValidOverrideValue(key: DisplayDefaultKey, value: unknown): boolean {
 
 // 规整任意来源的覆盖数据：丢弃未知键、类型错误与越界值
 // 不抛错，保证配置文件被手工改坏时站点仍能正常回退出厂值
-export function normalizeOverrides(input: unknown): RuntimeDisplaySettings {
+export function normalizeSavedSettings(input: unknown): RuntimeDisplaySettings {
 	const result: RuntimeDisplaySettings = {};
 	if (typeof input !== "object" || input === null || Array.isArray(input)) {
 		return result;
 	}
-	for (const key of Object.keys(
-		DISPLAY_DEFAULT_SCHEMA,
-	) as DisplayDefaultKey[]) {
+	for (const key of Object.keys(SAVED_SETTINGS_SCHEMA) as DisplaySettingKey[]) {
 		const value = (input as Record<string, unknown>)[key];
 		if (value === undefined) continue;
 		if (!isValidOverrideValue(key, value)) continue;
@@ -163,42 +161,42 @@ export function normalizeOverrides(input: unknown): RuntimeDisplaySettings {
 }
 
 // 当前生效的覆盖项（已规整）
-export function readOverrides(): RuntimeDisplaySettings {
-	return normalizeOverrides(overridesJson);
+export function readSavedSettings(): RuntimeDisplaySettings {
+	return normalizeSavedSettings(savedSettingsJson);
 }
 
 // 解析后的完整默认值：覆盖项优先，缺失的键回退出厂值
 // 服务端渲染、内联脚本与设置面板都从这里取默认值，确保三处一致
-export function resolveDisplayDefaults(): Required<RuntimeDisplaySettings> {
-	return { ...getFactoryDefaults(), ...readOverrides() };
+export function resolveDisplaySettings(): Required<RuntimeDisplaySettings> {
+	return { ...getFactorySettings(), ...readSavedSettings() };
 }
 
 // 取单项解析后的默认值，供原有 getDefault*() 函数复用
-export function resolveDisplayDefault<K extends DisplayDefaultKey>(
+export function resolveDisplaySetting<K extends DisplaySettingKey>(
 	key: K,
 ): NonNullable<RuntimeDisplaySettings[K]> {
-	return resolveDisplayDefaults()[key];
+	return resolveDisplaySettings()[key];
 }
 
 // 只取覆盖层里显式保存的值，没有则返回 undefined
 // 用于分设备开关（waves / gradient）：这类默认值要先让覆盖值优先，
 // 未保存时再由调用方按当前设备从配置里解析，因此不能直接用带出厂回退的
-// resolveDisplayDefault()（那样会让分设备的判断永远得不到执行）
-export function getOverrideValue<K extends DisplayDefaultKey>(
+// resolveDisplaySetting()（那样会让分设备的判断永远得不到执行）
+export function getSavedValue<K extends DisplaySettingKey>(
 	key: K,
 ): RuntimeDisplaySettings[K] {
-	return readOverrides()[key];
+	return readSavedSettings()[key];
 }
 
 // 保存时剪枝：剔除「与出厂值相同」的项，只保留真正的差异
 // 这样手工把某项改回默认再保存，该键会自动从文件里消失，覆盖文件始终最小
-export function pickOverrides(
+export function pickChangedSettings(
 	input: RuntimeDisplaySettings,
 ): RuntimeDisplaySettings {
-	const factory = getFactoryDefaults();
-	const normalized = normalizeOverrides(input);
+	const factory = getFactorySettings();
+	const normalized = normalizeSavedSettings(input);
 	const result: RuntimeDisplaySettings = {};
-	for (const key of Object.keys(normalized) as DisplayDefaultKey[]) {
+	for (const key of Object.keys(normalized) as DisplaySettingKey[]) {
 		if (normalized[key] === factory[key]) continue;
 		switch (key) {
 			case "hue":

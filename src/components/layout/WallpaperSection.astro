@@ -9,8 +9,8 @@ import type {
 	BannerPostMeta,
 	BannerVisibilityState,
 } from "@/utils/banner-visibility-utils";
-import { resolveDisplayDefaults } from "@/utils/display-defaults";
 import type { BackgroundImages } from "@/utils/layout-utils";
+import { resolveDisplaySettings } from "@/utils/saved-display-settings";
 
 interface Props {
 	state: BannerVisibilityState;
@@ -22,7 +22,7 @@ interface Props {
 const { state, backgroundImages, title, bannerPostMeta } = Astro.props;
 // 壁纸透明度/模糊度走默认值解析层，否则服务端会用出厂值渲染内联样式，
 // 与客户端按覆盖值渲染的结果不一致，滑动条保存过的值无法在首屏生效
-const displayDefaults = resolveDisplayDefaults();
+const displaySettings = resolveDisplaySettings();
 const wallpaperPosition = state.isFullscreenMode
 	? (backgroundWallpaper.fullscreen?.position ??
 		backgroundWallpaper.banner?.position)
@@ -31,7 +31,7 @@ const wallpaperPosition = state.isFullscreenMode
 
 <!-- Wallpaper - 如果允许切换则始终渲染，否则只渲染当前模式 -->
 {(state.isWallpaperSwitchable || state.isBannerMode || state.isFullscreenMode || state.isOverlayMode) && (
-<div id="wallpaper-wrapper" class="absolute z-10 w-full overflow-hidden" style={`--overlay-opacity: ${displayDefaults.overlayOpacity}; --overlay-z-index: ${backgroundWallpaper.overlay?.zIndex ?? -1}; --overlay-blur: ${displayDefaults.overlayBlur}px;`}>
+<div id="wallpaper-wrapper" class="absolute z-10 w-full overflow-hidden" style={`--overlay-opacity: ${displaySettings.overlayOpacity}; --overlay-z-index: ${backgroundWallpaper.overlay?.zIndex ?? -1}; --overlay-blur: ${displaySettings.overlayBlur}px;`}>
 <!-- 背景图片显示 -->
     {state.hasMultipleImages ? (
     /* 轮播模式：渲染所有图片为 slide-item */

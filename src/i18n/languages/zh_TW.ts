@@ -530,12 +530,15 @@ export const zh_TW: Translation = {
 	[Key.tocExpand]: "展開目錄",
 	[Key.tocCollapse]: "摺疊目錄",
 
-	// 顯示設定：儲存為預設 / 恢復預設
-	[Key.displaySaveAsDefault]: "儲存為預設",
-	[Key.displayRestoreDefault]: "恢復預設",
-	[Key.displaySaveSuccess]: "已儲存為站點預設值",
+	// 顯示設定：儲存目前樣式 / 恢復出廠設定
+	[Key.displaySaveAsDefault]: "儲存目前樣式",
+	[Key.displayRestoreDefault]: "恢復出廠設定",
+	[Key.displaySaveSuccess]: "已儲存目前樣式，它將成為站點預設外觀",
+	[Key.displaySaveNoChange]:
+		"目前樣式與出廠值完全相同，無需儲存（改點別的再試）",
+	[Key.displaySaving]: "儲存中…",
 	[Key.displaySaveFailed]: "儲存失敗，該功能僅在 pnpm dev 開發模式下可用",
 	[Key.displayRestoreConfirm]:
-		"確定要恢復預設嗎？這會清除已儲存的預設值，並重設本瀏覽器當前的所有顯示設定。",
-	[Key.displayRestoreSuccess]: "已恢復為原始預設值",
+		"確定要恢復出廠設定嗎？這會清除已儲存的樣式，並重設本瀏覽器當前的所有顯示設定。",
+	[Key.displayRestoreSuccess]: "已恢復為出廠設定",
 };

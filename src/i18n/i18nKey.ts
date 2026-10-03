@@ -522,10 +522,12 @@ enum I18nKey {
 	tocExpand = "tocExpand",
 	tocCollapse = "tocCollapse",
 
-	// 显示设置：保存为默认 / 恢复默认
+	// 显示设置：保存当前样式 / 恢复出厂设置
 	displaySaveAsDefault = "displaySaveAsDefault",
 	displayRestoreDefault = "displayRestoreDefault",
 	displaySaveSuccess = "displaySaveSuccess",
+	displaySaveNoChange = "displaySaveNoChange",
+	displaySaving = "displaySaving",
 	displaySaveFailed = "displaySaveFailed",
 	displayRestoreConfirm = "displayRestoreConfirm",
 	displayRestoreSuccess = "displayRestoreSuccess",

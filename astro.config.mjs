@@ -55,19 +55,19 @@ import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkPlantuml } from "./src/plugins/remark-plantuml.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { remarkWikiLink } from "./src/plugins/remark-wiki-link.js";
-import { DISPLAY_DEFAULT_SCHEMA } from "./src/types/displayDefaults.ts";
-import {
-	normalizeOverrides,
-	pickOverrides,
-} from "./src/utils/display-defaults.ts";
+import { SAVED_SETTINGS_SCHEMA } from "./src/types/savedDisplaySettings.ts";
 import { collectUsedFontCssVars } from "./src/utils/fontHelper";
+import {
+	normalizeSavedSettings,
+	pickChangedSettings,
+} from "./src/utils/saved-display-settings.ts";
 
 if (process.env.NODE_ENV === "development") {
 	setMaxListeners(20);
 }
 
-// 开发服务器上，显示设置面板的「保存为默认」需要一个能写文件的接口。
-// 该接口以 Vite 中间件形式提供（见下方 displayDefaultsDevApi），
+// 开发服务器上，显示设置面板的「保存当前样式」需要一个能写文件的接口。
+// 该接口以 Vite 中间件形式提供（见下方 displaySettingsDevApi），
 // 它只在开发服务器存在，完全不参与构建，因此 pnpm build 依旧是纯静态输出。
 const adapter = process.env.CF_WORKERS
 	? cloudflare({
@@ -85,27 +85,27 @@ const adapter = process.env.CF_WORKERS
 //   既拿得到 POST 请求体，又完全不参与构建 —— pnpm build 依旧是纯静态输出。
 //
 // 该中间件只在 `pnpm dev` 期间存在（apply: "serve"），生产环境不存在任何写入能力。
-const DISPLAY_DEFAULTS_ENDPOINT = "/api/display-defaults.json";
+const DISPLAY_SETTINGS_ENDPOINT = "/api/saved-display-settings.json";
 
 // 覆盖层文件（站点源码内，不在 dist）
-const DISPLAY_DEFAULTS_FILE = path.join(
+const DISPLAY_SETTINGS_FILE = path.join(
 	process.cwd(),
 	"src",
 	"constants",
-	"display-defaults.json",
+	"saved-display-settings.json",
 );
 
 // 直接从磁盘读取覆盖层文件。
 //
-// 为什么不用 display-defaults.ts 的 readOverrides()：
+// 为什么不用 saved-display-settings.ts 的 readSavedSettings()：
 //   那个函数读的是 import 进来的 JSON 模块，模块在进程内只求值一次并被缓存。
 //   开发服务器启动后再写文件，缓存不会失效，GET 就会一直返回旧值
 //   （正是调试中发现的「写成功但 GET 仍为空」现象）。
 //   读取路径走 fs 才能反映磁盘上的真实内容。
-async function readOverridesFromDisk() {
+async function readSavedSettingsFromDisk() {
 	try {
-		const raw = await readFile(DISPLAY_DEFAULTS_FILE, "utf8");
-		return normalizeOverrides(JSON.parse(raw));
+		const raw = await readFile(DISPLAY_SETTINGS_FILE, "utf8");
+		return normalizeSavedSettings(JSON.parse(raw));
 	} catch {
 		// 文件缺失或内容损坏时回退为空覆盖（等价于全部使用出厂值）
 		return {};
@@ -113,8 +113,8 @@ async function readOverridesFromDisk() {
 }
 
 // 校验请求体并剪枝写盘。与页面侧共用同一套 schema 与剪枝逻辑，
-// 保证「保存为默认」的语义（只存与出厂值不同的项）在两侧完全一致。
-async function saveDisplayDefaults(payload) {
+// 保证「保存当前样式」的语义（只存与出厂值不同的项）在两侧完全一致。
+async function saveDisplaySettings(payload) {
 	if (
 		typeof payload !== "object" ||
 		payload === null ||
@@ -128,7 +128,7 @@ async function saveDisplayDefaults(payload) {
 
 	// 未知键直接拒绝，避免拼写错误导致「保存了但没生效」
 	const unknownKeys = Object.keys(payload).filter(
-		(key) => !Object.hasOwn(DISPLAY_DEFAULT_SCHEMA, key),
+		(key) => !Object.hasOwn(SAVED_SETTINGS_SCHEMA, key),
 	);
 	if (unknownKeys.length > 0) {
 		return {
@@ -138,7 +138,7 @@ async function saveDisplayDefaults(payload) {
 	}
 
 	// 校验并规整：类型错误与越界值会被丢弃
-	const normalized = normalizeOverrides(payload);
+	const normalized = normalizeSavedSettings(payload);
 	const invalidKeys = Object.keys(payload).filter(
 		(key) => normalized[key] === undefined,
 	);
@@ -152,17 +152,17 @@ async function saveDisplayDefaults(payload) {
 		};
 	}
 
-	// 剪枝：只保留与出厂值不同的差异项；传空对象即得到空文件（恢复默认）
-	const overrides = pickOverrides(normalized);
+	// 剪枝：只保留与出厂值不同的差异项；传空对象即得到空文件（恢复出厂设置）
+	const overrides = pickChangedSettings(normalized);
 	try {
 		// 原子写：先写临时文件再 rename，避免写入中断留下半截文件
-		const tempFile = `${DISPLAY_DEFAULTS_FILE}.tmp`;
+		const tempFile = `${DISPLAY_SETTINGS_FILE}.tmp`;
 		await writeFile(
 			tempFile,
 			`${JSON.stringify(overrides, null, "\t")}\n`,
 			"utf8",
 		);
-		await rename(tempFile, DISPLAY_DEFAULTS_FILE);
+		await rename(tempFile, DISPLAY_SETTINGS_FILE);
 	} catch (error) {
 		return {
 			status: 500,
@@ -173,17 +173,23 @@ async function saveDisplayDefaults(payload) {
 		};
 	}
 
-	return { status: 200, body: { ok: true, overrides } };
+	// saved 为剪枝后真正写入的项数。
+	// saved === 0 表示当前样式与出厂值完全一致、没有任何差异项需要保存，
+	// 面板据此提示「没有需要保存的内容」，而不是假装保存成功。
+	return {
+		status: 200,
+		body: { ok: true, saved: Object.keys(overrides).length, overrides },
+	};
 }
 
-function displayDefaultsDevApi() {
+function displaySettingsDevApi() {
 	return {
-		name: "firefly-display-defaults-dev-api",
+		name: "firefly-saved-display-settings-dev-api",
 		apply: "serve",
 		configureServer(server) {
 			server.middlewares.use((req, res, next) => {
 				const pathname = (req.url || "").split("?")[0];
-				if (pathname !== DISPLAY_DEFAULTS_ENDPOINT) return next();
+				if (pathname !== DISPLAY_SETTINGS_ENDPOINT) return next();
 
 				const send = (status, body) => {
 					res.statusCode = status;
@@ -194,7 +200,7 @@ function displayDefaultsDevApi() {
 
 				if (req.method === "GET") {
 					// 走磁盘读取而不是模块缓存，保证读到的就是刚保存的内容
-					readOverridesFromDisk().then((overrides) =>
+					readSavedSettingsFromDisk().then((overrides) =>
 						send(200, { ok: true, overrides }),
 					);
 					return;
@@ -215,7 +221,9 @@ function displayDefaultsDevApi() {
 					} catch {
 						return send(400, { ok: false, error: "请求体不是合法 JSON" });
 					}
-					const result = await saveDisplayDefaults(payload);
+					// 写入结果通过响应体返回给面板（含 saved 项数），
+					// 面板会把「提交了什么、写入了几项」显示在设置面板上，便于自查。
+					const result = await saveDisplaySettings(payload);
 					send(result.status, result.body);
 				});
 			});
@@ -509,7 +517,7 @@ export default defineConfig({
 		}),
 	},
 	vite: {
-		plugins: [displayDefaultsDevApi(), tailwindcss()],
+		plugins: [displaySettingsDevApi(), tailwindcss()],
 		server: {
 			watch: {
 				ignored: ["**/package/**", "**/Firefly-docs/**"],

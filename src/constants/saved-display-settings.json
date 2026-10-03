@@ -1,0 +1,11 @@
+{
+	"hue": 220,
+	"cardBorderEnabled": true,
+	"cardFollowThemeEnabled": true,
+	"wallpaperMode": "fullscreen",
+	"fullscreenLayout": "hero",
+	"overlayBlur": 2,
+	"overlayCardOpacity": 0.47,
+	"sakuraEnabled": true,
+	"bannerCarouselEnabled": true
+}

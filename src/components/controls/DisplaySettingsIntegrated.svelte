@@ -7,6 +7,7 @@ import {
 } from "@constants/constants";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import { resolveDisplaySetting } from "@utils/saved-display-settings";
 import {
 	clearStoredDisplaySettings,
 	getDefaultBannerCarouselEnabled,
@@ -20,6 +21,7 @@ import {
 	getDefaultOverlayCardOpacity,
 	getDefaultOverlayOpacity,
 	getDefaultSakuraEnabled,
+	getDefaultWallpaperMode,
 	getDefaultWavesEnabled,
 	getHue,
 	getStoredBannerCarouselEnabled,
@@ -32,9 +34,10 @@ import {
 	getStoredOverlayCardOpacity,
 	getStoredOverlayOpacity,
 	getStoredSakuraEnabled,
+	getStoredTheme,
 	getStoredWallpaperMode,
 	getStoredWavesEnabled,
-	reapplyDisplayDefaults,
+	reapplyDisplaySettings,
 	setBannerCarouselEnabled,
 	setBannerTitleEnabled,
 	setCardBorderEnabled,
@@ -75,14 +78,17 @@ type TabKey = "appearance" | "wallpaper" | "effects";
 
 let hue = $state(getHue());
 const defaultHue = getDefaultHue();
-let wallpaperMode: WALLPAPER_MODE = $state(backgroundWallpaper.mode);
-const defaultWallpaperMode = backgroundWallpaper.mode;
+// 初始值一律取「解析后的默认值」，而不是出厂配置：
+// 这样无 localStorage 时（无痕窗口 / 首次访问）面板显示的就是保存过的样式，
+// 也保证「单行重置」按钮把值还原到与页面实际渲染一致的位置。
+let wallpaperMode: WALLPAPER_MODE = $state(getDefaultWallpaperMode());
+const defaultWallpaperMode = getDefaultWallpaperMode();
 let fullscreenLayout: FullscreenWallpaperLayout = $state(
 	getDefaultFullscreenLayout(),
 );
 const defaultFullscreenLayout = getDefaultFullscreenLayout();
 let currentLayout: "list" | "grid" = $state("list");
-const defaultLayout = siteConfig.postListLayout.defaultMode;
+const defaultLayout = resolveDisplaySetting("postListLayout");
 const mobileDefaultLayout =
 	siteConfig.postListLayout.mobileDefaultMode || defaultLayout;
 let mounted = $state(false);
@@ -96,15 +102,15 @@ let isMobileViewport = $state(
 	typeof window !== "undefined" ? window.innerWidth < 1024 : false,
 );
 let isSwitching = $state(false);
-let wavesEnabled = $state(true);
+let wavesEnabled = $state(getDefaultWavesEnabled());
 const defaultWavesEnabled = getDefaultWavesEnabled();
-let gradientEnabled = $state(true);
+let gradientEnabled = $state(getDefaultGradientEnabled());
 const defaultGradientEnabled = getDefaultGradientEnabled();
-let bannerTitleEnabled = $state(true);
+let bannerTitleEnabled = $state(getDefaultBannerTitleEnabled());
 const defaultBannerTitleEnabled = getDefaultBannerTitleEnabled();
-let bannerCarouselEnabled = $state(true);
+let bannerCarouselEnabled = $state(getDefaultBannerCarouselEnabled());
 const defaultBannerCarouselEnabled = getDefaultBannerCarouselEnabled();
-let sakuraEnabled = $state(true);
+let sakuraEnabled = $state(getDefaultSakuraEnabled());
 const defaultSakuraEnabled = getDefaultSakuraEnabled();
 let overlayOpacity = $state(getDefaultOverlayOpacity());
 const defaultOverlayOpacity = getDefaultOverlayOpacity();
@@ -129,9 +135,10 @@ let effectiveDefaultLayout = $derived(
 const showThemeColor = displaySettingsConfig.themeColorSwitchable;
 const isWavesSwitchable = displaySettingsConfig.wavesSwitchable;
 const isGradientSwitchable = displaySettingsConfig.gradientSwitchable;
-// 检查是否启用横幅标题配置（功能开关，非用户切换开关）
-const isBannerTitleEnabled =
-	backgroundWallpaper.common?.homeText?.enable ?? false;
+// 检查是否启用横幅标题（功能开关，非用户切换开关）
+// 用解析值而非出厂值：出厂开启但用户保存为关闭时，开关仍应可见（以便再打开）；
+// 出厂本来就关闭（该功能未启用）时，开关不显示。
+const isBannerTitleEnabled = getDefaultBannerTitleEnabled();
 const isBannerTitleSwitchable =
 	isBannerTitleEnabled && displaySettingsConfig.bannerTitleSwitchable;
 const isBannerCarouselSwitchable =
@@ -179,7 +186,7 @@ let overlaySettingsIsDefault = $derived(
 		(!isOverlayCardOpacitySwitchable ||
 			overlayCardOpacity === defaultOverlayCardOpacity),
 );
-// 横幅设置是否全部为默认值（用于控制恢复默认按钮的显隐）
+// 横幅设置是否全部为默认值（用于控制恢复出厂设置按钮的显隐）
 let bannerSettingsIsDefault = $derived(
 	(!isBannerTitleSwitchable ||
 		bannerTitleEnabled === defaultBannerTitleEnabled) &&
@@ -321,18 +328,27 @@ let hasVisibleOverlaySlider = $derived(
 	overlaySliderItems.some((item) => item.enabled),
 );
 
-// ── 保存为默认 / 恢复默认 ─────────────────────────────
-// 保存会把当前 15 项可调参数通过开发环境接口写入
-// src/constants/display-defaults.json，成为站点默认值（只存与出厂值不同的项）
-// 该接口只在 pnpm dev 下存在，生产构建不会产出，故按钮仅开发模式显示
-const canSaveAsDefault = import.meta.env.DEV;
+// ── 保存当前样式 / 恢复出厂设置 ─────────────────────────────
+// 保存会把当前 15 项可调参数通过开发服务器接口写入
+// src/constants/saved-display-settings.json，成为站点默认外观（只存与出厂值不同的项）
+//
+// 注意：这里刻意 **不用** `import.meta.env.DEV` 包住按钮的渲染。
+// 它在浏览器构建时会被替换成 false，于是 `{#if ...}` 整块被 tree-shake 掉：
+// 服务端渲染出的按钮仍在 DOM 里，但客户端没有对应的事件处理器，
+// 点下去毫无反应（曾因此出现「点了保存没有任何提示」）。
+// 改为始终渲染按钮，在点击处理函数里用运行时判断决定是否可写。
+const isDevMode = import.meta.env.DEV;
 
-type DefaultsFeedback = { kind: "ok" | "error"; text: string } | null;
+type DefaultsFeedback = {
+	kind: "ok" | "error";
+	text: string;
+	debug?: string;
+} | null;
 let defaultsFeedback: DefaultsFeedback = $state(null);
 let defaultsSaving = $state(false);
 let feedbackTimer: ReturnType<typeof setTimeout> | undefined;
 
-// reloadAfter: 恢复默认后需要整页刷新。
+// reloadAfter: 恢复出厂设置后需要整页刷新。
 // 原因：覆盖层 JSON 是在构建/开发服务器注入时被读入内存的（Layout 的
 // define:vars、ConfigCarrier、PostPage 都用了它），当前页面内存里仍是旧值，
 // 只重绘 DOM 无法拿回原始出厂值，必须重新加载页面才能让整条链路生效。
@@ -340,8 +356,9 @@ function showDefaultsFeedback(
 	kind: "ok" | "error",
 	text: string,
 	reloadAfter = false,
+	debug?: string,
 ): void {
-	defaultsFeedback = { kind, text };
+	defaultsFeedback = { kind, text, debug };
 	if (feedbackTimer !== undefined) clearTimeout(feedbackTimer);
 	feedbackTimer = setTimeout(
 		() => {
@@ -350,7 +367,7 @@ function showDefaultsFeedback(
 				window.location.reload();
 			}
 		},
-		reloadAfter ? 900 : 3500,
+		reloadAfter ? 900 : 15000,
 	);
 }
 
@@ -375,71 +392,129 @@ function collectCurrentDisplaySettings(): Record<string, unknown> {
 	};
 }
 
-// 写入接口走 POST + JSON body。
-// 该路由在开发环境是按需渲染的（prerender = !import.meta.env.DEV），
-// 因此能拿到完整请求体；预渲染路由会被 Astro 剥离请求体，无法写入。
+// 写入接口走 POST + JSON body，由 astro.config.mjs 里的 Vite dev 中间件处理。
+// 中间件在 Astro 路由之前执行，因此能拿到完整 POST 请求体（预渲染路由会被剥离）。
 // 剪枝由服务端按出厂值完成，前端只负责提交当前值。
-async function postDisplayDefaults(
-	payload: Record<string, unknown>,
-): Promise<{ ok: boolean; error?: string }> {
+const SAVED_SETTINGS_ENDPOINT = "/api/saved-display-settings.json";
+
+async function postSavedSettings(payload: Record<string, unknown>): Promise<{
+	ok: boolean;
+	saved?: number;
+	error?: string;
+	debug: string;
+}> {
+	const keys = Object.keys(payload);
+	// 把提交内容一并带出，便于对比「界面看到的样式」与「实际提交的值」是否一致
+	const payloadSummary = JSON.stringify(payload);
 	try {
-		const response = await fetch("/api/display-defaults.json", {
+		const response = await fetch(SAVED_SETTINGS_ENDPOINT, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(payload),
 			cache: "no-store",
 		});
-		const result = (await response.json()) as {
-			ok?: boolean;
-			error?: string;
-		};
-		if (!response.ok || result.ok !== true) {
-			return { ok: false, error: result.error };
+		const text = await response.text();
+		let result: { ok?: boolean; saved?: number; error?: string };
+		try {
+			result = JSON.parse(text) as typeof result;
+		} catch {
+			// 返回的不是 JSON（例如回到了首页 HTML），把片段带出来便于定位
+			return {
+				ok: false,
+				error: `HTTP ${response.status}`,
+				debug: `提交 ${keys.length} 项 → 响应非 JSON(HTTP ${response.status}): ${text.slice(0, 80)}`,
+			};
 		}
-		return { ok: true };
+		if (!response.ok || result.ok !== true) {
+			return {
+				ok: false,
+				error: result.error,
+				debug: `提交 ${payloadSummary} → HTTP ${response.status}${result.error ? ` ${result.error}` : ""}`,
+			};
+		}
+		return {
+			ok: true,
+			saved: result.saved ?? 0,
+			debug: `提交 ${payloadSummary} → 服务端写入 ${result.saved ?? 0} 项`,
+		};
 	} catch (error) {
+		// fetch 本身失败（接口不存在 / 网络中断）会走到这里
 		return {
 			ok: false,
 			error: error instanceof Error ? error.message : String(error),
+			debug: `提交 ${payloadSummary} → 请求未送达：${error instanceof Error ? error.message : String(error)}`,
 		};
 	}
 }
 
+// 保存当前样式。
+//
+// 两个关键点：
+//   1. defaultsSaving 的解锁必须放在 finally 里。此前它写在 await 之后，
+//      中间任何一步抛错都会让它永久停在 true，两个按钮 disabled 到必须刷新页面
+//      ——这正是「保存一次后再也点不动」的原因。
+//   2. 保存后不清理本浏览器的 localStorage 记录。当前页面里解析出的默认值是在
+//      服务启动时读入内存的，写文件不会刷新它；此时若清掉 localStorage，界面会
+//      回退到那套「旧」默认值，反而显示成不是刚保存的样式。保留记录则当前预览
+//      恰好就是刚保存的样式，语义一致；新样式在下次加载与构建时自动生效。
 async function saveAsDefault(): Promise<void> {
 	if (defaultsSaving) return;
-	defaultsSaving = true;
-	const result = await postDisplayDefaults(collectCurrentDisplaySettings());
-	defaultsSaving = false;
-
-	if (result.ok) {
-		showDefaultsFeedback("ok", i18n(I18nKey.displaySaveSuccess));
-	} else {
-		showDefaultsFeedback("error", i18n(I18nKey.displaySaveFailed));
-	}
-}
-
-// 恢复默认：先清空覆盖文件，再清除本浏览器的显示设置记录并重绘
-// 接口失败时不清理本地状态，保持两者一致，避免只清了一半
-async function restoreDefaults(): Promise<void> {
-	if (defaultsSaving) return;
-	if (typeof window !== "undefined") {
-		const confirmed = window.confirm(i18n(I18nKey.displayRestoreConfirm));
-		if (!confirmed) return;
-	}
-
-	defaultsSaving = true;
-	// 传空对象即清空全部覆盖项（服务端会剪枝成空文件）
-	const result = await postDisplayDefaults({});
-	if (!result.ok) {
-		defaultsSaving = false;
+	// 非开发环境直接给出说明，避免请求打到一个不存在的接口
+	if (!isDevMode) {
 		showDefaultsFeedback("error", i18n(I18nKey.displaySaveFailed));
 		return;
 	}
+	defaultsSaving = true;
+	// 注意：这里必须有 catch。此前只有 finally，导致函数体内任何异常（例如
+	// 调用了未导入的函数）都会静默消失，界面停在「点击已到达按钮」那一句，
+	// 既没有成功也没有失败提示 —— 极难排查。
+	try {
+		const payload = collectCurrentDisplaySettings();
+		const result = await postSavedSettings(payload);
+		if (!result.ok) {
+			showDefaultsFeedback(
+				"error",
+				i18n(I18nKey.displaySaveFailed),
+				false,
+				result.debug,
+			);
+			return;
+		}
 
-	clearStoredDisplaySettings();
-	reapplyDisplayDefaults();
+		// saved === 0 表示当前样式与出厂值完全一致，服务端剪枝后无可写入内容。
+		// 这时文件保持为空是正确结果，需要明确告知，而不是假装保存成功。
+		if (result.saved === 0) {
+			showDefaultsFeedback(
+				"ok",
+				i18n(I18nKey.displaySaveNoChange),
+				false,
+				result.debug,
+			);
+			return;
+		}
 
-	// 同步面板自身的显示状态，使其反映清除后的默认值
+		showDefaultsFeedback(
+			"ok",
+			i18n(I18nKey.displaySaveSuccess),
+			false,
+			result.debug,
+		);
+	} catch (error) {
+		// 把异常原文显示出来，避免再次出现「点了没反应也看不到原因」
+		showDefaultsFeedback(
+			"error",
+			i18n(I18nKey.displaySaveFailed),
+			false,
+			`${error instanceof Error ? `${error.name}: ${error.message}` : String(error)}`,
+		);
+	} finally {
+		// 无论成功、失败还是抛错，都必须解锁，保证可以继续保存
+		defaultsSaving = false;
+	}
+}
+
+// 把面板自身的显示状态重新从存储读一遍，使其反映最新的默认值
+function syncPanelStateFromStorage(): void {
 	hue = getHue();
 	wallpaperMode = getStoredWallpaperMode();
 	fullscreenLayout = getStoredFullscreenLayout();
@@ -455,10 +530,43 @@ async function restoreDefaults(): Promise<void> {
 	bannerCarouselEnabled = getStoredBannerCarouselEnabled();
 	currentLayout = window.innerWidth < 780 ? mobileDefaultLayout : defaultLayout;
 	requestAnimationFrame(refreshAllRangeProgress);
+}
 
-	defaultsSaving = false;
-	// 恢复默认后整页刷新：内存里的覆盖值需要重新加载才能回到出厂值
-	showDefaultsFeedback("ok", i18n(I18nKey.displayRestoreSuccess), true);
+// 恢复出厂设置：先清空保存的样式文件，再清除本浏览器的显示设置记录并重绘。
+// 接口失败时不清理本地状态，保持两者一致，避免只清了一半。
+async function restoreDefaults(): Promise<void> {
+	if (defaultsSaving) return;
+	if (!isDevMode) {
+		showDefaultsFeedback("error", i18n(I18nKey.displaySaveFailed));
+		return;
+	}
+	if (typeof window !== "undefined") {
+		const confirmed = window.confirm(i18n(I18nKey.displayRestoreConfirm));
+		if (!confirmed) return;
+	}
+
+	defaultsSaving = true;
+	try {
+		// 传空对象即清空保存的样式（服务端会剪枝成空文件）
+		const result = await postSavedSettings({});
+		if (!result.ok) {
+			showDefaultsFeedback(
+				"error",
+				i18n(I18nKey.displaySaveFailed),
+				false,
+				result.debug,
+			);
+			return;
+		}
+
+		clearStoredDisplaySettings();
+		reapplyDisplaySettings();
+		syncPanelStateFromStorage();
+		// 恢复出厂设置后整页刷新：内存里解析出的样式需要重新加载才能回到出厂值
+		showDefaultsFeedback("ok", i18n(I18nKey.displayRestoreSuccess), true);
+	} finally {
+		defaultsSaving = false;
+	}
 }
 
 function resetHue() {
@@ -1203,8 +1311,10 @@ $effect(() => {
 		{/if}
 	{/if}
 
-	<!-- 保存为默认 / 恢复默认（仅开发模式） -->
-	{#if canSaveAsDefault}
+	<!-- 保存当前样式 / 恢复出厂设置。
+	     不加 {#if import.meta.env.DEV} 之类条件：那会在浏览器构建时被替换成 false，
+	     整块标记被 tree-shake 掉，导致服务端渲染出的按钮点了没反应。
+	     非开发环境由处理函数在运行时给出提示。 -->
 	<div class="mt-3 pt-3 border-t border-black/5 dark:border-white/10">
 		<div class="flex gap-2">
 			<button
@@ -1212,14 +1322,14 @@ $effect(() => {
 				disabled={defaultsSaving}
 				onclick={saveAsDefault}
 			>
-				{i18n(I18nKey.displaySaveAsDefault)}
+				{defaultsSaving ? i18n(I18nKey.displaySaving) : i18n(I18nKey.displaySaveAsDefault)}
 			</button>
 			<button
 				class="flex-1 btn-regular rounded-md py-2 px-3 text-sm active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none"
 				disabled={defaultsSaving}
 				onclick={restoreDefaults}
 			>
-				{i18n(I18nKey.displayRestoreDefault)}
+				{defaultsSaving ? i18n(I18nKey.displaySaving) : i18n(I18nKey.displayRestoreDefault)}
 			</button>
 		</div>
 		{#if defaultsFeedback}
@@ -1230,8 +1340,13 @@ $effect(() => {
 			>
 				{defaultsFeedback.text}
 			</p>
+			{#if defaultsFeedback.debug}
+				<!-- 开发期诊断信息：直接显示在面板上，便于排查「点了保存但文件没变化」 -->
+				<p class="mt-1 text-[0.6875rem] leading-relaxed text-gray-500 dark:text-gray-400 break-all">
+					{defaultsFeedback.debug}
+				</p>
+			{/if}
 		{/if}
 	</div>
-	{/if}
 </div>
 {/if}

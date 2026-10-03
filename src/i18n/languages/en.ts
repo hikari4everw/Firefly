@@ -541,13 +541,17 @@ export const en: Translation = {
 	[Key.tocExpand]: "Expand directory",
 	[Key.tocCollapse]: "Collapse directory",
 
-	// Display settings: save as default / restore default
-	[Key.displaySaveAsDefault]: "Save as default",
-	[Key.displayRestoreDefault]: "Restore defaults",
-	[Key.displaySaveSuccess]: "Saved as site default",
+	// Display settings: save current style / restore factory settings
+	[Key.displaySaveAsDefault]: "Save current style",
+	[Key.displayRestoreDefault]: "Restore factory settings",
+	[Key.displaySaveSuccess]:
+		"Current style saved — it becomes the site's default appearance",
+	[Key.displaySaveNoChange]:
+		"Current style is identical to the factory settings — nothing to save (change something first)",
+	[Key.displaySaving]: "Saving…",
 	[Key.displaySaveFailed]:
 		"Save failed — this feature is only available in pnpm dev mode",
 	[Key.displayRestoreConfirm]:
-		"Restore defaults? This clears the saved defaults and resets all display settings in this browser.",
-	[Key.displayRestoreSuccess]: "Restored to original defaults",
+		"Restore factory settings? This clears the saved style and resets all display settings in this browser.",
+	[Key.displayRestoreSuccess]: "Restored to factory settings",
 };

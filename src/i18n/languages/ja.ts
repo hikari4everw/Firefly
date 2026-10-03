@@ -538,13 +538,17 @@ export const ja: Translation = {
 	[Key.tocExpand]: "目錄を開く",
 	[Key.tocCollapse]: "目錄をたたむ",
 
-	// 表示設定：デフォルトとして保存 / デフォルトに戻す
-	[Key.displaySaveAsDefault]: "デフォルトとして保存",
-	[Key.displayRestoreDefault]: "デフォルトに戻す",
-	[Key.displaySaveSuccess]: "サイトのデフォルトとして保存しました",
+	// 表示設定：現在のスタイルを保存 / 工場出荷状態に戻す
+	[Key.displaySaveAsDefault]: "現在のスタイルを保存",
+	[Key.displayRestoreDefault]: "工場出荷状態に戻す",
+	[Key.displaySaveSuccess]:
+		"現在のスタイルを保存しました。サイトの既定の外観になります",
+	[Key.displaySaveNoChange]:
+		"現在のスタイルは工場出荷値と完全に同じです。保存の必要はありません（何か変更してからお試しください）",
+	[Key.displaySaving]: "保存中…",
 	[Key.displaySaveFailed]:
 		"保存に失敗しました。この機能は pnpm dev 開発モードでのみ利用できます",
 	[Key.displayRestoreConfirm]:
-		"デフォルトに戻しますか？保存済みのデフォルトを削除し、このブラウザの表示設定をすべてリセットします。",
-	[Key.displayRestoreSuccess]: "元のデフォルトに戻しました",
+		"工場出荷状態に戻しますか？保存済みのスタイルを削除し、このブラウザの表示設定をすべてリセットします。",
+	[Key.displayRestoreSuccess]: "工場出荷状態に戻しました",
 };

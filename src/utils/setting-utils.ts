@@ -12,14 +12,14 @@ import type {
 	LIGHT_DARK_MODE,
 	WALLPAPER_MODE,
 } from "@/types/config";
-import { DISPLAY_DEFAULT_KEYS } from "@/types/displayDefaults";
+import { SAVED_SETTINGS_KEYS } from "@/types/savedDisplaySettings";
 import {
 	backgroundWallpaper,
 	displaySettingsConfig,
 	expressiveCodeConfig,
 } from "../config";
-import { getOverrideValue, resolveDisplayDefault } from "./display-defaults";
 import { isHomePage as checkIsHomePage } from "./layout-utils";
+import { getSavedValue, resolveDisplaySetting } from "./saved-display-settings";
 
 // Declare global functions
 declare global {
@@ -40,8 +40,8 @@ export function getDefaultHue(): number {
 }
 
 export function getDefaultTheme(): LIGHT_DARK_MODE {
-	// 默认值来自 display-defaults.json 覆盖层，回退到配置文件
-	return resolveDisplayDefault("theme");
+	// 默认值来自「保存的样式」，未保存时回退到配置文件里的出厂值
+	return resolveDisplaySetting("theme");
 }
 
 // 获取系统主题
@@ -299,7 +299,7 @@ export function syncBannerHomeTextVisibility(): void {
 }
 
 export function getDefaultFullscreenLayout(): FullscreenWallpaperLayout {
-	return resolveDisplayDefault("fullscreenLayout");
+	return resolveDisplaySetting("fullscreenLayout");
 }
 
 export function getStoredFullscreenLayout(): FullscreenWallpaperLayout {
@@ -475,24 +475,30 @@ export function initWallpaperMode(): void {
 	applyWallpaperModeToDocument(storedMode, false);
 }
 
+// 壁纸模式的默认值：走「保存的样式 → 出厂值」解析层
+// 页面首屏与设置面板都以它作为默认，保证无 localStorage 时（如无痕窗口）显示保存过的样式
+export function getDefaultWallpaperMode(): WALLPAPER_MODE {
+	return resolveDisplaySetting("wallpaperMode");
+}
+
 export function getStoredWallpaperMode(): WALLPAPER_MODE {
 	// 检查是否在浏览器环境中
 	if (
 		typeof localStorage === "undefined" ||
 		typeof localStorage.getItem !== "function"
 	) {
-		return backgroundWallpaper.mode;
+		return getDefaultWallpaperMode();
 	}
 
 	const isSwitchable = displaySettingsConfig.wallpaperModeSwitchable;
 	if (!isSwitchable) {
 		localStorage.removeItem("wallpaperMode");
-		return backgroundWallpaper.mode;
+		return getDefaultWallpaperMode();
 	}
 
 	return (
 		(localStorage.getItem("wallpaperMode") as WALLPAPER_MODE) ||
-		backgroundWallpaper.mode
+		getDefaultWallpaperMode()
 	);
 }
 
@@ -502,15 +508,15 @@ function clampNumber(value: number, min: number, max: number): number {
 }
 
 export function getDefaultOverlayOpacity(): number {
-	return resolveDisplayDefault("overlayOpacity");
+	return resolveDisplaySetting("overlayOpacity");
 }
 
 export function getDefaultOverlayBlur(): number {
-	return resolveDisplayDefault("overlayBlur");
+	return resolveDisplaySetting("overlayBlur");
 }
 
 export function getDefaultOverlayCardOpacity(): number {
-	return resolveDisplayDefault("overlayCardOpacity");
+	return resolveDisplaySetting("overlayCardOpacity");
 }
 
 export function getStoredOverlayOpacity(): number {
@@ -645,7 +651,7 @@ export function applyStoredOverlaySettingsToDocument(): void {
 // Waves animation functions
 export function getDefaultWavesEnabled(): boolean {
 	// 覆盖层优先：保存过 wavesEnabled 时直接使用该值
-	const override = getOverrideValue("wavesEnabled");
+	const override = getSavedValue("wavesEnabled");
 	if (override !== undefined) return override;
 	const wavesConfig = backgroundWallpaper.common?.waves?.enable;
 	if (typeof wavesConfig === "object") {
@@ -706,7 +712,7 @@ export function applyWavesEnabledToDocument(enabled: boolean): void {
 // Gradient transition functions
 export function getDefaultGradientEnabled(): boolean {
 	// 覆盖层优先：保存过 gradientEnabled 时直接使用该值
-	const override = getOverrideValue("gradientEnabled");
+	const override = getSavedValue("gradientEnabled");
 	if (override !== undefined) return override;
 	const gradientConfig = backgroundWallpaper.common?.gradient?.enable;
 	if (typeof gradientConfig === "object") {
@@ -766,7 +772,7 @@ export function applyGradientEnabledToDocument(enabled: boolean): void {
 
 // Sakura effect functions
 export function getDefaultSakuraEnabled(): boolean {
-	return resolveDisplayDefault("sakuraEnabled");
+	return resolveDisplaySetting("sakuraEnabled");
 }
 
 export function getStoredSakuraEnabled(): boolean {
@@ -795,7 +801,7 @@ export function setSakuraEnabled(enabled: boolean): void {
 	);
 }
 
-// 应用函数单独抽出，便于保存/恢复默认后重绘；事件派发留在 setter 内，
+// 应用函数单独抽出，便于保存样式/恢复出厂后重绘；事件派发留在 setter 内，
 // 避免重绘时触发一次多余的 sakuraToggle
 export function applySakuraEnabledToDocument(enabled: boolean): void {
 	if (typeof document === "undefined") {
@@ -806,11 +812,11 @@ export function applySakuraEnabledToDocument(enabled: boolean): void {
 
 // Banner title functions
 export function getDefaultBannerTitleEnabled(): boolean {
-	return resolveDisplayDefault("bannerTitleEnabled");
+	return resolveDisplaySetting("bannerTitleEnabled");
 }
 
 export function getDefaultBannerCarouselEnabled(): boolean {
-	return resolveDisplayDefault("bannerCarouselEnabled");
+	return resolveDisplaySetting("bannerCarouselEnabled");
 }
 
 export function getStoredBannerTitleEnabled(): boolean {
@@ -909,7 +915,7 @@ export function applyBannerCarouselEnabledToDocument(enabled: boolean): void {
 }
 
 // Card border functions
-// 应用函数单独抽出，便于「保存为默认 / 恢复默认」后无刷新重绘而无需写 localStorage
+// 应用函数单独抽出，便于「保存当前样式 / 恢复出厂设置」后无刷新重绘而无需写 localStorage
 export function applyCardBorderEnabledToDocument(enabled: boolean): void {
 	if (typeof document === "undefined") {
 		return;
@@ -922,7 +928,7 @@ export function applyCardBorderEnabledToDocument(enabled: boolean): void {
 }
 
 export function getDefaultCardBorderEnabled(): boolean {
-	return resolveDisplayDefault("cardBorderEnabled");
+	return resolveDisplaySetting("cardBorderEnabled");
 }
 
 export function getStoredCardBorderEnabled(): boolean {
@@ -961,7 +967,7 @@ export function applyCardFollowThemeEnabledToDocument(enabled: boolean): void {
 }
 
 export function getDefaultCardFollowThemeEnabled(): boolean {
-	return resolveDisplayDefault("cardFollowThemeEnabled");
+	return resolveDisplaySetting("cardFollowThemeEnabled");
 }
 
 export function getStoredCardFollowThemeEnabled(): boolean {
@@ -987,7 +993,7 @@ export function setCardFollowThemeEnabled(enabled: boolean): void {
 }
 
 // 清除显示设置面板写入的全部 localStorage 记录
-// 用 DISPLAY_DEFAULT_KEYS 白名单（每个可覆盖键与 localStorage 键名一一对应），
+// 用 SAVED_SETTINGS_KEYS 白名单（每个可覆盖键与 localStorage 键名一一对应），
 // 而不是清空整个 localStorage，避免误删其他功能（评论、搜索历史等）的数据
 export function clearStoredDisplaySettings(): void {
 	if (
@@ -996,21 +1002,21 @@ export function clearStoredDisplaySettings(): void {
 	) {
 		return;
 	}
-	for (const key of DISPLAY_DEFAULT_KEYS) {
+	for (const key of SAVED_SETTINGS_KEYS) {
 		localStorage.removeItem(key);
 	}
 }
 
-// ── 保存/恢复默认后的重绘 ────────────────────────────────
+// ── 保存样式/恢复出厂后的重绘 ────────────────────────────────
 //
-// 显示设置面板「保存为默认」与「恢复默认」都会改动默认值来源，
+// 显示设置面板「保存当前样式」与「恢复出厂设置」都会改动默认值来源，
 // 但当前页面的 DOM 是按旧的 localStorage 值渲染的，需要按新的
 // 存储状态整体重绘一次，让预览立即反映最终结果，无需手动刷新。
 //
 // 顺序说明：先切壁纸模式、再切全屏布局，最后刷新导航栏透明度。
 // applyWallpaperModeToDocument() 会依据当前的 data-fullscreen-layout
 // 决定导航栏透明态与 fullscreen hero 的联动，因此壁纸模式要在布局之前应用。
-export function reapplyDisplayDefaults(): void {
+export function reapplyDisplaySettings(): void {
 	if (typeof document === "undefined") return;
 
 	const current = {

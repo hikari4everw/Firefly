@@ -543,10 +543,15 @@
 		}
 		window.sakuraInitialized = true;
 
-		// 读取用户设置(localStorage 优先,缺省回退到配置默认值)
+		// 读取用户设置：localStorage（当前浏览器预览）优先，
+		// 其次读 <html data-sakura-enabled>（服务端按「保存的样式 → 出厂值」渲染的解析值）。
+		// 注意不能用 sakuraConfig.enable：那是出厂值，会丢掉「保存当前样式」保存的设置，
+		// 在无痕窗口 / 首次访问时表现为樱花开关失效。
 		const storedEnabled = localStorage.getItem("sakuraEnabled");
+		const resolvedEnabled =
+			document.documentElement.getAttribute("data-sakura-enabled") === "true";
 		const isEnabled =
-			storedEnabled !== null ? storedEnabled === "true" : sakuraConfig.enable;
+			storedEnabled !== null ? storedEnabled === "true" : resolvedEnabled;
 		const cfg: SakuraConfig = Object.assign({}, sakuraConfig, {
 			enable: isEnabled,
 		});

@@ -1,14 +1,14 @@
 ---
-import { resolveDisplayDefaults } from "@/utils/display-defaults";
+import { resolveDisplaySettings } from "@/utils/saved-display-settings";
 
 // 默认值走统一解析层（覆盖层 → 出厂值），保证服务端渲染与客户端读取一致
-const displayDefaults = resolveDisplayDefaults();
+const displaySettings = resolveDisplaySettings();
 ---
 
 <!-- 全局配置载体 -->
 <div
   id="config-carrier"
-  data-hue={displayDefaults.hue}
-  data-wallpaper-mode={displayDefaults.wallpaperMode}
+  data-hue={displaySettings.hue}
+  data-wallpaper-mode={displaySettings.wallpaperMode}
 >
 </div>

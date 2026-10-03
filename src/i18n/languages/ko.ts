@@ -538,13 +538,17 @@ export const ko: Translation = {
 	[Key.tocExpand]: "목차 펼치기",
 	[Key.tocCollapse]: "목차 접기",
 
-	// 표시 설정: 기본값으로 저장 / 기본값 복원
-	[Key.displaySaveAsDefault]: "기본값으로 저장",
-	[Key.displayRestoreDefault]: "기본값 복원",
-	[Key.displaySaveSuccess]: "사이트 기본값으로 저장했습니다",
+	// 표시 설정: 현재 스타일 저장 / 공장 초기값으로 복원
+	[Key.displaySaveAsDefault]: "현재 스타일 저장",
+	[Key.displayRestoreDefault]: "공장 초기값으로 복원",
+	[Key.displaySaveSuccess]:
+		"현재 스타일을 저장했습니다. 사이트의 기본 모양이 됩니다",
+	[Key.displaySaveNoChange]:
+		"현재 스타일이 공장 초기값과 완전히 같아 저장할 것이 없습니다 (무언가 변경한 뒤 다시 시도하세요)",
+	[Key.displaySaving]: "저장 중…",
 	[Key.displaySaveFailed]:
 		"저장에 실패했습니다. 이 기능은 pnpm dev 개발 모드에서만 사용할 수 있습니다",
 	[Key.displayRestoreConfirm]:
-		"기본값으로 복원할까요? 저장된 기본값이 삭제되고 이 브라우저의 모든 표시 설정이 초기화됩니다.",
-	[Key.displayRestoreSuccess]: "원래 기본값으로 복원했습니다",
+		"공장 초기값으로 복원할까요? 저장된 스타일이 삭제되고 이 브라우저의 모든 표시 설정이 초기화됩니다.",
+	[Key.displayRestoreSuccess]: "공장 초기값으로 복원했습니다",
 };
