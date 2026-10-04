@@ -1,8 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
 import TypewriterText from "@/components/features/TypewriterText.astro";
-import { backgroundWallpaper } from "@/config";
+import { backgroundWallpaper, displaySettingsConfig } from "@/config";
 import { encodeMailto, MAILTO_ONCLICK_SCRIPT } from "@/utils/email-utils";
+import { resolveDisplaySettings } from "@/utils/saved-display-settings";
 
 interface Props {
 	showHomeText: boolean;
@@ -13,8 +14,11 @@ const { showHomeText, initialRandomSubtitle } = Astro.props;
 const homeText = backgroundWallpaper.common?.homeText;
 const homeTextLinks = homeText?.links;
 const homeTextLinksEnable = homeText?.linksEnable !== false;
+const shouldRenderHomeText = homeText && (
+	displaySettingsConfig.bannerTitleSwitchable || resolveDisplaySettings().bannerTitleEnabled
+);
 ---
-{homeText?.enable && (
+{shouldRenderHomeText && (
     <div class={`banner-home-text-overlay absolute inset-0 z-20 flex items-center justify-center ${!showHomeText ? 'hidden' : ''}`}>
         <div class="w-4/5 lg:w-3/4 text-center mb-0">
             <div class="flex flex-col">

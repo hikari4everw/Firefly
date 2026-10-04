@@ -5,7 +5,7 @@
 	"wallpaperMode": "fullscreen",
 	"fullscreenLayout": "hero",
 	"overlayBlur": 2,
-	"overlayCardOpacity": 0.47,
+	"overlayCardOpacity": 0.7,
 	"sakuraEnabled": true,
 	"bannerCarouselEnabled": true
 }

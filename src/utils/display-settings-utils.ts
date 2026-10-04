@@ -1,7 +1,7 @@
 import type { DisplaySettingsConfig } from "@/types/displaySettingsConfig";
 
 // 视图设置面板总开关的解析工具
-// 把「环境变量覆盖」和「总开关关闭时强制关闭所有子项」的逻辑收敛在这里，
+// 把「仅开发环境开放」「环境变量覆盖」和「总开关关闭时强制关闭所有子项」收敛在这里，
 // 让 displaySettingsConfig.ts 保持纯配置，不掺杂判断代码
 
 const TRUTHY_VALUES = ["true", "1", "on", "yes", "enable", "enabled"];
@@ -47,12 +47,12 @@ function readEnableEnv(): unknown {
 	}
 }
 
-// 应用总开关：环境变量 PUBLIC_DISPLAY_SETTINGS 优先于配置文件里的 enable
-// 这样在部署平台（Vercel / Cloudflare 等）配置环境变量即可开启面板，无需修改配置文件
-// 变量名必须带 PUBLIC_ 前缀，否则不会注入到浏览器端的设置面板代码中
+// 仅 Astro 开发环境允许开启面板；生产构建、预览和独立 Node 脚本均关闭。
+// 开发环境内 PUBLIC_DISPLAY_SETTINGS 优先于配置里的 enable，不能绕过生产限制。
 export function resolveDisplaySettingsConfig(
 	config: DisplaySettingsConfig,
 ): DisplaySettingsConfig {
+	if (import.meta.env?.DEV !== true) return DISABLED_SETTINGS;
 	const enable = parseBooleanEnv(readEnableEnv()) ?? config.enable;
 	return enable ? { ...config, enable: true } : DISABLED_SETTINGS;
 }

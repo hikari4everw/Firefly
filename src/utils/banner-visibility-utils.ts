@@ -1,6 +1,10 @@
 import { backgroundWallpaper, displaySettingsConfig } from "@/config";
 import { getImageQuality } from "@/utils/image-utils";
 import { getBackgroundImages } from "@/utils/layout-utils";
+import {
+	getSavedValue,
+	resolveDisplaySettings,
+} from "@/utils/saved-display-settings";
 
 /** 文章横幅元信息（从 MainGridLayout 的 Props 提取，供组件复用） */
 export interface BannerPostMeta {
@@ -84,7 +88,7 @@ export function getBannerDescriptionWidth(
 
 /**
  * 计算横幅 / 渐变 / 水波纹的启用状态与各类 show-* 标志（SSR，纯配置读）。
- * 从 MainGridLayout.astro 的 frontmatter 迁出，逐字保留原逻辑。
+ * 保存的样式优先；未保存的分设备特效仍分别使用桌面与移动端配置。
  */
 export function getBannerVisibilityState(
 	ctx: BannerVisibilityContext,
@@ -96,39 +100,46 @@ export function getBannerVisibilityState(
 		bannerPostMeta,
 	} = ctx;
 
-	const isBannerMode = backgroundWallpaper.mode === "banner";
-	const isFullscreenMode = backgroundWallpaper.mode === "fullscreen";
+	const displaySettings = resolveDisplaySettings();
+	const isBannerMode = displaySettings.wallpaperMode === "banner";
+	const isFullscreenMode = displaySettings.wallpaperMode === "fullscreen";
 	const isClassicFullscreenMode =
-		isFullscreenMode && backgroundWallpaper.fullscreen?.layout !== "hero";
-	const isOverlayMode = backgroundWallpaper.mode === "overlay";
+		isFullscreenMode && displaySettings.fullscreenLayout !== "hero";
+	const isOverlayMode = displaySettings.wallpaperMode === "overlay";
 	const isWallpaperSwitchable = displaySettingsConfig.wallpaperModeSwitchable;
 	const isBackgroundEnabled =
-		backgroundWallpaper.mode !== "none" || isWallpaperSwitchable;
+		displaySettings.wallpaperMode !== "none" || isWallpaperSwitchable;
 
 	const wavesConfig = backgroundWallpaper.common?.waves?.enable;
 	const wavesSwitchable = displaySettingsConfig.wavesSwitchable;
+	const savedWaves = getSavedValue("wavesEnabled");
 	const wavesEnabledOnDesktop =
-		typeof wavesConfig === "object" ? wavesConfig.desktop : wavesConfig;
+		savedWaves ??
+		(typeof wavesConfig === "object" ? wavesConfig.desktop : wavesConfig);
 	const wavesEnabledOnMobile =
-		typeof wavesConfig === "object" ? wavesConfig.mobile : wavesConfig;
+		savedWaves ??
+		(typeof wavesConfig === "object" ? wavesConfig.mobile : wavesConfig);
 	const shouldRenderWaves =
 		wavesEnabledOnDesktop || wavesEnabledOnMobile || wavesSwitchable;
 
 	const gradientConfig = backgroundWallpaper.common?.gradient?.enable;
 	const gradientSwitchable = displaySettingsConfig.gradientSwitchable;
+	const savedGradient = getSavedValue("gradientEnabled");
 	const gradientEnabledOnDesktop =
-		typeof gradientConfig === "object"
+		savedGradient ??
+		(typeof gradientConfig === "object"
 			? gradientConfig.desktop
-			: (gradientConfig ?? true);
+			: (gradientConfig ?? true));
 	const gradientEnabledOnMobile =
-		typeof gradientConfig === "object"
+		savedGradient ??
+		(typeof gradientConfig === "object"
 			? gradientConfig.mobile
-			: (gradientConfig ?? true);
+			: (gradientConfig ?? true));
 	const gradientHeight = backgroundWallpaper.common?.gradient?.height ?? "30vh";
 	const shouldRenderGradient =
 		gradientEnabledOnDesktop || gradientEnabledOnMobile || gradientSwitchable;
 
-	const homeTextEnable = backgroundWallpaper.common?.homeText?.enable ?? false;
+	const homeTextEnable = displaySettings.bannerTitleEnabled;
 	const showHomeText =
 		(isBannerMode || isFullscreenMode) && !!homeTextEnable && isHomePageCheck;
 	const homeTextLinksEnable =
@@ -163,8 +174,7 @@ export function getBannerVisibilityState(
 	const backgroundImages = getBackgroundImages();
 	const configQuality = getImageQuality();
 	const mobileQuality = Math.round(configQuality * 0.9);
-	const bannerCarouselEnabledDefault =
-		backgroundWallpaper.common?.carousel?.enable ?? false;
+	const bannerCarouselEnabledDefault = displaySettings.bannerCarouselEnabled;
 	const bannerCarouselSwitchable =
 		displaySettingsConfig.bannerCarouselSwitchable;
 	const bannerCarouselInterval = Math.max(

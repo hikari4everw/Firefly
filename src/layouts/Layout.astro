@@ -32,6 +32,7 @@ import {
 } from "@/constants/constants";
 import { defaultFavicons } from "@/constants/icon";
 import type { Favicon } from "@/types/config";
+import { SAVED_SETTINGS_KEYS } from "@/types/savedDisplaySettings";
 import { isHomePage } from "@/utils/layout-utils";
 import { resolveDisplaySettings } from "@/utils/saved-display-settings";
 import { getAuthorAvatarUrl, getSiteLogo } from "@/utils/schema-image";
@@ -166,6 +167,16 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 <html lang={siteLang} class={`bg-(--page-bg) text-[14px] md:text-[16px]${displaySettings.cardBorderEnabled ? " enable-card-border" : ""}`} data-wallpaper-mode={displaySettings.wallpaperMode} data-fullscreen-layout={fullscreenLayout} data-waves-enabled={String(displaySettings.wavesEnabled)} data-gradient-enabled={String(displaySettings.gradientEnabled)} data-banner-title-enabled={String(displaySettings.bannerTitleEnabled)} data-sakura-enabled={String(displaySettings.sakuraEnabled)} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
   <head>
     <meta charset="UTF-8" />
+    {import.meta.env.PROD && (
+      <script is:inline id="display-settings-cache-reset" define:vars={{
+        appearanceKeys: SAVED_SETTINGS_KEYS.filter((key) => key !== "theme"),
+      }}>
+        // 在首屏外观初始化前清理旧面板偏好，保留亮暗色及其他功能的数据。
+        (function () {
+          for (const key of appearanceKeys) localStorage.removeItem(key);
+        })();
+      </script>
+    )}
     <style is:inline>
 			@layer properties, theme, base, components, utilities;
 		</style>
