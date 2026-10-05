@@ -1,3 +1,10 @@
 {
-	"hiddenTargets": []
+	"hiddenTargets": [],
+	"overrides": {
+		"sidebar-left-profile": {
+			"content": {
+				"bio": "死宅一枚，CS在读"
+			}
+		}
+	}
 }

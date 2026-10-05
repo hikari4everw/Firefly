@@ -11,6 +11,7 @@ interface Props {
 	class?: string;
 	style?: string;
 	widgetConfig?: WidgetComponentConfig;
+	uiTarget?: string;
 }
 
 const { class: className, style, widgetConfig } = Astro.props;
@@ -58,7 +59,7 @@ const calendarDataUrl = url("/api/allPostMeta.json");
 const postUrlPrefix = url("/posts/");
 ---
 
-<WidgetLayout name={i18n(I18nKey.calendar)} showTitle={showTitle} id="calendar-widget" class={className} style={style}>
+<WidgetLayout uiTarget={Astro.props.uiTarget} name={i18n(I18nKey.calendar)} showTitle={showTitle} id="calendar-widget" class={className} style={style}>
   <div class="calendar-container">
     <div class="flex justify-between items-center mb-2">
         <button id="prev-month-btn" class="btn-plain rounded-lg w-8 h-8 flex items-center justify-center hover:bg-(--btn-plain-bg-hover) transition-colors" aria-label="Previous Month">

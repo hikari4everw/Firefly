@@ -16,6 +16,7 @@ interface Props {
 	class?: string;
 	style?: string;
 	widgetConfig?: WidgetComponentConfig;
+	uiTarget?: string;
 }
 const { class: className, style, widgetConfig } = Astro.props;
 
@@ -23,7 +24,7 @@ const collapseThreshold = widgetConfig?.specificConfig?.collapseThreshold;
 const showTitle = widgetConfig?.showTitle !== false;
 const isCollapsed = collapseThreshold ? tags.length > collapseThreshold : false;
 ---
-<WidgetLayout name={i18n(I18nKey.tags)} showTitle={showTitle} id="tags" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT} useExpandedButtonSpacing={true} moreUrl={url("/tags/")} class={className} style={style}>
+<WidgetLayout uiTarget={Astro.props.uiTarget} name={i18n(I18nKey.tags)} showTitle={showTitle} id="tags" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT} useExpandedButtonSpacing={true} moreUrl={url("/tags/")} class={className} style={style}>
     <div class="tags-container">
         {tags.map(t => (
             <ButtonTag href={getTagUrl(t.name)} label={`View all posts with the ${t.name.trim()} tag`}>

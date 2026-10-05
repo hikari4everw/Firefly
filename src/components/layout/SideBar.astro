@@ -123,6 +123,7 @@ const getComponentProps = (
 		class: "onload-animation",
 		style: `animation-delay: ${getAnimationDelay(index)}`,
 		widgetConfig: config,
+		uiTarget: getWidgetVisibilityId(side, config),
 	};
 
 	// 添加 showOnPostPage 和 hideOnNonPostPage 标记class（仅WidgetComponentConfig有这些属性）

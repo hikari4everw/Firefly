@@ -163,6 +163,7 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
   // 防止 Swup 切页重跑脚本时重复注册监听器/hooks（runInitWithDelay 由下方一次性监听器在切页时触发）
   if (!window.__typewriterTextInit) {
     window.__typewriterTextInit = true;
+    document.addEventListener("firefly:ui-content-change", initTypewriterElements);
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", runInitWithDelay);
     } else {

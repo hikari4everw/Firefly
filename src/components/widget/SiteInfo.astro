@@ -15,6 +15,7 @@ interface Props {
 	class?: string;
 	style?: string;
 	widgetConfig?: WidgetComponentConfig;
+	uiTarget?: string;
 }
 
 const { class: className, style, widgetConfig } = Astro.props;
@@ -160,7 +161,7 @@ const detailItems: {
 ];
 ---
 
-<WidgetLayout
+<WidgetLayout uiTarget={Astro.props.uiTarget}
   name={i18n(I18nKey.siteInfo)}
   showTitle={showTitle}
   id="site-info"

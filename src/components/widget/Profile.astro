@@ -2,14 +2,18 @@
 import { Icon } from "astro-icon/components";
 import ImageWrapper from "@/components/common/ImageWrapper.astro";
 import { profileConfig } from "@/config/profileConfig";
-import { encodeMailto, MAILTO_ONCLICK_SCRIPT } from "@/utils/email-utils";
+import UiIcon from "@/components/common/UiIcon.astro";
+import UiText from "@/components/common/UiText.astro";
+import { getUiContent } from "@/utils/ui-visibility";
+import { getUiLinkAttributes } from "@/utils/ui-link-attributes";
 import { url } from "@/utils/url-utils";
 
 interface Props {
+	uiTarget?: string;
 	class?: string;
 	style?: string;
 }
-const { style } = Astro.props;
+const { style, uiTarget = "" } = Astro.props;
 const className = Astro.props.class;
 ---
 
@@ -43,54 +47,28 @@ const className = Astro.props.class;
     <div
       class="font-bold text-xl text-center mb-1 dark:text-neutral-50 transition"
     >
-      {profileConfig.name}
+      <UiText target={uiTarget} field="name" value={profileConfig.name} />
     </div>
     <div
       class="h-1 w-5 bg-(--primary) mx-auto rounded-full mb-2 transition"
     >
     </div>
     <div class="text-center text-neutral-400 mb-2.5 transition">
-      {profileConfig.bio}
+      <UiText target={uiTarget} field="bio" value={profileConfig.bio} />
     </div>
         <div class="flex flex-wrap gap-2 justify-center mb-1">
-            {profileConfig.links.length > 1 && profileConfig.links.map(item =>
-                    {
-                    const showName = item.showName;
-                    const className = showName 
-                        ? "btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95" 
-                        : "btn-regular rounded-lg h-10 w-10 active:scale-90";
-
-                    if (item.url.startsWith("mailto:")) {
-                        const encodedEmail = encodeMailto(item.url);
-                        return <a rel="me" aria-label={item.name} href="#" data-encoded-email={encodedEmail} onclick={MAILTO_ONCLICK_SCRIPT},
-                                    class={className}>
-                            <Icon name={item.icon} class="text-[1.5rem]"></Icon>
-                            {showName && item.name}
-                        </a>
-                    } else {
-                        return <a rel="me" aria-label={item.name} href={item.url} target="_blank" class={className}>
-                            <Icon name={item.icon} class="text-[1.5rem]"></Icon>
-                            {showName && item.name}
-                        </a>
-                    }
-                    }
-            )}
-            {profileConfig.links.length == 1 && (function(item){
-                if (item.url.startsWith("mailto:")) {
-                        const encodedEmail = encodeMailto(item.url);
-                        return <a rel="me" aria-label={item.name} href="#" data-encoded-email={encodedEmail} onclick={MAILTO_ONCLICK_SCRIPT},
-                                    class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
-                            <Icon name={item.icon} class="text-[1.5rem]"></Icon>
-                            {item.name}
-                        </a>
-                    } else {
-                        return <a rel="me" aria-label={item.name} href={item.url} target="_blank"
-                                            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
-                                <Icon name={item.icon} class="text-[1.5rem]"></Icon>
-                                {item.name}
-                            </a>
-                    }
-            })(profileConfig.links[0])}
+            {profileConfig.links.map((item, index) => {
+                const prefix = `link${index}`;
+                const baseShowName = profileConfig.links.length === 1 || (item.showName ?? false);
+                const showName = getUiContent(uiTarget, `${prefix}ShowName`, baseShowName);
+                const linkClass = showName
+                    ? "btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95"
+                    : "btn-regular rounded-lg h-10 w-10 active:scale-90";
+                return <a {...getUiLinkAttributes(uiTarget, item.url, item.name, `${prefix}Url`, `${prefix}Name`, item.url.startsWith("http"), "me")} class={linkClass}>
+                    <UiIcon target={uiTarget} field={`${prefix}Icon`} value={item.icon} class="text-[1.5rem]" />
+                    <UiText target={uiTarget} field={`${prefix}Name`} value={item.name} showNameField={`${prefix}ShowName`} showName={baseShowName} />
+                </a>;
+            })}
         </div>
   </div>
 </div>

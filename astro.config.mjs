@@ -56,7 +56,8 @@ import { remarkPlantuml } from "./src/plugins/remark-plantuml.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { remarkWikiLink } from "./src/plugins/remark-wiki-link.js";
 import { SAVED_SETTINGS_SCHEMA } from "./src/types/savedDisplaySettings.ts";
-import { validateUiVisibility } from "./src/utils/ui-visibility.ts";
+import { mergeUiVisibility, validateUiVisibility } from "./src/utils/ui-visibility.ts";
+import { getUiDebugIconSvg, uiDebugIconExists } from "./src/utils/ui-debug-icons.ts";
 import { collectUsedFontCssVars } from "./src/utils/fontHelper";
 import {
 	normalizeSavedSettings,
@@ -185,12 +186,15 @@ async function saveDisplaySettings(payload) {
 
 function uiVisibilityDevApi() {
 	const file = path.join(process.cwd(), "src/constants/saved-ui-visibility.json");
+	let writes = Promise.resolve();
 	return {
 		name: "firefly-ui-visibility-dev-api",
 		apply: "serve",
 		configureServer(server) {
 			server.middlewares.use(async (req, res, next) => {
-				if ((req.url || "").split("?")[0] !== "/api/saved-ui-visibility.json") return next();
+				const requestUrl = new URL(req.url || "/", "http://localhost");
+				const iconRequest = requestUrl.pathname === "/api/ui-debug-icon.json";
+				if (!iconRequest && requestUrl.pathname !== "/api/saved-ui-visibility.json") return next();
 				const send = (status, body) => {
 					res.statusCode = status;
 					res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -199,29 +203,53 @@ function uiVisibilityDevApi() {
 				};
 				const address = req.socket.remoteAddress || "";
 				if (!(address === "::1" || address === "127.0.0.1" || address === "::ffff:127.0.0.1") || (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`)) return send(403, { ok: false, error: "仅允许本机同源访问" });
+				if (iconRequest) {
+					if (req.method !== "GET") return send(405, { ok: false, error: "仅支持 GET" });
+					try {
+						const svg = getUiDebugIconSvg(requestUrl.searchParams.get("name") || "");
+						return svg ? send(200, { ok: true, svg }) : send(400, { ok: false, error: "图标不存在或未安装该图标集" });
+					} catch (error) {
+						return send(500, { ok: false, error: `读取图标失败：${error.message}` });
+					}
+				}
 				if (req.method === "GET") {
 					try {
-						return send(200, { ok: true, settings: validateUiVisibility(JSON.parse(await readFile(file, "utf8"))) });
+						return send(200, { ok: true, settings: validateUiVisibility(JSON.parse(await readFile(file, "utf8")), uiDebugIconExists) });
 					} catch (error) {
 						return send(500, { ok: false, error: error.message });
 					}
 				}
 				if (req.method !== "POST") return send(405, { ok: false, error: "仅支持 GET / POST" });
 				let settings;
+				let selectedTargets;
 				try {
-					let raw = "";
+					const chunks = [];
+					let bytes = 0;
 					for await (const chunk of req) {
-						raw += chunk;
-						if (raw.length > 16384) return send(413, { ok: false, error: "配置过大" });
+						bytes += Buffer.byteLength(chunk);
+						if (bytes > 128 * 1024) return send(413, { ok: false, error: "配置过大（最多 128KB）" });
+						chunks.push(chunk);
 					}
-					settings = validateUiVisibility(JSON.parse(raw));
+					const payload = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+					if (!payload || typeof payload !== "object" || Array.isArray(payload) || Object.keys(payload).some((key) => key !== "selectedTargets" && key !== "settings")) throw new Error("请求只接受 selectedTargets 和 settings");
+					settings = validateUiVisibility(payload.settings, uiDebugIconExists);
+					selectedTargets = payload.selectedTargets;
+					// 先校验选择集，避免非法请求进入写盘队列。
+					mergeUiVisibility({ hiddenTargets: [], overrides: {} }, settings, selectedTargets);
 				} catch (error) {
 					return send(400, { ok: false, error: error.message });
 				}
-				try {
-					await writeFile(`${file}.tmp`, `${JSON.stringify(settings, null, "\t")}\n`, "utf8");
+				const save = writes.catch(() => {}).then(async () => {
+					// 每次轮到写入才读磁盘，防止并发保存丢失其他板块的修改。
+					const current = validateUiVisibility(JSON.parse(await readFile(file, "utf8")), uiDebugIconExists);
+					const merged = mergeUiVisibility(current, settings, selectedTargets);
+					await writeFile(`${file}.tmp`, `${JSON.stringify(merged, null, "\t")}\n`, "utf8");
 					await rename(`${file}.tmp`, file);
-					return send(200, { ok: true, settings });
+					return merged;
+				});
+				writes = save;
+				try {
+					return send(200, { ok: true, settings: await save });
 				} catch (error) {
 					return send(500, { ok: false, error: `写入失败：${error.message}` });
 				}

@@ -13,6 +13,7 @@ interface Props {
 	class?: string;
 	style?: string;
 	widgetConfig?: WidgetComponentConfig;
+	uiTarget?: string;
 }
 
 const {
@@ -29,7 +30,7 @@ const showTitle = widgetConfig?.showTitle !== false;
 const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
 ---
 
-<WidgetLayout
+<WidgetLayout uiTarget={Astro.props.uiTarget}
   name={i18n(I18nKey.tableOfContents)}
   showTitle={showTitle}
   id="sidebar-toc"

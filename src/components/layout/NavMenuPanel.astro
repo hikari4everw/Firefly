@@ -2,7 +2,9 @@
 import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/config";
 import type { NavBarLink } from "@/types/config";
-import { url } from "@/utils/url-utils";
+import UiText from "@/components/common/UiText.astro";
+import UiIcon from "@/components/common/UiIcon.astro";
+import { getUiLinkAttributes } from "@/utils/ui-link-attributes";
 import { getNavVisibilityId } from "@/utils/ui-visibility";
 
 interface Props {
@@ -36,8 +38,8 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                                 aria-expanded="false"
                                 aria-controls={`mobile-submenu-${index}`}
                             >
-								{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" />}
-                                <span class="mobile-menu-item-label">{link.name}</span>
+								<UiIcon target={getNavVisibilityId(link)} value={link.icon || ""} class="mobile-menu-item-icon" />
+                                <UiText target={getNavVisibilityId(link)} field="name" value={link.name} class="mobile-menu-item-label" />
                                 <Icon name="material-symbols:keyboard-arrow-down-rounded"
                                       class="mobile-menu-item-arrow"
                                 />
@@ -45,14 +47,12 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                             <div id={`mobile-submenu-${index}`} class="mobile-submenu" data-mobile-submenu inert aria-hidden="true">
                                 {link.children.map((child) => (
                                     <a
-                                        href={child.external ? child.url : url(child.url)}
+                                        {...getUiLinkAttributes(getNavVisibilityId(child), child.url, child.name, "url", "name", child.external)}
                                         class="mobile-menu-item"
                                         data-ui-target={getNavVisibilityId(child)}
-                                        data-nav-href={child.external ? undefined : url(child.url)}
-                                        target={child.external ? "_blank" : null}
                                     >
-										{child.icon && <Icon name={child.icon} class="mobile-menu-item-icon" />}
-                                        <span class="mobile-menu-item-label">{child.name}</span>
+										<UiIcon target={getNavVisibilityId(child)} value={child.icon || ""} class="mobile-menu-item-icon" />
+                                        <UiText target={getNavVisibilityId(child)} field="name" value={child.name} class="mobile-menu-item-label" />
                                         {child.external && <Icon
                                             name="fa7-solid:arrow-up-right-from-square"
                                             class="mobile-menu-item-external text-[0.9rem] shrink-0"
@@ -64,13 +64,11 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                     ) : (
                         /* 普通链接项目 */
                         <a
-                            href={link.external ? link.url : url(link.url)}
+                            {...getUiLinkAttributes(getNavVisibilityId(link), link.url, link.name, "url", "name", link.external)}
                             class="mobile-menu-item"
-                            data-nav-href={link.external ? undefined : url(link.url)}
-                            target={link.external ? "_blank" : null}
                         >
-							{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" />}
-                            <span class="mobile-menu-item-label">{link.name}</span>
+							<UiIcon target={getNavVisibilityId(link)} value={link.icon || ""} class="mobile-menu-item-icon" />
+                            <UiText target={getNavVisibilityId(link)} field="name" value={link.name} class="mobile-menu-item-label" />
 							{!link.external && <Icon
                                 name="material-symbols:chevron-right-rounded"
                                 class="mobile-menu-item-arrow"

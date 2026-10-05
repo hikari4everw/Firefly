@@ -1,0 +1,17 @@
+---
+import { getUiContent } from "@/utils/ui-visibility";
+export interface Props {
+	target: string;
+	field: string;
+	value?: string;
+	as?: "span" | "div";
+	class?: string;
+	style?: string;
+	showNameField?: string;
+	showName?: boolean;
+}
+const { target, field, value = "", as: Tag = "span", showNameField, showName = true, ...attrs } = Astro.props;
+const text = getUiContent(target, field, value);
+const visible = showNameField ? getUiContent(target, showNameField, showName) : true;
+---
+<Tag {...attrs} data-ui-field={field} data-ui-show-name-field={showNameField} hidden={!visible} data-ui-base-value={import.meta.env.DEV ? JSON.stringify(value) : undefined}>{text}</Tag>

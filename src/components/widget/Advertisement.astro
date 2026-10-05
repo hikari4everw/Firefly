@@ -10,6 +10,7 @@ export interface Props {
 	class?: string;
 	style?: string;
 	widgetConfig?: WidgetComponentConfig;
+	uiTarget?: string;
 }
 
 const { class: className = "", style, widgetConfig } = Astro.props as Props;
@@ -57,7 +58,7 @@ const widgetId = `advertisement-${Math.random().toString(36).slice(2, 8)}`;
 const useContentPadding = !adConfig.padding;
 ---
 
-<WidgetLayout
+<WidgetLayout uiTarget={Astro.props.uiTarget}
   name={adConfig.title || i18n(I18nKey.advertisement)}
   showTitle={showTitle}
   id={widgetId}

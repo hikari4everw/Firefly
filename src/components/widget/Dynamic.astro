@@ -12,6 +12,7 @@ interface Props {
 	class?: string;
 	style?: string;
 	widgetConfig?: WidgetComponentConfig;
+	uiTarget?: string;
 }
 
 const { class: className, style, widgetConfig } = Astro.props;
@@ -27,7 +28,7 @@ const memos = dynamicConfig.memos;
 
 {
 	siteConfig.pages.dynamic && (
-		<WidgetLayout
+		<WidgetLayout uiTarget={Astro.props.uiTarget}
 			name={i18n(I18nKey.latestDynamics)}
 			showTitle={showTitle}
 			id="latest-dynamics"

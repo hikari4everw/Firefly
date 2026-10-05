@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+import { getUiContent } from "@/utils/ui-visibility";
+interface Props {
+	target: string;
+	field?: string;
+	value: string;
+	class?: string;
+	style?: string;
+}
+const { target, field = "icon", value, ...attrs } = Astro.props;
+const icon = getUiContent(target, field, value);
+---
+<span class="contents" data-ui-kind="icon" data-ui-field={field} data-ui-icon-name={icon} data-ui-icon-class={import.meta.env.DEV ? attrs.class : undefined} data-ui-icon-style={import.meta.env.DEV ? attrs.style : undefined} data-ui-base-value={import.meta.env.DEV ? JSON.stringify(value) : undefined}>
+	{icon && <Icon name={icon} {...attrs} />}
+</span>
