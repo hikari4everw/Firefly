@@ -1,4 +1,7 @@
 export type AnalyticsConfig = {
+	vercelAnalytics?: {
+		enable?: boolean; // 是否启用 Vercel Web Analytics，默认 true
+	};
 	googleAnalyticsId?: string; // Google Analytics ID
 	microsoftClarityId?: string; // Microsoft Clarity ID
 	umamiAnalytics?: {

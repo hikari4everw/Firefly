@@ -1,6 +1,12 @@
 import type { AnalyticsConfig } from "../types/analyticsConfig";
 
 export const analyticsConfig: AnalyticsConfig = {
+	// Vercel Web Analytics（Vercel 平台自带的访问统计）
+	// 需要先在 Vercel 项目 → Analytics 面板启用 Web Analytics，再重新部署才会开始记录；
+	// 非 Vercel 部署（例如 Cloudflare Workers）拿不到 /_vercel/insights/script.js，可关掉。
+	vercelAnalytics: {
+		enable: true,
+	},
 	// Google Analytics ID
 	googleAnalyticsId: "",
 	// Microsoft Clarity ID

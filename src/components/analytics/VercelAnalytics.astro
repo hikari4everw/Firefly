@@ -1,0 +1,45 @@
+---
+/**
+ * VercelAnalytics.astro
+ *
+ * Vercel Web Analytics：数据由 Vercel 平台收集，需先在 Vercel 项目的
+ * Analytics 面板启用 Web Analytics，再重新部署才会开始记录。
+ * 文档：https://vercel.com/docs/analytics/quickstart
+ *
+ * 这里用官方 Astro 组件负责注入脚本与首屏的 pageview。
+ *
+ * 为什么还要补一段 swup 钩子：
+ *   本站用 swup 做 SPA 式切换，容器不含 body 根节点，本组件渲染的
+ *   <vercel-analytics> 元素在切页时不会被重建，官方组件也只在挂载时
+ *   上报一次 pageview，因此后续换页需要手动补报，否则只有在整页刷新时
+ *   才会产生数据。
+ *
+ * 注意：本组件必须放在 swup 容器之外的 body 根节点。
+ *   swup 的 head-plugin 在每次切页时会 cloneNode 新版 head 的元素，
+ *   自定义元素在属性复制前就会执行构造函数，放进 <head> 会拿到空的
+ *   data-pathname，从而产生重复且 path 为空的上报。
+ */
+import Analytics from "@vercel/analytics/astro";
+---
+
+<Analytics />
+
+<script>
+	import { pageview } from "@vercel/analytics";
+
+	// 换页后按当前地址补报一次 pageview（首屏由上面的官方组件负责，
+	// page:view 只在 swup 实际发生跳转时触发，不会与首屏重复计数）。
+	const reportPageview = (): void => {
+		pageview({ path: window.location.pathname });
+	};
+
+	let registered = false;
+	const registerSwup = (): void => {
+		if (registered || !window.swup?.hooks?.on) return;
+		window.swup.hooks.on("page:view", reportPageview);
+		registered = true;
+	};
+
+	registerSwup();
+	document.addEventListener("swup:enable", registerSwup);
+</script>
