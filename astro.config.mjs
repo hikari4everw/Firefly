@@ -56,6 +56,7 @@ import { remarkPlantuml } from "./src/plugins/remark-plantuml.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { remarkWikiLink } from "./src/plugins/remark-wiki-link.js";
 import { SAVED_SETTINGS_SCHEMA } from "./src/types/savedDisplaySettings.ts";
+import { validateUiVisibility } from "./src/utils/ui-visibility.ts";
 import { collectUsedFontCssVars } from "./src/utils/fontHelper";
 import {
 	normalizeSavedSettings,
@@ -179,6 +180,53 @@ async function saveDisplaySettings(payload) {
 	return {
 		status: 200,
 		body: { ok: true, saved: Object.keys(overrides).length, overrides },
+	};
+}
+
+function uiVisibilityDevApi() {
+	const file = path.join(process.cwd(), "src/constants/saved-ui-visibility.json");
+	return {
+		name: "firefly-ui-visibility-dev-api",
+		apply: "serve",
+		configureServer(server) {
+			server.middlewares.use(async (req, res, next) => {
+				if ((req.url || "").split("?")[0] !== "/api/saved-ui-visibility.json") return next();
+				const send = (status, body) => {
+					res.statusCode = status;
+					res.setHeader("Content-Type", "application/json; charset=utf-8");
+					res.setHeader("Cache-Control", "no-store");
+					res.end(JSON.stringify(body));
+				};
+				const address = req.socket.remoteAddress || "";
+				if (!(address === "::1" || address === "127.0.0.1" || address === "::ffff:127.0.0.1") || (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`)) return send(403, { ok: false, error: "仅允许本机同源访问" });
+				if (req.method === "GET") {
+					try {
+						return send(200, { ok: true, settings: validateUiVisibility(JSON.parse(await readFile(file, "utf8"))) });
+					} catch (error) {
+						return send(500, { ok: false, error: error.message });
+					}
+				}
+				if (req.method !== "POST") return send(405, { ok: false, error: "仅支持 GET / POST" });
+				let settings;
+				try {
+					let raw = "";
+					for await (const chunk of req) {
+						raw += chunk;
+						if (raw.length > 16384) return send(413, { ok: false, error: "配置过大" });
+					}
+					settings = validateUiVisibility(JSON.parse(raw));
+				} catch (error) {
+					return send(400, { ok: false, error: error.message });
+				}
+				try {
+					await writeFile(`${file}.tmp`, `${JSON.stringify(settings, null, "\t")}\n`, "utf8");
+					await rename(`${file}.tmp`, file);
+					return send(200, { ok: true, settings });
+				} catch (error) {
+					return send(500, { ok: false, error: `写入失败：${error.message}` });
+				}
+			});
+		},
 	};
 }
 
@@ -517,10 +565,11 @@ export default defineConfig({
 		}),
 	},
 	vite: {
-		plugins: [displaySettingsDevApi(), tailwindcss()],
+		plugins: [displaySettingsDevApi(), uiVisibilityDevApi(), tailwindcss()],
 		server: {
 			watch: {
-				ignored: ["**/package/**", "**/Firefly-docs/**"],
+				// 隐藏配置保存后继续保留当前预览和反馈；默认值在下次构建时读取。
+				ignored: ["**/package/**", "**/Firefly-docs/**", "**/saved-ui-visibility.json", "**/saved-ui-visibility.json.tmp"],
 			},
 		},
 		resolve: {

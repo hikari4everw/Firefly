@@ -4,6 +4,7 @@ import TypewriterText from "@/components/features/TypewriterText.astro";
 import { backgroundWallpaper, displaySettingsConfig } from "@/config";
 import { encodeMailto, MAILTO_ONCLICK_SCRIPT } from "@/utils/email-utils";
 import { resolveDisplaySettings } from "@/utils/saved-display-settings";
+import { getHomeLinkVisibilityId } from "@/utils/ui-visibility";
 
 interface Props {
 	showHomeText: boolean;
@@ -55,6 +56,7 @@ const shouldRenderHomeText = homeText && (
                                 <a
                                     href={isMailto ? "#" : link.url}
                                     aria-label={link.name}
+                                    data-ui-target={getHomeLinkVisibilityId(link.name)}
                                     title={link.name}
                                     data-encoded-email={encodedEmail}
                                     target={!isMailto && isExternal ? "_blank" : undefined}

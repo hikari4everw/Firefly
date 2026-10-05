@@ -1,10 +1,14 @@
 import type { SiteConfig } from "@/types/siteConfig";
 import { resolvePageToggles } from "../utils/page-toggle-utils";
-import { resolveSiteLang } from "../utils/site-config-utils";
+import { resolveBangumiApiUrl, resolveSiteLang } from "../utils/site-config-utils";
 
 // 定义站点语言
 // 语言代码，例如：'zh_CN', 'zh_TW', 'en', 'ja', 'ru', 'ko'。
 const SITE_LANG = resolveSiteLang("zh_CN");
+
+// Bangumi API 地址：优先读环境变量 BANGUMI_API_URL（用于接入自建反代，
+// 避免把带 token 的地址写进仓库），未设置时用下面的默认公共镜像。
+const BANGUMI_API_URL = resolveBangumiApiUrl("https://api.bangumi.vip");
 
 // 页面开关配置 - 控制特定页面的访问权限，设为false会返回404并自动隐藏对应的导航栏菜单项
 const pages = resolvePageToggles({
@@ -273,9 +277,10 @@ export const siteConfig: SiteConfig = {
 		// dynamic 模式在浏览器中实时请求 API，始终显示最新数据
 		mode: "dynamic",
 		// Bangumi API 地址
-		// 注意：镜像域名会随封锁情况迁移（.one → .pro → .vip），
-		// 官方 api.bgm.tv 在大陆被墙，浏览器 dynamic 模式要求 API 响应带 CORS 头且不能经过无 CORS 头的重定向
-		apiUrl: "https://api.bangumi.vip",
+		// 默认走公共镜像；接入自建 Cloudflare 反代时，在本地 .env 与部署平台设置
+		// BANGUMI_API_URL 即可，带 token 的地址不要写进本文件（否则会提交进仓库）
+		// 注意：dynamic 模式由浏览器直接请求，要求响应带 CORS 头且不能经过无 CORS 头的重定向
+		apiUrl: BANGUMI_API_URL,
 		// 详情页地址
 		subjectBaseUrl: "https://bangumi.vip/subject/",
 		// 条目类型排序，数组中的类型将按顺序优先展示

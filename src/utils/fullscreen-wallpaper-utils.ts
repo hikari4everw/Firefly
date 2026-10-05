@@ -77,6 +77,13 @@ function requestFullscreenTitleParallax(): void {
 export function syncFullscreenOverlays(): void {
 	const mode = document.documentElement.getAttribute("data-wallpaper-mode");
 	const isHome = pathsEqual(window.location.pathname, url("/"));
+	const wrapper = document.getElementById("wallpaper-wrapper");
+	// wrapper 不参与 Swup 替换；每次切页都恢复交互层级，避免返回首页后落到 body 后面。
+	if (mode === "fullscreen" && isHeroFullscreenLayout() && isHome) {
+		wrapper?.style.setProperty("z-index", "10", "important");
+	} else {
+		wrapper?.style.removeProperty("z-index");
+	}
 	const overlays = document.querySelectorAll(
 		"#banner-overlay-container .banner-home-text-overlay, #banner-overlay-container .banner-page-title-overlay, #banner-overlay-container .banner-post-meta-overlay",
 	);

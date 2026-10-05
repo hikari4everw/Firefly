@@ -66,7 +66,7 @@ const showThemeColor = displaySettingsConfig.themeColorSwitchable;
 const isWallpaperSwitchable = displaySettingsConfig.wallpaperModeSwitchable;
 const allowLayoutSwitch = displaySettingsConfig.layoutSwitchable;
 const hasDisplaySettings =
-	showThemeColor || isWallpaperSwitchable || allowLayoutSwitch;
+	showThemeColor || isWallpaperSwitchable || allowLayoutSwitch || isDisplaySettingsEnabled;
 
 // 解析导航栏链接（按 siteConfig.pages 过滤 + i18n 名称），桌面下拉与移动抽屉共用
 const links: NavBarLink[] = resolveNavMenuLinks();

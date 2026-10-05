@@ -54,6 +54,7 @@ import {
 } from "@utils/setting-utils";
 import { onMount } from "svelte";
 import Icon from "@/components/common/Icon.svelte";
+import PageDebug from "@/components/controls/PageDebug.svelte";
 import {
 	backgroundWallpaper,
 	displaySettingsConfig,
@@ -74,7 +75,7 @@ type OverlaySliderItem = {
 	onValueChange: (value: number) => void;
 };
 
-type TabKey = "appearance" | "wallpaper" | "effects";
+type TabKey = "appearance" | "wallpaper" | "effects" | "page-debug";
 
 let hue = $state(getHue());
 const defaultHue = getDefaultHue();
@@ -208,7 +209,7 @@ const hasAnyContent = $derived(
 		allowLayoutSwitch ||
 		hasBannerSettings ||
 		hasOverlaySettings ||
-		isSakuraSwitchable,
+		isSakuraSwitchable || displaySettingsConfig.enable,
 );
 
 // --- Tab visibility ---
@@ -250,6 +251,7 @@ let visibleTabs = $derived.by(() => {
 			icon: "mdi:flower-poppy",
 			label: i18n(I18nKey.settingsTabEffects),
 		});
+	tabs.push({ key: "page-debug", icon: "material-symbols:visibility-off-outline", label: "页面调试" });
 	return tabs;
 });
 
@@ -932,6 +934,7 @@ $effect(() => {
 	{/if}
 
 	<!-- Appearance Tab: Theme Color + Layout -->
+	{#if activeTab === "page-debug"}<PageDebug />{/if}
 	{#if activeTab === "appearance"}
 		<!-- Theme Color Section -->
 		{#if showThemeColor}
@@ -1315,6 +1318,7 @@ $effect(() => {
 	     不加 {#if import.meta.env.DEV} 之类条件：那会在浏览器构建时被替换成 false，
 	     整块标记被 tree-shake 掉，导致服务端渲染出的按钮点了没反应。
 	     非开发环境由处理函数在运行时给出提示。 -->
+	{#if activeTab !== "page-debug"}
 	<div class="mt-3 pt-3 border-t border-black/5 dark:border-white/10">
 		<div class="flex gap-2">
 			<button
@@ -1348,5 +1352,6 @@ $effect(() => {
 			{/if}
 		{/if}
 	</div>
+{/if}
 </div>
 {/if}

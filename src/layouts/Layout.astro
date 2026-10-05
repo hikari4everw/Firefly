@@ -41,6 +41,7 @@ import { getOgLocale } from "@/utils/site-config-utils";
 import { getCanonicalUrl, url } from "@/utils/url-utils";
 
 import "@/styles/main.css";
+import { getSavedUiVisibility, getUiVisibilityCss, UI_VISIBILITY_STORAGE_KEY, UI_VISIBILITY_TARGETS } from "@/utils/ui-visibility";
 import "@/styles/immersive-reading.css";
 import "@/styles/variables.styl";
 import "@rehype-callouts-theme";
@@ -164,9 +165,20 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 ---
 
 <!doctype html>
-<html lang={siteLang} class={`bg-(--page-bg) text-[14px] md:text-[16px]${displaySettings.cardBorderEnabled ? " enable-card-border" : ""}`} data-wallpaper-mode={displaySettings.wallpaperMode} data-fullscreen-layout={fullscreenLayout} data-waves-enabled={String(displaySettings.wavesEnabled)} data-gradient-enabled={String(displaySettings.gradientEnabled)} data-banner-title-enabled={String(displaySettings.bannerTitleEnabled)} data-sakura-enabled={String(displaySettings.sakuraEnabled)} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
+<html data-ui-hidden={getSavedUiVisibility().hiddenTargets.join(" ")} lang={siteLang} class={`bg-(--page-bg) text-[14px] md:text-[16px]${displaySettings.cardBorderEnabled ? " enable-card-border" : ""}`} data-wallpaper-mode={displaySettings.wallpaperMode} data-fullscreen-layout={fullscreenLayout} data-waves-enabled={String(displaySettings.wavesEnabled)} data-gradient-enabled={String(displaySettings.gradientEnabled)} data-banner-title-enabled={String(displaySettings.bannerTitleEnabled)} data-sakura-enabled={String(displaySettings.sakuraEnabled)} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
   <head>
     <meta charset="UTF-8" />
+    <style is:inline set:html={getUiVisibilityCss()}></style>
+    {import.meta.env.DEV && (
+      <script is:inline define:vars={{ uiPreviewKey: UI_VISIBILITY_STORAGE_KEY, validUiIds: UI_VISIBILITY_TARGETS.map(item => item.id) }}>
+        try {
+          const preview = JSON.parse(localStorage.getItem(uiPreviewKey) || "null");
+          if (preview && Array.isArray(preview.hiddenTargets) && preview.hiddenTargets.every(id => typeof id === "string" && validUiIds.includes(id))) {
+            document.documentElement.setAttribute("data-ui-hidden", [...new Set(preview.hiddenTargets)].join(" "));
+          }
+        } catch {}
+      </script>
+    )}
     {import.meta.env.PROD && (
       <script is:inline id="display-settings-cache-reset" define:vars={{
         appearanceKeys: SAVED_SETTINGS_KEYS.filter((key) => key !== "theme"),

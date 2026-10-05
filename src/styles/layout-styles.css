@@ -578,6 +578,11 @@ html[data-wallpaper-mode="fullscreen"] #wallpaper-wrapper::after {
    banner 模式的移动端隐藏仍由 .mobile-hide-banner 的横幅规则控制 */
 
 
+/* Hero 首页标题与链接需要位于 body 背景之上；内容面板和导航栏仍保持更高层级 */
+html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="hero"] body.is-home #wallpaper-wrapper {
+    z-index: 10 !important;
+}
+
 /* classic 全屏布局：覆盖新版 fixed Hero 规则，恢复文档流全屏壁纸 */
 html[data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] #wallpaper-wrapper {
     position: relative !important;

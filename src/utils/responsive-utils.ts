@@ -1,4 +1,5 @@
 import { sidebarLayoutConfig } from "@/config";
+import { getWidgetVisibilityId, isUiTargetHidden } from "@/utils/ui-visibility";
 
 /** 侧栏列宽，全仓库唯一字面值出处 */
 const SIDEBAR_WIDTH = "17.5rem";
@@ -62,27 +63,31 @@ export function getResponsiveSidebarConfig(): ResponsiveSidebarConfig {
 
 	const visibleOn = (
 		comps: {
+			type: string;
 			enable: boolean;
 			showOnPostPage?: boolean;
 			hideOnNonPostPage?: boolean;
 		}[],
 		isPostPage: boolean,
+		side: "left" | "right",
 	): boolean =>
-		comps.some((comp) => isWidgetVisibleOnPageType(comp, isPostPage));
+		comps.some((comp) => isWidgetVisibleOnPageType(comp, isPostPage) && !isUiTargetHidden(getWidgetVisibilityId(side, comp)));
 
 	return {
 		hasLeftComponents,
 		hasRightComponents,
 		tabletSidebar,
-		hasLeftWidgetsOnPost: visibleOn(sidebarLayoutConfig.leftComponents, true),
+		hasLeftWidgetsOnPost: visibleOn(sidebarLayoutConfig.leftComponents, true, "left"),
 		hasLeftWidgetsOnNonPost: visibleOn(
 			sidebarLayoutConfig.leftComponents,
 			false,
+			"left",
 		),
-		hasRightWidgetsOnPost: visibleOn(sidebarLayoutConfig.rightComponents, true),
+		hasRightWidgetsOnPost: visibleOn(sidebarLayoutConfig.rightComponents, true, "right"),
 		hasRightWidgetsOnNonPost: visibleOn(
 			sidebarLayoutConfig.rightComponents,
 			false,
+			"right",
 		),
 	};
 }
