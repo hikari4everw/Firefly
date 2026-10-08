@@ -11,8 +11,9 @@ export type CommentConfig = {
 		visitorCount?: boolean;
 		/**
 		 * Twikoo JS 文件地址，支持 CDN 链接
-		 * 国内推荐: https://registry.npmmirror.com/twikoo/1.7.9/files/dist/twikoo.min.js
-		 * 国际推荐: https://cdn.jsdelivr.net/npm/twikoo@1.7.9/dist/twikoo.min.js
+		 * 版本号需与云函数版本保持一致
+		 * 国内推荐: https://registry.npmmirror.com/twikoo/2.0.12/files/dist/twikoo.min.js
+		 * 国际推荐: https://cdn.jsdelivr.net/npm/twikoo@2.0.12/dist/twikoo.min.js
 		 */
 		jsUrl?: string;
 		/**
