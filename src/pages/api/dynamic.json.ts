@@ -3,6 +3,8 @@ import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import {
 	dynamicSearchText,
 	dynamicSlug,
+	isDynamicPublished,
+	resolveDynamicImageSrc,
 	sortDynamics,
 } from "@/utils/dynamic-utils";
 
@@ -10,14 +12,22 @@ const markdownImagePattern = /!\[([^\]]*)\]\((\S+?)(?:\s+["']([^"']*)["'])?\)/g;
 
 export async function GET(): Promise<Response> {
 	const processor = await createMarkdownProcessor();
-	const dynamics = sortDynamics(await getCollection("dynamic"));
+	const dynamics = sortDynamics(
+		await getCollection("dynamic", (entry) =>
+			isDynamicPublished(entry, import.meta.env.PROD),
+		),
+	);
 	const data = await Promise.all(
 		dynamics.map(async (entry) => {
 			const images: Array<{ alt: string; src: string; title?: string }> = [];
 			const markdown = (entry.body || "").replace(
 				markdownImagePattern,
 				(_match, alt: string, src: string, title?: string) => {
-					images.push({ alt, src, ...(title ? { title } : {}) });
+					images.push({
+						alt,
+						src: resolveDynamicImageSrc(src, entry.filePath || `src/content/dynamic/${entry.id}.md`, import.meta.env.BASE_URL),
+						...(title ? { title } : {}),
+					});
 					return "";
 				},
 			);

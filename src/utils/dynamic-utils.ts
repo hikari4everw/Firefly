@@ -1,4 +1,31 @@
 import type { CollectionEntry } from "astro:content";
+import path from "node:path";
+
+export const isDynamicPublished = (
+	entry: { data: { draft?: boolean } },
+	production: boolean,
+): boolean => !production || entry.data.draft !== true;
+
+export const resolveDynamicImageSrc = (
+	src: string,
+	filePath: string,
+	baseUrl: string,
+): string => {
+	if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(src)) return src;
+	const split = src.search(/[?#]/);
+	const pathname = split < 0 ? src : src.slice(0, split);
+	const suffix = split < 0 ? "" : src.slice(split);
+	const normalized = path.posix.normalize(filePath.replaceAll("\\", "/"));
+	const marker = "src/content/dynamic/";
+	const start = normalized.indexOf(marker);
+	if (start < 0) return src;
+	let decoded: string;
+	try { decoded = decodeURIComponent(pathname); } catch { return src; }
+	const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(normalized.slice(start)), decoded));
+	if (!resolved.startsWith("public/")) return src;
+	const encoded = resolved.slice(7).split("/").map(encodeURIComponent).join("/");
+	return `${baseUrl.replace(/\/$/, "")}/${encoded}${suffix}`;
+};
 
 export const sortDynamics = (
 	entries: CollectionEntry<"dynamic">[],

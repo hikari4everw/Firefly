@@ -29,6 +29,7 @@ function normalizeContentPath(value) {
 		.replaceAll("\\", "/")
 		.replace(/^\.?\//, "")
 		.replace(/\/+$/, "")
+		.replace(/^src\/content\/posts\//, "")
 		.replace(MARKDOWN_EXTENSION, "");
 	const segments = contentPath.split("/").filter(Boolean);
 
