@@ -48,10 +48,39 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	local: {
 		playlist: [
 			{
-				name: "使一颗心免于哀伤",
-				artist: "知更鸟 / HOYO-MiX / Chevy",
-				url: "/assets/music/使一颗心免于哀伤-哼唱.mp3",
-				cover: "/assets/music/cover/109951169585655912.webp",
+				name: "自由の時間",
+				artist: "出羽良彰",
+				url: "/assets/music/出羽良彰 - 自由の時間.mp3",
+				cover: "/assets/music/cover/出羽良彰 - 自由の時間.jpg",
+				lrc: "",
+			},
+
+			{
+				name: "「暦お兄ちゃん」",
+				artist: "神前暁",
+				url: "/assets/music/神前暁 - 「暦お兄ちゃん」.mp3",
+				cover: "/assets/music/cover/神前暁 - 「暦お兄ちゃん」.jpg",
+				lrc: "",
+			},
+			{
+				name: "深窓の令嬢",
+				artist: "神前暁",
+				url: "/assets/music/神前暁 - 深窓の令嬢.mp3",
+				cover: "/assets/music/cover/神前暁 - 深窓の令嬢.jpg",
+				lrc: "",
+			},
+			{
+				name: "『友達』",
+				artist: "出羽良彰",
+				url: "/assets/music/出羽良彰 - 『友達』.mp3",
+				cover: "/assets/music/cover/出羽良彰 - 『友達』.jpg",
+				lrc: "",
+			},
+			{
+				name: "殺風景",
+				artist: "神前暁",
+				url: "/assets/music/神前暁 - 殺風景.mp3",
+				cover: "/assets/music/cover/神前暁 - 殺風景.jpg",
 				lrc: "",
 			},
 		],
