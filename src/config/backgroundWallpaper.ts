@@ -39,6 +39,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 桌面背景图片（支持单张或多张随机）
 		// desktop: "assets/images/DesktopWallpaper/d1.avif",
 		desktop: [
+			"assets/images/DesktopWallpaper/mushoku_tensei_wallpaper_01.jpg",
 			"assets/images/DesktopWallpaper/mushoku_tensei_wallpaper_04.png",
 			// "assets/images/DesktopWallpaper/d1.avif",
 			// "assets/images/DesktopWallpaper/d2.avif",
@@ -135,7 +136,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否启用壁纸轮播；关闭时保持每次刷新随机显示一张
 			enable: true,
 			// 轮播切换间隔（毫秒）
-			interval: 5000,
+			interval: 50000,
 			// 过渡效果: 'fade' 渐变 | 'zoom' 缩放 | 'slide' 滑动 | 'kenburns' 旋转木马
 			transitionEffect: "zoom",
 		},
