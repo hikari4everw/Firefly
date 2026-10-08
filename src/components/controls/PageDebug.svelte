@@ -220,9 +220,9 @@ onMount(() => {
 
 <div data-page-debug>
 	<p class="mb-3 rounded-lg bg-(--btn-plain-bg-hover) p-3 text-xs leading-relaxed text-(--primary)">
-		仅本地开发可见，访客看不到此工具。勾选仅用于本地预览；保存并重新构建部署后，访客页面才会应用。
+		仅本地开发可见，访客看不到此工具。样式与内容修改可在本地预览；保存并重新构建部署后，访客页面才会应用。
 	</p>
-	<p class="mb-3 text-xs text-75">勾选“隐藏”表示全站隐藏；原配置未启用的功能不会被重新开启。只有勾选“保存此板块”的板块会写入配置，其余修改仅用于本地预览。</p>
+	<p class="mb-3 text-xs text-75">勾选“隐藏”后本地仍显示，方便继续调整；保存并部署后，正式网站全站隐藏。原配置未启用的功能不会被重新开启。只有勾选“保存此板块”的板块会写入配置，其余修改仅用于本地预览。</p>
 	{#each groups as group}
 		<fieldset class="mb-3">
 			<legend class="mb-1 font-semibold text-sm text-90">{group}</legend>

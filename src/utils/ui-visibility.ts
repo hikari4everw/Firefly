@@ -670,6 +670,8 @@ export function getSavedUiVisibility(): UiVisibilitySettings {
 }
 
 export function isUiTargetHidden(id: string): boolean {
+	// 本地保留板块便于继续编辑，隐藏配置只作用于构建后的正式页面。
+	if (import.meta.env?.DEV === true) return false;
 	const runtime =
 		typeof document === "undefined"
 			? null
@@ -681,6 +683,7 @@ export function isUiTargetHidden(id: string): boolean {
 
 // 所有规则都在共享布局中生成，Swup 换入的节点无需重新扫描或逐个修改样式。
 export function getUiVisibilityCss(): string {
+	if (import.meta.env?.DEV === true) return "";
 	return UI_VISIBILITY_TARGETS.map((item) => {
 		const selectors = item.selector
 			.split(",")

@@ -1,5 +1,7 @@
 {
-	"hiddenTargets": [],
+	"hiddenTargets": [
+		"nav-%2Fsponsor%2F"
+	],
 	"overrides": {
 		"sidebar-left-profile": {
 			"content": {

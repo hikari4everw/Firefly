@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { build } from "esbuild";
 import { sidebarLayoutConfig } from "@/config/sidebarConfig";
 import { getUiLinkAttributes } from "./ui-link-attributes";
 import {
@@ -9,6 +10,78 @@ import {
 	UI_VISIBILITY_TARGETS,
 	validateUiVisibility,
 } from "./ui-visibility";
+
+async function loadVisibilityForEnvironment(dev: boolean) {
+	const result = await build({
+		entryPoints: ["src/utils/ui-visibility.ts"],
+		bundle: true,
+		write: false,
+		platform: "node",
+		format: "esm",
+		define: { "import.meta.env": JSON.stringify({ DEV: dev, PROD: !dev }) },
+		plugins: [
+			{
+				name: "saved-visibility-fixture",
+				setup(builder) {
+					builder.onLoad({ filter: /saved-ui-visibility\.json$/ }, () => ({
+						loader: "json",
+						contents: JSON.stringify({
+							hiddenTargets: ["search"],
+							overrides: {},
+						}),
+					}));
+				},
+			},
+		],
+	});
+	return import(
+		`data:text/javascript;base64,${Buffer.from(result.outputFiles[0].text).toString("base64")}`
+	) as Promise<typeof import("./ui-visibility")>;
+}
+
+test("隐藏配置只在生产生效，本地保留板块和隐藏勾选状态", async () => {
+	for (const dev of [true, false]) {
+		const visibility = await loadVisibilityForEnvironment(dev);
+		assert.deepEqual(visibility.getSavedUiVisibility().hiddenTargets, [
+			"search",
+		]);
+		assert.equal(visibility.isUiTargetHidden("search"), !dev);
+		assert.equal(visibility.isUiTargetHidden("footer"), false);
+		if (dev) assert.equal(visibility.getUiVisibilityCss(), "");
+		else
+			assert.match(visibility.getUiVisibilityCss(), /display: none !important/);
+		// 隐藏规则不影响本地的样式预览。
+		assert.match(
+			visibility.getUiStyleCss({
+				hiddenTargets: ["search"],
+				overrides: { "home-title": { style: { fontSize: 42 } } },
+			}),
+			/font-size:42px/,
+		);
+	}
+});
+
+test("本地草稿隐藏不影响布局判断，生产读取页面的隐藏状态", async () => {
+	const originalDocument = Object.getOwnPropertyDescriptor(
+		globalThis,
+		"document",
+	);
+	try {
+		Object.defineProperty(globalThis, "document", {
+			configurable: true,
+			value: { documentElement: { getAttribute: () => "footer" } },
+		});
+		for (const dev of [true, false]) {
+			const visibility = await loadVisibilityForEnvironment(dev);
+			assert.equal(visibility.isUiTargetHidden("footer"), !dev);
+			assert.equal(visibility.isUiTargetHidden("search"), false);
+		}
+	} finally {
+		if (originalDocument)
+			Object.defineProperty(globalThis, "document", originalDocument);
+		else Reflect.deleteProperty(globalThis, "document");
+	}
+});
 
 test("目标清单保持唯一，重复广告可独立隐藏", () => {
 	assert.equal(
