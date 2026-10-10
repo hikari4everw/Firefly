@@ -69,6 +69,22 @@ export const fontsList: FontDefinition[] = [
 	// 2. 参考下方配置填写正确的字体信息
 	// 3. 在 fontConfig.selected 或区域字段中引用 cssVariable
 	{
+		name: "Lolita Second Edition",
+		cssVariable: "--font-lolita",
+		provider: "local",
+		display: "swap",
+		options: {
+			variants: [
+				{
+					src: ["./public/assets/fonts/Lolita-SecondEdition.ttf"],
+					weight: 400,
+					style: "normal",
+				},
+			],
+		},
+		fallbacks: ["sans-serif"],
+	},
+	{
 		name: "GreatVibes Regular 2",
 		cssVariable: "--font-greatvibes",
 		provider: "local",
@@ -89,14 +105,14 @@ export const fontConfig: FontSelectionConfig = {
 	enable: true,
 	// 当前选择的字体 CSS 变量名（对应上方 fonts 中的 cssVariable）
 	// 使用 "system" 表示系统字体（不加载任何自定义字体）
-	selected: ["system"],
+	selected: ["--font-lolita"],
 
 	// 各区域独立字体设置（填写上方 fonts 中的 cssVariable，留空则使用全局 selected 字体）
 	// 例如：bannerTitleFont: "--font-inter", 表示主页横幅主标题使用 Inter 字体
 	// 主页横幅主标题字体
-	bannerTitleFont: "--font-zen-maru-gothic",
+	bannerTitleFont: "",
 	// 主页横幅副标题字体
-	bannerSubtitleFont: "--font-inter",
+	bannerSubtitleFont: "",
 	// 导航栏标题字体
 	navbarTitleFont: "",
 	// 代码块字体（用于代码高亮和等宽字体场景）
