@@ -222,3 +222,10 @@ body.wallpaper-transparent .custom-md {
   }
 }
 
+@layer properties {
+    .markdown-content.custom-md {
+        max-width: 54rem !important;
+        margin-inline: auto;
+    }
+}
+

@@ -533,6 +533,8 @@ export const zh_TW: Translation = {
 	// 顯示設定：儲存目前樣式 / 恢復出廠設定
 	[Key.displaySaveAsDefault]: "儲存目前樣式",
 	[Key.displayRestoreDefault]: "恢復出廠設定",
+	[Key.displayRestoreSiteDefault]: "恢復網站預設",
+	[Key.displayPersonalHint]: "調整只影響目前瀏覽器，並會自動儲存。",
 	[Key.displaySaveSuccess]: "已儲存目前樣式，它將成為站點預設外觀",
 	[Key.displaySaveNoChange]:
 		"目前樣式與出廠值完全相同，無需儲存（改點別的再試）",

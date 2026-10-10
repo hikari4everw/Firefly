@@ -325,3 +325,25 @@ html[data-has-wallpaper] #navbar[data-transparent-mode="semi"].navbar-sticky-sha
 :root.dark[data-has-wallpaper] #navbar[data-transparent-mode="semi"].navbar-sticky-shadow>div {
     box-shadow: inset 0 1px 0 var(--navbar-glass-highlight), 0 1px 0 var(--navbar-glass-hairline) !important;
 }
+
+/* 放大基础字号后，菜单保持单行；较窄桌面使用紧凑搜索。 */
+#navbar [data-dropdown] {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+@layer components {
+@media (max-width: 1535px) {
+    #navbar #search-bar { display: none !important; }
+    #navbar #search-switch,
+    #navbar #search-bar-inside { display: flex !important; }
+    #navbar [data-dropdown] > a,
+    #navbar [data-dropdown] > button { padding-left: 0.6rem !important; }
+    #navbar [data-dropdown] > a { padding-right: 0.6rem !important; }
+}
+
+@media (max-width: 1279px) {
+    #navbar .col-start-2 { display: none !important; }
+    #navbar #nav-menu-switch { display: flex !important; }
+}
+}

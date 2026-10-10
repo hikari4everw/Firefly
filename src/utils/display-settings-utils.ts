@@ -1,7 +1,7 @@
 import type { DisplaySettingsConfig } from "@/types/displaySettingsConfig";
 
 // 视图设置面板总开关的解析工具
-// 把「仅开发环境开放」「环境变量覆盖」和「总开关关闭时强制关闭所有子项」收敛在这里，
+// 把「环境变量覆盖」和「总开关关闭时强制关闭所有子项」收敛在这里，
 // 让 displaySettingsConfig.ts 保持纯配置，不掺杂判断代码
 
 const TRUTHY_VALUES = ["true", "1", "on", "yes", "enable", "enabled"];
@@ -47,12 +47,10 @@ function readEnableEnv(): unknown {
 	}
 }
 
-// 仅 Astro 开发环境允许开启面板；生产构建、预览和独立 Node 脚本均关闭。
-// 开发环境内 PUBLIC_DISPLAY_SETTINGS 优先于配置里的 enable，不能绕过生产限制。
+// 开发与生产均允许个人外观调整，PUBLIC_DISPLAY_SETTINGS 优先于配置里的 enable。
 export function resolveDisplaySettingsConfig(
 	config: DisplaySettingsConfig,
 ): DisplaySettingsConfig {
-	if (import.meta.env?.DEV !== true) return DISABLED_SETTINGS;
 	const enable = parseBooleanEnv(readEnableEnv()) ?? config.enable;
 	return enable ? { ...config, enable: true } : DISABLED_SETTINGS;
 }

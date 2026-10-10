@@ -545,6 +545,8 @@ export const ru: Translation = {
 	// Настройки отображения: сохранить текущий стиль / сброс к заводским настройкам
 	[Key.displaySaveAsDefault]: "Сохранить текущий стиль",
 	[Key.displayRestoreDefault]: "Сбросить к заводским настройкам",
+	[Key.displayRestoreSiteDefault]: "Вернуть настройки сайта",
+	[Key.displayPersonalHint]: "Изменения действуют только в этом браузере и сохраняются автоматически.",
 	[Key.displaySaveSuccess]:
 		"Текущий стиль сохранён — он станет оформлением сайта по умолчанию",
 	[Key.displaySaveNoChange]:

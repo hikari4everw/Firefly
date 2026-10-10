@@ -116,7 +116,7 @@ const minutes = remarkPluginFrontmatter.minutes;
   <div
     class:list={[
       "post-card-content",
-      "pl-4 md:pl-9 pr-4 md:pr-2 pt-4 md:pt-7 pb-4 md:pb-7 relative flex flex-col h-full",
+      "pl-4 md:pl-6 pr-4 md:pr-2 pt-4 md:pt-5 pb-4 md:pb-5 flex flex-col h-full",
       {
         "w-full md:w-[calc(100%-52px-12px)]": !hasCover,
         "w-full md:w-[calc(100%-var(--coverWidth)-1.5rem)]": hasCover,
@@ -131,16 +131,20 @@ const minutes = remarkPluginFrontmatter.minutes;
         before:w-1 before:h-5 before:rounded-md before:bg-(--primary)
         before:absolute before:top-[35px] before:left-[18px] before:hidden md:before:block"
     >
-      {title}
-
-      {
-        password && (
-          <Icon
-            name="material-symbols:lock-outline"
-            class="inline text-2xl align-middle -translate-y-px"
-          />
-        )
-      }
+      <span class="post-card-title-text">
+        {title}
+        {
+          password && (
+            <Icon
+              name="material-symbols:lock-outline"
+              class="inline text-2xl align-middle -translate-y-px"
+            />
+          )
+        }
+      </span>
+      {!hasCover && (
+        <Icon name="material-symbols:chevron-right-rounded" class="post-card-title-arrow inline align-middle text-xl" />
+      )}
     </a>
 
     <!-- metadata -->
@@ -239,18 +243,18 @@ const minutes = remarkPluginFrontmatter.minutes;
           "rounded-(--radius-large) md:rounded-xl overflow-hidden",
         ]}
       >
-        <div class="absolute pointer-events-none z-10 w-full h-full group-hover:bg-black/30 group-active:bg-black/50 transition" />
+        <div class="post-card-cover-shade absolute pointer-events-none z-10 w-full h-full transition" />
         <div class="absolute pointer-events-none z-20 w-full h-full flex items-center justify-center ">
           <Icon
             name="material-symbols:chevron-right-rounded"
-            class="transition opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 text-white text-5xl"
+            class="post-card-cover-arrow transition opacity-0 text-white text-5xl"
           />
         </div>
         <CoverImage
           src={processedImage}
           basePath={getFileDirFromPath(entry.filePath || "")}
           alt={title}
-          class="w-full h-full transition-transform duration-300 group-hover:scale-110 group-active:scale-115"
+          class="w-full h-full"
           preview={true}
           loading={loading}
           apiUrls={apiUrls}
@@ -281,6 +285,85 @@ const minutes = remarkPluginFrontmatter.minutes;
 </div>
 
 <style define:vars={{ coverWidth, descriptionClampLines }}>
+  .post-card-wrapper {
+    isolation: isolate;
+    cursor: pointer;
+  }
+
+  /* 使用标题的原生链接覆盖整卡，独立链接保留在点击层之上。 */
+  .post-card-title::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .post-card-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .post-card-title-text {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .post-card-content :global(a:not(.post-card-title)),
+  .post-card-image,
+  .post-card-enter-btn {
+    z-index: 2;
+  }
+
+  .post-card-content :global(a:not(.post-card-title)) {
+    position: relative;
+  }
+
+  /* 移动端元数据有缩放层，提升根层级才能让分类链接越过整卡点击层。 */
+  .post-card-content :global(.post-meta-root) {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .post-card-content :global(.post-meta-root a) {
+    pointer-events: auto;
+  }
+
+  .post-card-title-arrow {
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .post-card-wrapper:focus-within .post-card-title {
+    color: var(--primary);
+  }
+  .post-card-wrapper:focus-within .post-card-title-arrow,
+  .post-card-wrapper:focus-within .post-card-cover-arrow {
+    opacity: 1;
+  }
+  .post-card-wrapper:focus-within .post-card-cover-shade {
+    background: rgb(0 0 0 / 0.3);
+  }
+  .post-card-wrapper:has(.post-card-title:focus-visible) {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+  .post-card-title:focus-visible {
+    outline: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .post-card-wrapper:hover .post-card-title {
+      color: var(--primary);
+    }
+    .post-card-wrapper:hover .post-card-title-arrow,
+    .post-card-wrapper:hover .post-card-cover-arrow {
+      opacity: 1;
+    }
+    .post-card-wrapper:hover .post-card-cover-shade {
+      background: rgb(0 0 0 / 0.3);
+    }
+  }
+
   .description-clamped {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -358,7 +441,7 @@ const minutes = remarkPluginFrontmatter.minutes;
 
     :global(.list-mode) .has-cover .post-card-content {
       width: calc(100% - var(--coverWidth) - 1.5rem) !important;
-      padding: 1.75rem 0.5rem 1.75rem 2.25rem !important;
+      padding: 1.25rem 0.5rem 1.25rem 1.5rem !important;
     }
 
     :global(.list-mode) .has-cover .post-card-image {
@@ -369,9 +452,9 @@ const minutes = remarkPluginFrontmatter.minutes;
       border-radius: 0.75rem !important;
     }
 
-    /* 封面在左侧：内边距完全镜像右侧模式（靠封面那侧 0.5rem，靠卡片边缘那侧 2.25rem） */
+    /* 封面在左侧：内边距完全镜像右侧模式。 */
     :global(.list-mode.cover-left) .has-cover .post-card-content {
-      padding: 1.75rem 2.25rem 1.75rem 0.5rem !important;
+      padding: 1.25rem 1.5rem 1.25rem 0.5rem !important;
     }
 
     :global(.list-mode.cover-left) .has-cover .post-card-image {
@@ -385,19 +468,21 @@ const minutes = remarkPluginFrontmatter.minutes;
     }
 
     :global(.list-mode) .post-card-title {
-      font-size: 1.5rem !important;
-      line-height: 2rem !important;
+      font-size: 1.25rem !important;
+      line-height: 1.75rem !important;
       margin-bottom: 0.75rem !important;
     }
 
     :global(.list-mode) .post-card-title::before {
       display: block !important;
-      top: 2.25rem !important;
+      top: 1.625rem !important;
+      left: 0.75rem !important;
       height: 1rem !important;
     }
 
-    :global(.list-mode) .description {
-      font-size: inherit !important;
+    .description {
+      font-size: 0.875rem !important;
+      line-height: 1.6;
     }
 
     :global(.list-mode) .stats a {
@@ -460,7 +545,7 @@ const minutes = remarkPluginFrontmatter.minutes;
     padding-top: 0.8rem !important;
   }
   :global(.grid-mode) .has-cover .post-card-title::before {
-    top: 1.3rem !important;
+    display: none !important;
   }
 
   :global(.grid-mode) .no-cover .post-card-content {

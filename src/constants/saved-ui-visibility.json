@@ -1,6 +1,7 @@
 {
 	"hiddenTargets": [
-		"nav-%2Fsponsor%2F"
+		"nav-%2Fsponsor%2F",
+		"nav-material-symbols%3Ainfo"
 	],
 	"overrides": {
 		"sidebar-left-profile": {

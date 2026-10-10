@@ -7,6 +7,7 @@ import { backgroundWallpaper, displaySettingsConfig } from "../src/config";
 import savedSettings from "../src/constants/saved-display-settings.json";
 import type { DisplaySettingsConfig } from "../src/types/displaySettingsConfig";
 import { getBannerVisibilityState } from "../src/utils/banner-visibility-utils";
+import { resolveDisplaySettings } from "../src/utils/saved-display-settings";
 
 const enabledConfig: DisplaySettingsConfig = {
 	enable: true,
@@ -49,21 +50,17 @@ async function resolveConfig(
 	return module.resolveDisplaySettingsConfig(config);
 }
 
-await test("生产环境即使显式开启面板，也关闭入口及全部设置项", async () => {
-	for (const env of [undefined, "true", "1", "false", "invalid"]) {
-		const config = await resolveConfig(false, env);
-		assert.equal(config.enable, false, `生产环境变量 ${env}`);
-		assert.ok(Object.values(config).every((value) => value === false));
+await test("开发和生产均支持面板，并遵循配置与环境变量开关", async () => {
+	for (const dev of [true, false]) {
+		assert.deepEqual(await resolveConfig(dev, undefined), enabledConfig);
+		assert.deepEqual(await resolveConfig(dev, "invalid"), enabledConfig);
+		assert.deepEqual(await resolveConfig(dev, "true"), enabledConfig);
+		const disabled = { ...enabledConfig, enable: false };
+		assert.equal((await resolveConfig(dev, undefined, disabled)).enable, false);
+		assert.equal((await resolveConfig(dev, "true", disabled)).enable, true);
+		const off = await resolveConfig(dev, "false");
+		assert.ok(Object.values(off).every((value) => value === false));
 	}
-});
-
-await test("开发环境保留原有配置和环境变量开关", async () => {
-	assert.deepEqual(await resolveConfig(true, undefined), enabledConfig);
-	assert.deepEqual(await resolveConfig(true, "invalid"), enabledConfig);
-	assert.equal((await resolveConfig(true, "false")).enable, false);
-	const disabled = { ...enabledConfig, enable: false };
-	assert.equal((await resolveConfig(true, undefined, disabled)).enable, false);
-	assert.equal((await resolveConfig(true, "true", disabled)).enable, true);
 });
 
 const originalSaved = { ...savedSettings };
@@ -151,6 +148,8 @@ try {
 			isHomePage: true,
 			isPostPage: false,
 		});
+		assert.equal(resolveDisplaySettings(true).wavesEnabled, false);
+		assert.equal(resolveDisplaySettings(true).gradientEnabled, true);
 		assert.equal(state.wavesEnabledOnDesktop, true);
 		assert.equal(state.wavesEnabledOnMobile, false);
 		assert.equal(state.gradientEnabledOnDesktop, false);

@@ -241,7 +241,7 @@ const logoVariants = await Promise.all(
                 <MusicPlayer />
             </div>
         )}
-        {isDisplaySettingsEnabled && <DisplaySettings client:load></DisplaySettings>}
+        {isDisplaySettingsEnabled && <DisplaySettings allowSiteEditing={import.meta.env.DEV} client:load></DisplaySettings>}
     </div>
 </div>
 

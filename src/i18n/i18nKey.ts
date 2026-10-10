@@ -525,6 +525,8 @@ enum I18nKey {
 	// 显示设置：保存当前样式 / 恢复出厂设置
 	displaySaveAsDefault = "displaySaveAsDefault",
 	displayRestoreDefault = "displayRestoreDefault",
+	displayRestoreSiteDefault = "displayRestoreSiteDefault",
+	displayPersonalHint = "displayPersonalHint",
 	displaySaveSuccess = "displaySaveSuccess",
 	displaySaveNoChange = "displaySaveNoChange",
 	displaySaving = "displaySaving",

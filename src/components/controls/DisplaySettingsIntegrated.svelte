@@ -54,13 +54,15 @@ import {
 } from "@utils/setting-utils";
 import { onMount } from "svelte";
 import Icon from "@/components/common/Icon.svelte";
-import PageDebug from "@/components/controls/PageDebug.svelte";
 import {
 	backgroundWallpaper,
 	displaySettingsConfig,
 	siteConfig,
 } from "@/config";
 import type { FullscreenWallpaperLayout, WALLPAPER_MODE } from "@/types/config";
+
+// 由 Astro 传入，避免服务端与客户端的开发环境判断不一致。
+let { allowSiteEditing = false }: { allowSiteEditing?: boolean } = $props();
 
 type OverlaySliderItem = {
 	key: "opacity" | "blur" | "cardOpacity";
@@ -136,12 +138,10 @@ let effectiveDefaultLayout = $derived(
 const showThemeColor = displaySettingsConfig.themeColorSwitchable;
 const isWavesSwitchable = displaySettingsConfig.wavesSwitchable;
 const isGradientSwitchable = displaySettingsConfig.gradientSwitchable;
-// 检查是否启用横幅标题（功能开关，非用户切换开关）
-// 用解析值而非出厂值：出厂开启但用户保存为关闭时，开关仍应可见（以便再打开）；
-// 出厂本来就关闭（该功能未启用）时，开关不显示。
-const isBannerTitleEnabled = getDefaultBannerTitleEnabled();
+// 有标题配置即可切换，默认关闭也允许访客重新开启。
 const isBannerTitleSwitchable =
-	isBannerTitleEnabled && displaySettingsConfig.bannerTitleSwitchable;
+	Boolean(backgroundWallpaper.common?.homeText) &&
+	displaySettingsConfig.bannerTitleSwitchable;
 const isBannerCarouselSwitchable =
 	displaySettingsConfig.bannerCarouselSwitchable;
 const isSakuraSwitchable = displaySettingsConfig.sakuraSwitchable;
@@ -251,7 +251,8 @@ let visibleTabs = $derived.by(() => {
 			icon: "mdi:flower-poppy",
 			label: i18n(I18nKey.settingsTabEffects),
 		});
-	tabs.push({ key: "page-debug", icon: "material-symbols:visibility-off-outline", label: "页面调试" });
+	if (allowSiteEditing)
+		tabs.push({ key: "page-debug", icon: "material-symbols:visibility-off-outline", label: "页面调试" });
 	return tabs;
 });
 
@@ -334,12 +335,7 @@ let hasVisibleOverlaySlider = $derived(
 // 保存会把当前 15 项可调参数通过开发服务器接口写入
 // src/constants/saved-display-settings.json，成为站点默认外观（只存与出厂值不同的项）
 //
-// 注意：这里刻意 **不用** `import.meta.env.DEV` 包住按钮的渲染。
-// 它在浏览器构建时会被替换成 false，于是 `{#if ...}` 整块被 tree-shake 掉：
-// 服务端渲染出的按钮仍在 DOM 里，但客户端没有对应的事件处理器，
-// 点下去毫无反应（曾因此出现「点了保存没有任何提示」）。
-// 改为始终渲染按钮，在点击处理函数里用运行时判断决定是否可写。
-const isDevMode = import.meta.env.DEV;
+// 站点级写入只在本地开发开放，访客通过独立按钮恢复自己的外观默认。
 
 type DefaultsFeedback = {
 	kind: "ok" | "error";
@@ -462,7 +458,7 @@ async function postSavedSettings(payload: Record<string, unknown>): Promise<{
 async function saveAsDefault(): Promise<void> {
 	if (defaultsSaving) return;
 	// 非开发环境直接给出说明，避免请求打到一个不存在的接口
-	if (!isDevMode) {
+	if (!allowSiteEditing) {
 		showDefaultsFeedback("error", i18n(I18nKey.displaySaveFailed));
 		return;
 	}
@@ -538,7 +534,7 @@ function syncPanelStateFromStorage(): void {
 // 接口失败时不清理本地状态，保持两者一致，避免只清了一半。
 async function restoreDefaults(): Promise<void> {
 	if (defaultsSaving) return;
-	if (!isDevMode) {
+	if (!allowSiteEditing) {
 		showDefaultsFeedback("error", i18n(I18nKey.displaySaveFailed));
 		return;
 	}
@@ -574,6 +570,11 @@ async function restoreDefaults(): Promise<void> {
 function resetHue() {
 	hue = getDefaultHue();
 	requestAnimationFrame(refreshAllRangeProgress);
+}
+
+function restorePersonalDefaults(): void {
+	clearStoredDisplaySettings({ preserveTheme: true });
+	window.location.reload();
 }
 
 function resetWallpaperMode() {
@@ -934,7 +935,11 @@ $effect(() => {
 	{/if}
 
 	<!-- Appearance Tab: Theme Color + Layout -->
-	{#if activeTab === "page-debug"}<PageDebug />{/if}
+	{#if allowSiteEditing && activeTab === "page-debug"}
+		{#await import("@/components/controls/PageDebug.svelte") then component}
+			<component.default />
+		{/await}
+	{/if}
 	{#if activeTab === "appearance"}
 		<!-- Theme Color Section -->
 		{#if showThemeColor}
@@ -1314,13 +1319,15 @@ $effect(() => {
 		{/if}
 	{/if}
 
-	<!-- 保存当前样式 / 恢复出厂设置。
-	     不加 {#if import.meta.env.DEV} 之类条件：那会在浏览器构建时被替换成 false，
-	     整块标记被 tree-shake 掉，导致服务端渲染出的按钮点了没反应。
-	     非开发环境由处理函数在运行时给出提示。 -->
+	<!-- 个人重置不访问写入接口；站点默认样式管理仅供本地开发使用。 -->
 	{#if activeTab !== "page-debug"}
 	<div class="mt-3 pt-3 border-t border-black/5 dark:border-white/10">
-		<div class="flex gap-2">
+		<p class="mb-2 text-xs text-75">{i18n(I18nKey.displayPersonalHint)}</p>
+		<button class="w-full btn-regular rounded-md py-2 px-3 text-sm active:scale-95 transition-colors" onclick={restorePersonalDefaults}>
+			{i18n(I18nKey.displayRestoreSiteDefault)}
+		</button>
+		{#if allowSiteEditing}
+		<div class="mt-2 flex gap-2">
 			<button
 				class="flex-1 btn-regular rounded-md py-2 px-3 text-sm active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none"
 				disabled={defaultsSaving}
@@ -1350,6 +1357,7 @@ $effect(() => {
 					{defaultsFeedback.debug}
 				</p>
 			{/if}
+		{/if}
 		{/if}
 	</div>
 {/if}

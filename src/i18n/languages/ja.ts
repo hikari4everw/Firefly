@@ -541,6 +541,8 @@ export const ja: Translation = {
 	// 表示設定：現在のスタイルを保存 / 工場出荷状態に戻す
 	[Key.displaySaveAsDefault]: "現在のスタイルを保存",
 	[Key.displayRestoreDefault]: "工場出荷状態に戻す",
+	[Key.displayRestoreSiteDefault]: "サイトの初期設定に戻す",
+	[Key.displayPersonalHint]: "変更はこのブラウザーにのみ適用され、自動保存されます。",
 	[Key.displaySaveSuccess]:
 		"現在のスタイルを保存しました。サイトの既定の外観になります",
 	[Key.displaySaveNoChange]:

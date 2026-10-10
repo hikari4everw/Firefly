@@ -541,6 +541,8 @@ export const ko: Translation = {
 	// 표시 설정: 현재 스타일 저장 / 공장 초기값으로 복원
 	[Key.displaySaveAsDefault]: "현재 스타일 저장",
 	[Key.displayRestoreDefault]: "공장 초기값으로 복원",
+	[Key.displayRestoreSiteDefault]: "사이트 기본값 복원",
+	[Key.displayPersonalHint]: "변경 사항은 이 브라우저에만 적용되며 자동으로 저장됩니다.",
 	[Key.displaySaveSuccess]:
 		"현재 스타일을 저장했습니다. 사이트의 기본 모양이 됩니다",
 	[Key.displaySaveNoChange]:

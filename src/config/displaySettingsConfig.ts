@@ -17,10 +17,9 @@ export const displaySettingsConfig: DisplaySettingsConfig =
 		// 壁纸模式切换开关设为 false 则不显示壁纸模式切换开关，始终使用 backgroundWallpaper 配置的默认壁纸模式
 		// 壁纸模式切换开关设为 true 时，为了能在运行时切换，构建期必须把各壁纸模式所需的整套内容，导致构建体积大幅增加，大概+33 KB/页，首屏加载时间变长，性能下降
 
-		// 面板只在 pnpm dev 本地开发时开放，生产构建和 pnpm preview 始终关闭。
-		// 在本地调整后点「保存当前样式」，再重新构建部署，访客即可看到保存的样式。
-		// 本地可通过 PUBLIC_DISPLAY_SETTINGS=true/false 覆盖此开关；
-		// 未设置或取值无法识别时使用这里的值，生产环境无法通过环境变量开启。
+		// 访客可调整自己的外观、壁纸和特效，偏好只保存在其浏览器中。
+		// 页面调试与站点默认样式保存只在 pnpm dev 开放；保存后需重新构建部署。
+		// PUBLIC_DISPLAY_SETTINGS=true/false 可覆盖此开关；未设置或无效时使用这里的值。
 		enable: true,
 
 		// ── 外观 (Appearance) ──────────────────────────────────

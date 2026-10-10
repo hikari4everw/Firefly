@@ -531,6 +531,8 @@ export const zh_CN: Translation = {
 	// 显示设置：保存当前样式 / 恢复出厂设置
 	[Key.displaySaveAsDefault]: "保存当前样式",
 	[Key.displayRestoreDefault]: "恢复出厂设置",
+	[Key.displayRestoreSiteDefault]: "恢复站点默认",
+	[Key.displayPersonalHint]: "调整只影响当前浏览器，并会自动保存。",
 	[Key.displaySaveSuccess]: "已保存当前样式，它将成为站点默认外观",
 	[Key.displaySaveNoChange]:
 		"当前样式与出厂值完全相同，无需保存（改点别的再试）",

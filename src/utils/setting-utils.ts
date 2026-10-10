@@ -995,7 +995,9 @@ export function setCardFollowThemeEnabled(enabled: boolean): void {
 // 清除显示设置面板写入的全部 localStorage 记录
 // 用 SAVED_SETTINGS_KEYS 白名单（每个可覆盖键与 localStorage 键名一一对应），
 // 而不是清空整个 localStorage，避免误删其他功能（评论、搜索历史等）的数据
-export function clearStoredDisplaySettings(): void {
+export function clearStoredDisplaySettings(
+	{ preserveTheme = false }: { preserveTheme?: boolean } = {},
+): void {
 	if (
 		typeof localStorage === "undefined" ||
 		typeof localStorage.removeItem !== "function"
@@ -1003,6 +1005,7 @@ export function clearStoredDisplaySettings(): void {
 		return;
 	}
 	for (const key of SAVED_SETTINGS_KEYS) {
+		if (preserveTheme && key === "theme") continue;
 		localStorage.removeItem(key);
 	}
 }

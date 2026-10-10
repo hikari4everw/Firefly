@@ -29,9 +29,10 @@ function isMobileViewport(): boolean {
 function resolveDeviceFlag(
 	config: boolean | { desktop?: boolean; mobile?: boolean } | undefined,
 	fallback: boolean,
+	mobile: boolean,
 ): boolean {
 	if (typeof config === "object") {
-		return isMobileViewport()
+		return mobile
 			? (config.mobile ?? fallback)
 			: (config.desktop ?? fallback);
 	}
@@ -40,7 +41,9 @@ function resolveDeviceFlag(
 
 // 出厂值：完全来自原配置文件，不含覆盖层
 // 这是「恢复出厂设置」的终点，也是判断某项是否属于差异项的基准
-export function getFactorySettings(): Required<RuntimeDisplaySettings> {
+export function getFactorySettings(
+	mobile: boolean = isMobileViewport(),
+): Required<RuntimeDisplaySettings> {
 	return {
 		hue: siteConfig.themeColor.hue,
 		// defaultMode 可选，未配置时回退到 DEFAULT_THEME（与 getDefaultTheme() 行为一致）
@@ -57,10 +60,12 @@ export function getFactorySettings(): Required<RuntimeDisplaySettings> {
 		wavesEnabled: resolveDeviceFlag(
 			backgroundWallpaper.common?.waves?.enable,
 			false,
+			mobile,
 		),
 		gradientEnabled: resolveDeviceFlag(
 			backgroundWallpaper.common?.gradient?.enable,
 			true,
+			mobile,
 		),
 		sakuraEnabled: sakuraConfig?.enable ?? false,
 		bannerTitleEnabled: backgroundWallpaper.common?.homeText?.enable ?? true,
@@ -167,8 +172,10 @@ export function readSavedSettings(): RuntimeDisplaySettings {
 
 // 解析后的完整默认值：覆盖项优先，缺失的键回退出厂值
 // 服务端渲染、内联脚本与设置面板都从这里取默认值，确保三处一致
-export function resolveDisplaySettings(): Required<RuntimeDisplaySettings> {
-	return { ...getFactorySettings(), ...readSavedSettings() };
+export function resolveDisplaySettings(
+	mobile: boolean = isMobileViewport(),
+): Required<RuntimeDisplaySettings> {
+	return { ...getFactorySettings(mobile), ...readSavedSettings() };
 }
 
 // 取单项解析后的默认值，供原有 getDefault*() 函数复用

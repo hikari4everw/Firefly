@@ -544,6 +544,8 @@ export const en: Translation = {
 	// Display settings: save current style / restore factory settings
 	[Key.displaySaveAsDefault]: "Save current style",
 	[Key.displayRestoreDefault]: "Restore factory settings",
+	[Key.displayRestoreSiteDefault]: "Restore site defaults",
+	[Key.displayPersonalHint]: "Changes affect only this browser and are saved automatically.",
 	[Key.displaySaveSuccess]:
 		"Current style saved — it becomes the site's default appearance",
 	[Key.displaySaveNoChange]:

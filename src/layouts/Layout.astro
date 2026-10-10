@@ -33,7 +33,6 @@ import {
 } from "@/constants/constants";
 import { defaultFavicons } from "@/constants/icon";
 import type { Favicon } from "@/types/config";
-import { SAVED_SETTINGS_KEYS } from "@/types/savedDisplaySettings";
 import { isHomePage } from "@/utils/layout-utils";
 import { resolveDisplaySettings } from "@/utils/saved-display-settings";
 import { getAuthorAvatarUrl, getSiteLogo } from "@/utils/schema-image";
@@ -88,6 +87,7 @@ const isHomePageCheck = isHomePage(Astro.url.pathname);
 // 如果这里仍读原始配置，用户「保存当前样式」写入的覆盖值就不会在首屏生效，
 // 会出现先按出厂值渲染、客户端挂载后再跳变的闪烁。
 const displaySettings = resolveDisplaySettings();
+const mobileDisplaySettings = resolveDisplaySettings(true);
 const configHue = displaySettings.hue;
 
 // 获取导航栏透明模式配置（banner 模式专属）
@@ -167,7 +167,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 ---
 
 <!doctype html>
-<html data-ui-hidden={getSavedUiVisibility().hiddenTargets.join(" ")} lang={siteLang} class={`bg-(--page-bg) text-[14px] md:text-[16px]${displaySettings.cardBorderEnabled ? " enable-card-border" : ""}`} data-wallpaper-mode={displaySettings.wallpaperMode} data-fullscreen-layout={fullscreenLayout} data-waves-enabled={String(displaySettings.wavesEnabled)} data-gradient-enabled={String(displaySettings.gradientEnabled)} data-banner-title-enabled={String(displaySettings.bannerTitleEnabled)} data-sakura-enabled={String(displaySettings.sakuraEnabled)} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
+<html data-ui-hidden={getSavedUiVisibility().hiddenTargets.join(" ")} lang={siteLang} class={`bg-(--page-bg) text-[16px] ${displaySettings.cardBorderEnabled ? " enable-card-border" : ""}`} data-wallpaper-mode={displaySettings.wallpaperMode} data-fullscreen-layout={fullscreenLayout} data-waves-enabled={String(displaySettings.wavesEnabled)} data-gradient-enabled={String(displaySettings.gradientEnabled)} data-banner-title-enabled={String(displaySettings.bannerTitleEnabled)} data-sakura-enabled={String(displaySettings.sakuraEnabled)} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
   <head>
     <meta charset="UTF-8" />
     <style is:inline set:html={getUiVisibilityCss()}></style>
@@ -182,16 +182,6 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
             document.documentElement.setAttribute("data-ui-hidden", [...new Set(preview.hiddenTargets)].join(" "));
           }
         } catch {}
-      </script>
-    )}
-    {import.meta.env.PROD && (
-      <script is:inline id="display-settings-cache-reset" define:vars={{
-        appearanceKeys: SAVED_SETTINGS_KEYS.filter((key) => key !== "theme"),
-      }}>
-        // 在首屏外观初始化前清理旧面板偏好，保留亮暗色及其他功能的数据。
-        (function () {
-          for (const key of appearanceKeys) localStorage.removeItem(key);
-        })();
       </script>
     )}
     <style is:inline>
@@ -378,6 +368,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
     <!-- Set the theme before the page is rendered to avoid a flash -->
     <script
       is:inline
+      id="appearance-init"
       define:vars={{
         PAGE_WIDTH,
         configHue,
@@ -392,6 +383,10 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
         baseUrl: import.meta.env.BASE_URL,
         cardTransparentOpacity: displaySettings.overlayCardOpacity,
         fullscreenLayout,
+        mobileEffects: {
+          wavesEnabled: mobileDisplaySettings.wavesEnabled,
+          gradientEnabled: mobileDisplaySettings.gradientEnabled,
+        },
       }}
     >
       // 主题初始化 - 与setting-utils.ts保持一致
@@ -496,7 +491,9 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
       // localStorage 只在「有值」时覆盖，保持「当前浏览器临时预览优先」的语义。
       function resolveEffectFlag(attr, storageKey) {
         const el = document.documentElement;
-        const resolved = el.getAttribute(attr);
+        const resolved = window.matchMedia("(max-width: 767px)").matches && storageKey in mobileEffects
+          ? String(mobileEffects[storageKey])
+          : el.getAttribute(attr);
         const stored = localStorage.getItem(storageKey);
         el.setAttribute(attr, stored !== null ? stored : resolved);
       }
@@ -504,6 +501,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
       resolveEffectFlag("data-waves-enabled", "wavesEnabled");
       resolveEffectFlag("data-gradient-enabled", "gradientEnabled");
       resolveEffectFlag("data-banner-title-enabled", "bannerTitleEnabled");
+      resolveEffectFlag("data-sakura-enabled", "sakuraEnabled");
     </script>
     <style
       define:vars={{
