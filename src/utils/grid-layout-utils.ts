@@ -7,7 +7,7 @@ import {
 	getResponsiveSidebarConfig,
 	gridColumnVarsToStyle,
 } from "@/utils/responsive-utils";
-import { isArticleDetailPage } from "@/utils/url-utils";
+import { isAnimePage, isArticleDetailPage } from "@/utils/url-utils";
 
 const sidebarStickyState: Record<
 	"left" | "right",
@@ -46,6 +46,7 @@ export function updateMainGridCols(): void {
 
 	const vars = computeGridColumns({
 		enabled: flag("data-sidebar-enable"),
+		hideRightSidebar: isAnimePage(window.location.pathname),
 		position:
 			positionAttr === "right" || positionAttr === "both"
 				? positionAttr

@@ -1,0 +1,6 @@
+---
+import AnimePage from "@/components/pages/anime/AnimePage.astro";
+import { siteConfig } from "@/config";
+if (!siteConfig.pages.anime) return Astro.redirect("/404/");
+---
+<AnimePage />

@@ -33,6 +33,7 @@ const pages = resolvePageToggles({
 	bilibili: true,
 	// 番组计划页面开关
 	bangumi: true,
+	anime: true,
 	// VNDB页面开关
 	vndb: false,
 	// MyAnimeList页面开关
@@ -79,7 +80,7 @@ export const siteConfig: SiteConfig = {
 	// 页面整体宽度（单位：rem）
 	// 数值越大可以让页面内容区域更宽
 	// 在使用单侧栏边栏时，建议调低一些宽度以获得更好的视觉效果。
-	pageWidth: 100,
+	pageWidth: 96,
 
 	// 网站Card样式配置
 	card: {

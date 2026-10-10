@@ -73,6 +73,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 			// 番组计划
 			LinkPresets.Bangumi,
+			LinkPresets.Anime,
 
 			// VNDB
 			LinkPresets.VNDB,
@@ -217,6 +218,12 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		url: "/bangumi/",
 		icon: "material-symbols:movie",
 		pageKey: "bangumi",
+	},
+	Anime: {
+		name: "追番",
+		url: "/anime/",
+		icon: "material-symbols:movie",
+		pageKey: "anime",
 	},
 	VNDB: {
 		name: "VNDB",

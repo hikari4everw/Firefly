@@ -1,0 +1,10 @@
+---
+import AnimePage from "@/components/pages/anime/AnimePage.astro";
+import { siteConfig } from "@/config";
+import { getAnimeArchive } from "@/utils/anime-content";
+export function getStaticPaths() {
+	if (!siteConfig.pages.anime) return [];
+	return getAnimeArchive().boards.flatMap((board) => board.versions.map((version) => ({ params: { board: board.id, version: version.id } })));
+}
+---
+<AnimePage boardId={Astro.params.board} versionId={Astro.params.version} />

@@ -1,0 +1,63 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { selectAnimeState } from "@/utils/anime-selection";
+import { getAnimeArchive } from "@/utils/anime-content";
+import { animeVersionUrl } from "@/utils/anime-ranking";
+import { getSortedPostsList } from "@/utils/content-utils";
+import { getPostUrlBySlug } from "@/utils/url-utils";
+import { formatDateI18n } from "@/utils/date-utils";
+import AnimeBoard from "./AnimeBoard.svelte";
+import "@/styles/pages/common.css";
+import "@/styles/pages/anime.css";
+
+interface Props { boardId?: string; versionId?: string; }
+const { boardId, versionId } = Astro.props;
+const archive = getAnimeArchive();
+const boards = archive.boards.filter((board) => board.versions.length);
+const { board, version } = selectAnimeState(archive, [], boardId, versionId);
+const posts = await getSortedPostsList();
+const reviewId = board && version ? archive.reviews[`${board.id}/${version.id}`] : "";
+const review = posts.find((post) => post.id === reviewId);
+const editorPosts = import.meta.env.DEV ? posts.map((post) => ({ id: post.id, title: post.data.title, draft: post.data.draft })) : [];
+const title = version ? `追番 · ${version.title} · ${version.label}` : "追番";
+---
+<MainGridLayout title={title} description="每一季的追番计划与观看评价，记录随时间变化的喜好。">
+	<section class="anime-page page-shell">
+		<header class="card-base page-header">
+			<div class="page-heading"><div class="page-icon" aria-hidden="true"><Icon name="material-symbols:movie" /></div><div><h2>追番</h2></div></div>
+			<div class="page-count"><strong>{boards.length}</strong><span>季度</span></div>
+		</header>
+		<div class="card-base anime-panel">
+			{boards.length > 0 && <nav class="anime-version-tabs" aria-label="季度榜单">{boards.map((entry) => <a class:list={["anime-pill", { active: board?.id === entry.id }]} href={animeVersionUrl(entry.id, entry.versions.at(-1)!.id)}>{entry.title}</a>)}</nav>}
+			{board && version ? <>
+				<div class="anime-toolbar"><div><h3>{version.title}</h3><p class="anime-meta">{version.label} · {formatDateI18n(new Date(version.createdAt))} · {version.items.length} 部</p></div><span class="anime-meta">{version.mode === "plan" ? "开播前的期待" : "个人观看评价"}</span></div>
+				<nav class="anime-version-tabs" aria-label="历史版本">{[...board.versions].reverse().map((entry) => <a class:list={["anime-pill", { active: version.id === entry.id }]} href={animeVersionUrl(board.id, entry.id)}>{entry.label}</a>)}</nav>
+				<AnimeBoard draft={version} />
+				{review && <section style="margin-top:1.5rem"><h3>排行解读</h3><a class="anime-review" href={getPostUrlBySlug(review.id)}><strong>{review.data.title} →</strong>{review.data.description && <p>{review.data.description}</p>}</a></section>}
+			</> : <div class="anime-empty"><h3>追番记录准备中</h3><p>新的期待与评价，会在这里慢慢积累。</p></div>}
+			{import.meta.env.DEV && <div id="anime-editor-root" data-board-id={boardId} data-version-id={versionId} data-posts={JSON.stringify(editorPosts)}><p class="anime-meta">正在加载本机编辑器…</p></div>}
+		</div>
+	</section>
+</MainGridLayout>
+
+<script>
+// 开发条件在构建时裁剪，正式产物不加载编辑器或它的依赖。
+if (import.meta.env.DEV) {
+	let editor: Record<string, unknown> | undefined;
+	let mountedRoot: HTMLElement | null = null;
+	const { mount, unmount } = await import("svelte");
+	const { default: Editor } = await import("./AnimeEditor.svelte");
+	function initEditor() {
+		const root = document.getElementById("anime-editor-root");
+		if (root === mountedRoot) return;
+		if (editor) unmount(editor);
+		editor = undefined; mountedRoot = root;
+		if (root) { root.replaceChildren(); editor = mount(Editor, { target: root, props: { posts: JSON.parse(root.dataset.posts || "[]"), initialBoardId: root.dataset.boardId, initialVersionId: root.dataset.versionId } }); }
+	}
+	initEditor();
+	document.addEventListener("swup:contentReplaced", initEditor);
+	document.addEventListener("astro:page-load", initEditor);
+	window.swup?.hooks.on("page:view", initEditor);
+}
+</script>

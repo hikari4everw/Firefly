@@ -1,6 +1,7 @@
 import { setMaxListeners } from "node:events";
 import { readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { animeDevApi } from "./scripts/anime-dev-api.mjs";
 import cloudflare from "@astrojs/cloudflare";
 import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
@@ -593,7 +594,7 @@ export default defineConfig({
 		}),
 	},
 	vite: {
-		plugins: [displaySettingsDevApi(), uiVisibilityDevApi(), tailwindcss()],
+		plugins: [displaySettingsDevApi(), uiVisibilityDevApi(), animeDevApi(siteConfig.bangumi?.apiUrl || "https://api.bangumi.vip"), tailwindcss()],
 		server: {
 			watch: {
 				// 隐藏配置保存后继续保留当前预览和反馈；默认值在下次构建时读取。

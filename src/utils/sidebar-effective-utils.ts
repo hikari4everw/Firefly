@@ -7,6 +7,7 @@ import {
 
 export interface EffectiveSidebarContext {
 	isPostPage: boolean;
+	hideRightSidebar?: boolean;
 }
 
 export interface EffectiveSidebarState {
@@ -36,6 +37,7 @@ export function getEffectiveSidebarState(
 
 	const gridColumnVars = computeGridColumns({
 		enabled: sidebarLayoutConfig.enable,
+		hideRightSidebar: ctx.hideRightSidebar,
 		position: sidebarLayoutConfig.position,
 		tabletSidebar: sidebarConfig.tabletSidebar,
 		hideSidebarOnPostPage,

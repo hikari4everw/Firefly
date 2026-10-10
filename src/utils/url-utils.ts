@@ -112,3 +112,8 @@ const CONTENT_DETAIL_PATH_PATTERNS = [
 export function isArticleDetailPage(pathname: string): boolean {
 	return CONTENT_DETAIL_PATH_PATTERNS.some((re) => re.test(pathname));
 }
+
+/** 追番首页及其固定历史版本路由。 */
+export function isAnimePage(pathname: string): boolean {
+	return /^\/anime(?:\/|$)/.test(pathname);
+}

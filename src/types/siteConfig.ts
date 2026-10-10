@@ -91,6 +91,7 @@ export type SiteConfig = {
 		sponsor: boolean; // 打赏页面开关
 		guestbook: boolean; // 留言板页面开关
 		bangumi: boolean;
+		anime: boolean; // 季度追番排行页面
 		vndb: boolean;
 		mal: boolean; // MyAnimeList 页面开关
 		gallery: boolean; // 相册页面开关

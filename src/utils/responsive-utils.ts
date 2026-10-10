@@ -94,6 +94,7 @@ export function getResponsiveSidebarConfig(): ResponsiveSidebarConfig {
 
 /** computeGridColumns 的输入，SSR 与客户端共用同一组值 */
 export interface GridColumnsInput {
+	hideRightSidebar?: boolean;
 	enabled: boolean;
 	position: "left" | "right" | "both";
 	tabletSidebar: "left" | "right";
@@ -140,7 +141,7 @@ export function computeGridColumns(input: GridColumnsInput): GridColumnVars {
 	const leftIn =
 		sidebarActive && input.hasLeftWidgets && input.position !== "right";
 	const rightIn =
-		sidebarActive && input.hasRightWidgets && input.position !== "left";
+		sidebarActive && !input.hideRightSidebar && input.hasRightWidgets && input.position !== "left";
 
 	// 平板端：position 为 both 时只显示 tabletSidebar 指定的那一侧
 	const mdLeft =

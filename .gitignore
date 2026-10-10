@@ -42,6 +42,7 @@ Firefly-Lite/
 cache/
 package/
 .obsidian/
+.local/
 
 # vibe coding
 .codex*
