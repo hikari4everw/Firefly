@@ -16,6 +16,23 @@ const draft = {
 	mode: "plan",
 	items: [{ id: 1, title: "A", cover: "", placement: "tier:0" }],
 };
+test("custom tiers survive disk reload and each public version keeps its own columns", async () => {
+	const root = await mkdtemp(path.join(os.tmpdir(), "anime-store-"));
+	try {
+		const store = createAnimeStore(root);
+		const saved = await store.saveDraft("2026-4", { ...draft, tiers: ["必看", "备选"] }, null);
+		const first = await store.publish("2026-4", saved.revision, "预定追");
+		const revised = await store.saveDraft("2026-4", { ...draft, tiers: ["最爱"] }, saved.revision);
+		await store.publish("2026-4", revised.revision, "中期");
+		const reloaded = await createAnimeStore(root).state();
+		assert.deepEqual(reloaded.drafts[0].draft.tiers, ["最爱"]);
+		assert.deepEqual(reloaded.archive.boards[0].versions[0].tiers, ["必看", "备选"]);
+		assert.deepEqual(reloaded.archive.boards[0].versions[1].tiers, ["最爱"]);
+		assert.deepEqual(first.tiers, ["必看", "备选"]);
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});
 test("rejects stale and concurrent saves without losing the winner", async () => {
 	const root = await mkdtemp(path.join(os.tmpdir(), "anime-store-"));
 	try {

@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMount } from "svelte";
 import type { AnimeArchive, AnimeDraft, AnimeDraftRecord, AnimeMode, AnimePlacement } from "@/types/anime";
-import { ANIME_TIERS, animeVersionUrl, convertMode, mergeImported, moveItem, normalizeLegacyDraft } from "@/utils/anime-ranking";
+import { ANIME_TIERS, addAnimeTier, animeVersionUrl, convertMode, getAnimeTiers, mergeImported, moveItem, normalizeLegacyDraft, removeAnimeTier, renameAnimeTier } from "@/utils/anime-ranking";
 import { selectAnimeState } from "@/utils/anime-selection";
 import AnimeBoard from "./AnimeBoard.svelte";
 let { posts, initialBoardId, initialVersionId }: { posts: { id: string; title: string; draft: boolean }[]; initialBoardId?: string; initialVersionId?: string } = $props();
@@ -24,6 +24,7 @@ let error = $state(false);
 let undo = $state<AnimeDraft[]>([]);
 const versions = $derived(archive.boards.find((board) => board.id === boardId)?.versions || []);
 const selectedItem = $derived(draft?.items.find((item) => item.id === selectedId));
+const tiers = $derived(draft ? getAnimeTiers(draft) : []);
 const boards = $derived([...new Map([...archive.boards.map((board) => [board.id, board.title] as const), ...records.map((record) => [record.boardId, record.draft.title] as const)]).entries()].sort((a, b) => b[0].localeCompare(a[0], undefined, { numeric: true })));
 
 async function api(body?: object) {
@@ -63,9 +64,21 @@ async function save() {
 	revision = record.revision; dirty = false; await refresh();
 }
 function updatePost() { postId = archive.reviews[`${boardId}/${selectedVersion}`] || ""; }
+function renameTier(index: number, input: HTMLInputElement) {
+	if (!draft || busy) return;
+	try {
+		const next = renameAnimeTier(draft, index, input.value);
+		input.value = getAnimeTiers(next)[index];
+		if (input.value === tiers[index]) return;
+		change(next); error = false; message = "栏目名称已修改，保存草稿后生效";
+	} catch (e) {
+		input.value = tiers[index]; error = true; message = e instanceof Error ? e.message : "栏目名称无效";
+	}
+}
 function setMode(mode: AnimeMode) {
 	if (!draft || mode === draft.mode) return;
-	if (draft.items.some((item) => item.placement !== "pool") && !window.confirm("切换档位模式会把番剧放回待选区，随后重新排列。继续？")) return;
+	const customTiers = JSON.stringify(tiers) !== JSON.stringify(ANIME_TIERS[draft.mode]);
+	if ((customTiers || draft.items.some((item) => item.placement !== "pool")) && !window.confirm("切换档位模式会恢复默认栏目，并把番剧放回待选区，随后重新排列。继续？")) return;
 	change(convertMode(draft, mode)); label = mode === "plan" ? "追番计划" : "中期评价";
 }
 onMount(() => {
@@ -89,8 +102,18 @@ onMount(() => {
 		{#if draft}
 			<div class="anime-editor-fields">
 				<label>榜单名称<input value={draft.title} maxlength="100" oninput={(event) => { if (draft) { draft.title = event.currentTarget.value; dirty = true; } }} /></label>
-				<label>档位模式<select value={draft.mode} onchange={(event) => setMode(event.currentTarget.value as AnimeMode)}><option value="plan">追番计划 · 必追 / 想追 / 观望</option><option value="review">观看评价 · 神作 / 佳作 / 还行 / 及格 / 差</option></select></label>
+				<label>档位模式<select value={draft.mode} onchange={(event) => { setMode(event.currentTarget.value as AnimeMode); event.currentTarget.value = draft!.mode; }}><option value="plan">追番计划 · 必追 / 想追 / 观望</option><option value="review">观看评价 · 神作 / 佳作 / 还行 / 及格 / 差</option></select></label>
 			</div>
+			<details class="anime-tier-settings">
+				<summary>栏目设置</summary>
+				<p class="anime-meta">删除栏目后，番剧会退回待选区。栏目名称失焦或按 Enter 后生效。</p>
+				<div class="anime-tier-fields">
+					{#each tiers as tier, index}
+						<div class="anime-tier-field"><label>栏目 {index + 1}<input aria-label={`栏目${index + 1}名称`} value={tier} onblur={(event) => renameTier(index, event.currentTarget)} onkeydown={(event) => { if (event.key === "Enter" && !event.isComposing && event.keyCode !== 229) { event.preventDefault(); event.currentTarget.blur(); } }} /></label><button class="action" aria-label={`删除栏目${index + 1}`} disabled={tiers.length <= 1} onclick={() => { if (draft) change(removeAnimeTier(draft, index)); }}>删除</button></div>
+					{/each}
+				</div>
+				<button class="action" disabled={tiers.length >= 20} onclick={() => { if (draft) change(addAnimeTier(draft)); }}>新增栏目</button>
+			</details>
 			<div class="anime-actions">
 				<button class="action" onclick={() => run(async () => { const result = await api({action:"import", year:draft!.year, quarter:draft!.quarter}); busy = false; change(mergeImported(draft!, result.subjects)); busy = true; message = `导入完成，当前共 ${draft!.items.length} 部；已保留已有排序`; })}>导入当季番剧</button>
 				<input aria-label="补充番剧链接" placeholder="Bangumi 条目链接" bind:value={subjectUrl} />
@@ -100,7 +123,7 @@ onMount(() => {
 			<AnimeBoard {draft} editable selectedId={selectedId} onselect={(id) => selectedId = id} onmove={move} />
 			{#if selectedItem}
 				<div class="anime-selection"><strong>{selectedItem.title}</strong><div class="anime-actions" style="margin-top:.7rem">
-					<select aria-label="番剧目标位置" value={selectedItem.placement} onchange={(event) => move(selectedItem!.id, event.currentTarget.value as AnimePlacement)}><option value="pool">待选／待评价</option>{#each ANIME_TIERS[draft.mode] as tier, index}<option value="tier:{index}">{tier}</option>{/each}</select>
+					<select aria-label="番剧目标位置" value={selectedItem.placement} onchange={(event) => move(selectedItem!.id, event.currentTarget.value as AnimePlacement)}><option value="pool">待选／待评价</option>{#each tiers as tier, index}<option value="tier:{index}">{tier}</option>{/each}</select>
 					<button class="action" onclick={() => shift(-1)}>向前</button><button class="action" onclick={() => shift(1)}>向后</button><button class="action" onclick={() => { change({...draft!, items:draft!.items.filter((item) => item.id !== selectedId)}); selectedId = null; }}>移出榜单</button>
 				</div></div>
 			{/if}

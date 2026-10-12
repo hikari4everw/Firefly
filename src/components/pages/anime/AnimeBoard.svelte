@@ -1,11 +1,11 @@
 <script lang="ts">
 import type { AnimeDraft, AnimePlacement } from "@/types/anime";
-import { ANIME_TIERS } from "@/utils/anime-ranking";
+import { getAnimeTiers } from "@/utils/anime-ranking";
 import AnimeCover from "./AnimeCover.svelte";
 let { draft, editable = false, selectedId = null, onmove, onselect }:
 	{ draft: AnimeDraft; editable?: boolean; selectedId?: number | null; onmove?: (id: number, placement: AnimePlacement, before: number | null) => void; onselect?: (id: number) => void } = $props();
 let dragging = $state<number | null>(null);
-const tiers = $derived(ANIME_TIERS[draft.mode]);
+const tiers = $derived(getAnimeTiers(draft));
 const itemsAt = (placement: string) => draft.items.filter((item) => item.placement === placement);
 function start(event: DragEvent, id: number) {
 	dragging = id;

@@ -7,6 +7,7 @@ export type AnimeDraft = {
 	year: number;
 	quarter: number;
 	mode: AnimeMode;
+	tiers?: string[];
 	items: AnimeItem[];
 };
 export type AnimeSnapshot = AnimeDraft & {
