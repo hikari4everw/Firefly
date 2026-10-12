@@ -39,7 +39,7 @@ async function loadVisibilityForEnvironment(dev: boolean) {
 	) as Promise<typeof import("./ui-visibility")>;
 }
 
-test("隐藏配置只在生产生效，本地保留板块和隐藏勾选状态", async () => {
+test("本地默认保留板块，隐藏样式需要本地开关，生产无需开关", async () => {
 	for (const dev of [true, false]) {
 		const visibility = await loadVisibilityForEnvironment(dev);
 		assert.deepEqual(visibility.getSavedUiVisibility().hiddenTargets, [
@@ -47,9 +47,11 @@ test("隐藏配置只在生产生效，本地保留板块和隐藏勾选状态",
 		]);
 		assert.equal(visibility.isUiTargetHidden("search"), !dev);
 		assert.equal(visibility.isUiTargetHidden("footer"), false);
-		if (dev) assert.equal(visibility.getUiVisibilityCss(), "");
+		assert.match(visibility.getUiVisibilityCss(), /display: none !important/);
+		if (dev)
+			assert.match(visibility.getUiVisibilityCss(), /html\[data-ui-local-hide="true"\]\[data-ui-hidden~="search"\]/);
 		else
-			assert.match(visibility.getUiVisibilityCss(), /display: none !important/);
+			assert.doesNotMatch(visibility.getUiVisibilityCss(), /data-ui-local-hide/);
 		// 隐藏规则不影响本地的样式预览。
 		assert.match(
 			visibility.getUiStyleCss({
@@ -61,20 +63,27 @@ test("隐藏配置只在生产生效，本地保留板块和隐藏勾选状态",
 	}
 });
 
-test("本地草稿隐藏不影响布局判断，生产读取页面的隐藏状态", async () => {
+test("本地开关控制草稿的布局判断，生产始终读取隐藏状态", async () => {
 	const originalDocument = Object.getOwnPropertyDescriptor(
 		globalThis,
 		"document",
 	);
 	try {
-		Object.defineProperty(globalThis, "document", {
-			configurable: true,
-			value: { documentElement: { getAttribute: () => "footer" } },
-		});
 		for (const dev of [true, false]) {
 			const visibility = await loadVisibilityForEnvironment(dev);
-			assert.equal(visibility.isUiTargetHidden("footer"), !dev);
-			assert.equal(visibility.isUiTargetHidden("search"), false);
+			for (const localHide of [null, "false", "true"]) {
+				Object.defineProperty(globalThis, "document", {
+					configurable: true,
+					value: {
+						documentElement: {
+							getAttribute: (name: string) =>
+								name === "data-ui-hidden" ? "footer" : localHide,
+						},
+					},
+				});
+				assert.equal(visibility.isUiTargetHidden("footer"), !dev || localHide === "true");
+				assert.equal(visibility.isUiTargetHidden("search"), false);
+			}
 		}
 	} finally {
 		if (originalDocument)

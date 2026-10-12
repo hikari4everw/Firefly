@@ -139,16 +139,12 @@
 	gap: 0.5rem;
 	font-weight: 600;
 	font-size: 1rem;
-	color: oklch(0.20 0.02 var(--hue));
+	color: var(--on-surface);
 	transition: all;
 	padding-left: 0;
 	margin-top: 0.75rem;
 	margin-bottom: 0.6rem;
 	align-items: center;
-}
-
-.dark #display-setting .section-title {
-	color: oklch(0.96 0.02 var(--hue));
 }
 
 #display-setting .section-title::before {
@@ -174,4 +170,13 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+/* 开关轨道的边界在亮暗主题下保持清晰，尺寸与行为沿用现有组件。 */
+#display-setting button > .w-10.h-5 {
+	outline: 1px solid var(--outline);
+}
+
+#display-setting button > [class~="bg-(--primary)"] > div {
+	background-color: var(--on-primary);
 }

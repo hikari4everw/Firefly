@@ -4,15 +4,15 @@
 /* 胶囊样式（默认） - 主题色 tonal chip 风格（配色同分类胶囊，跟随主题色） */
 .tag-item {
     border-radius: 9999px;
-    background: color-mix(in srgb, var(--btn-content) 8%, transparent);
+    background: var(--btn-regular-bg);
     color: var(--btn-content);
 }
 .tag-item:hover {
-    background: color-mix(in srgb, var(--btn-content) 18%, transparent);
+    background: var(--btn-regular-bg-hover);
     color: var(--primary);
 }
 .tag-item:active {
-    background: color-mix(in srgb, var(--btn-content) 24%, transparent);
+    background: var(--btn-regular-bg-active);
 }
 .tag-item .tag-count-badge {
     border-radius: 9999px;
@@ -23,14 +23,14 @@
 /* 非交互变体（文章卡片底部的 +N 折叠提示），不响应 hover，配色与普通标签一致（全不透明度） */
 .tag-item.tag-item-static,
 .tag-item.tag-item-static:hover {
-    background: color-mix(in srgb, var(--btn-content) 8%, transparent);
+    background: var(--btn-regular-bg);
     color: var(--btn-content);
 }
 
 /* 中性灰胶囊样式（siteConfig.tagStyle = "pill-gray"） - 原版 MD3 Filter Chip 风格，中性灰底描边 */
 html[data-tag-style="pill-gray"] .tag-item {
     background: rgba(0, 0, 0, 0.05);
-    color: rgb(115, 115, 115);
+    color: var(--on-surface-variant);
 }
 html[data-tag-style="pill-gray"] .tag-item:hover {
     background: var(--btn-regular-bg);
@@ -41,7 +41,7 @@ html[data-tag-style="pill-gray"] .tag-item:active {
 }
 html[data-tag-style="pill-gray"].dark .tag-item {
     background: rgba(255, 255, 255, 0.1);
-    color: rgb(163, 163, 163);
+    color: var(--on-surface-variant);
 }
 html[data-tag-style="pill-gray"].dark .tag-item:hover {
     background: var(--btn-regular-bg);
@@ -52,21 +52,21 @@ html[data-tag-style="pill-gray"].dark .tag-item:active {
 }
 html[data-tag-style="pill-gray"] .tag-item .tag-count-badge {
     background: rgba(0, 0, 0, 0.08);
-    color: rgb(115, 115, 115);
+    color: var(--on-surface-variant);
 }
 html[data-tag-style="pill-gray"].dark .tag-item .tag-count-badge {
     background: rgba(255, 255, 255, 0.15);
-    color: rgb(163, 163, 163);
+    color: var(--on-surface-variant);
 }
 html[data-tag-style="pill-gray"] .tag-item.tag-item-static,
 html[data-tag-style="pill-gray"] .tag-item.tag-item-static:hover {
     background: rgba(0, 0, 0, 0.05);
-    color: rgb(163, 163, 163);
+    color: var(--on-surface-variant);
 }
 html[data-tag-style="pill-gray"].dark .tag-item.tag-item-static,
 html[data-tag-style="pill-gray"].dark .tag-item.tag-item-static:hover {
     background: rgba(255, 255, 255, 0.1);
-    color: rgb(115, 115, 115);
+    color: var(--on-surface-variant);
 }
 
 /* 矩形样式（siteConfig.tagStyle = "rectangle"） - 主题色底 + 小圆角 */
@@ -84,17 +84,17 @@ html[data-tag-style="rectangle"] .tag-item:active {
 }
 html[data-tag-style="rectangle"].dark .tag-item,
 html[data-tag-style="rectangle"].dark .tag-item:hover {
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--btn-content);
 }
 html[data-tag-style="rectangle"] .tag-item.tag-item-static,
 html[data-tag-style="rectangle"] .tag-item.tag-item-static:hover {
     background: var(--btn-regular-bg);
     color: var(--btn-content);
-    opacity: 0.75;
+    opacity: 1;
 }
 html[data-tag-style="rectangle"].dark .tag-item.tag-item-static,
 html[data-tag-style="rectangle"].dark .tag-item.tag-item-static:hover {
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--btn-content);
 }
 html[data-tag-style="rectangle"] .tag-item .tag-count-badge,
 html[data-tag-style="rectangle"].dark .tag-item .tag-count-badge {

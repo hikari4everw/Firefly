@@ -6,6 +6,7 @@ import {
 import {
 	getSavedUiVisibility,
 	getUiStyleCss,
+	UI_LOCAL_HIDE_STORAGE_KEY,
 	UI_VISIBILITY_STORAGE_KEY,
 	UI_VISIBILITY_TARGETS,
 	type UiVisibilitySettings,
@@ -17,6 +18,18 @@ let initialized = false;
 let swupRegistered = false;
 let previewRevision = 0;
 const iconCache = new Map<string, Promise<string>>();
+
+export function getUiLocalHideEnabled(): boolean {
+	return import.meta.env.DEV && localStorage.getItem(UI_LOCAL_HIDE_STORAGE_KEY) === "true";
+}
+
+export function setUiLocalHideEnabled(enabled: boolean): void {
+	if (!import.meta.env.DEV) return;
+	localStorage.setItem(UI_LOCAL_HIDE_STORAGE_KEY, String(enabled));
+	document.documentElement.setAttribute("data-ui-local-hide", String(enabled));
+	updateMainGridCols();
+	updateSidebarComponentsVisibility();
+}
 
 export function getUiPreview(): UiVisibilitySettings {
 	const stored = localStorage.getItem(UI_VISIBILITY_STORAGE_KEY);
@@ -161,6 +174,10 @@ function applySettings(
 	settings: UiVisibilitySettings,
 	icons: Map<string, string>,
 ): void {
+	document.documentElement.setAttribute(
+		"data-ui-local-hide",
+		String(getUiLocalHideEnabled()),
+	);
 	document.documentElement.setAttribute(
 		"data-ui-hidden",
 		settings.hiddenTargets.join(" "),

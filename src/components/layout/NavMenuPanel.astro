@@ -141,8 +141,8 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
     /* ---- 抽屉面板：fixed 锚定视口占满整高 ---- */
     .mobile-menu-drawer {
         /* MD3 color roles */
-        --drawer-on-surface: var(--deep-text);
-        --drawer-on-surface-variant: color-mix(in oklch, var(--deep-text) 70%, transparent);
+        --drawer-on-surface: var(--on-surface);
+        --drawer-on-surface-variant: var(--on-surface-variant);
         --drawer-hover: color-mix(in oklch, var(--primary) 8%, transparent);
         --drawer-selected-bg: color-mix(in oklch, var(--primary) 14%, transparent);
 
@@ -153,7 +153,7 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
         width: min(70vw, 340px);
         display: flex;
         flex-direction: column;
-        background: var(--card-bg);
+        background: var(--float-panel-bg);
         border-radius: var(--radius-large) 0 0 var(--radius-large); /* 仅左侧，跟随主题统一圆角 */
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
         overflow: hidden;
@@ -161,8 +161,6 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
         transition: transform 0.3s var(--ease-decelerate);
     }
     :root.dark .mobile-menu-drawer {
-        --drawer-on-surface: rgba(255, 255, 255, 0.87);
-        --drawer-on-surface-variant: rgba(255, 255, 255, 0.62);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
     }
 
@@ -171,17 +169,17 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
        data-wallpaper-mode="none" 时无壁纸可模糊，落回上面的不透明卡片。 */
     html:not([data-wallpaper-mode="none"])[data-has-wallpaper] .mobile-menu-drawer,
     html:not([data-wallpaper-mode="none"]) body.wallpaper-transparent .mobile-menu-drawer {
-        background: rgba(255, 255, 255, 0.55) !important;
+        background: color-mix(in oklch, var(--float-panel-bg) 96%, transparent) !important;
         backdrop-filter: blur(var(--navbar-panel-blur, 20px)) saturate(1.5) !important;
         box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
-        border: 1px solid rgba(0, 0, 0, 0.06) !important;
+        border: 1px solid var(--outline-variant) !important;
     }
     :root.dark:not([data-wallpaper-mode="none"])[data-has-wallpaper] .mobile-menu-drawer,
     :root.dark:not([data-wallpaper-mode="none"]) body.wallpaper-transparent .mobile-menu-drawer {
-        background: rgba(23, 23, 23, 0.6) !important;
+        background: color-mix(in oklch, var(--float-panel-bg) 96%, transparent) !important;
         backdrop-filter: blur(var(--navbar-panel-blur, 20px)) saturate(1.5) !important;
         box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid var(--outline-variant) !important;
     }
     #nav-menu-panel:not(.float-panel-closed) .mobile-menu-drawer {
         transform: translateX(0);

@@ -160,6 +160,7 @@ function linkFields(
 }
 
 export const UI_VISIBILITY_STORAGE_KEY = "firefly-ui-visibility-preview";
+export const UI_LOCAL_HIDE_STORAGE_KEY = "firefly-ui-local-hide";
 
 export function getNavVisibilityId(link: NavBarLink): string {
 	return `nav-${encodeURIComponent(link.url === "#" ? link.icon || link.name : link.url)}`;
@@ -670,8 +671,13 @@ export function getSavedUiVisibility(): UiVisibilitySettings {
 }
 
 export function isUiTargetHidden(id: string): boolean {
-	// 本地保留板块便于继续编辑，隐藏配置只作用于构建后的正式页面。
-	if (import.meta.env?.DEV === true) return false;
+	// 本地默认保留板块；开启本地隐藏预览后，布局判断与隐藏样式保持一致。
+	if (
+		import.meta.env?.DEV === true &&
+		(typeof document === "undefined" ||
+			document.documentElement.getAttribute("data-ui-local-hide") !== "true")
+	)
+		return false;
 	const runtime =
 		typeof document === "undefined"
 			? null
@@ -683,12 +689,14 @@ export function isUiTargetHidden(id: string): boolean {
 
 // 所有规则都在共享布局中生成，Swup 换入的节点无需重新扫描或逐个修改样式。
 export function getUiVisibilityCss(): string {
-	if (import.meta.env?.DEV === true) return "";
+	const scope = import.meta.env?.DEV === true
+		? 'html[data-ui-local-hide="true"]'
+		: "html";
 	return UI_VISIBILITY_TARGETS.map((item) => {
 		const selectors = item.selector
 			.split(",")
 			.map(
-				(selector) => `html[data-ui-hidden~="${item.id}"] ${selector.trim()}`,
+				(selector) => `${scope}[data-ui-hidden~="${item.id}"] ${selector.trim()}`,
 			);
 		return `${selectors.join(",")} { display: none !important; }`;
 	}).join("\n");

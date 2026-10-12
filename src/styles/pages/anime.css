@@ -6,8 +6,8 @@
 .anime-page h3 { font-weight: 700; font-size: 1.1rem; }
 .anime-page p, .anime-meta { color: var(--content-meta); }
 .anime-pill, .anime-page button.action { padding: .5rem .9rem; border-radius: .75rem; background: var(--btn-regular-bg); color: var(--btn-content); transition: background .15s; }
-.anime-pill:hover, .anime-page button.action:hover { background: var(--btn-regular-bg-hover); }
-.anime-pill.active, .anime-page button.primary { background: var(--primary); color: white; }
+.anime-pill:hover, .anime-page button.action:not(.primary):hover { background: var(--btn-regular-bg-hover); }
+.anime-pill.active, .anime-page button.primary { background: var(--primary); color: var(--on-primary); }
 .anime-page button:disabled { opacity: .45; cursor: wait; }
 .anime-meta { font-size: .9rem; }
 .anime-ranking { margin-top: 1.25rem; border: 1px solid var(--line-divider); border-radius: var(--radius-large); }

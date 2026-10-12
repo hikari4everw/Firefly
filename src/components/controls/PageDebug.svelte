@@ -9,7 +9,9 @@ import {
 } from "@/utils/ui-visibility";
 import {
 	getUiPreview,
+	getUiLocalHideEnabled,
 	previewUiVisibility,
+	setUiLocalHideEnabled,
 } from "@/utils/ui-visibility-client";
 
 const groups = [...new Set(UI_VISIBILITY_TARGETS.map((item) => item.group))];
@@ -21,9 +23,22 @@ let previewing = $state(false);
 let invalidDraft = $state(false);
 let feedback = $state("");
 let failed = $state(false);
+let localHideEnabled = $state(false);
 let subtitleInputs = $state<Record<string, string>>({});
 let previewRevision = 0;
 const busy = $derived(saving || previewing);
+
+function changeLocalHide(enabled: boolean): void {
+	try {
+		setUiLocalHideEnabled(enabled);
+		localHideEnabled = enabled;
+		failed = false;
+		feedback = enabled ? "本地已同步隐藏勾选的板块。" : "本地已恢复显示，隐藏配置仍保留。";
+	} catch (error) {
+		failed = true;
+		feedback = `无法保存本地隐藏选择：${error instanceof Error ? error.message : String(error)}`;
+	}
+}
 
 function sorted(
 	record: Record<string, unknown> | undefined,
@@ -184,6 +199,7 @@ async function save(): Promise<void> {
 
 onMount(() => {
 	try {
+		localHideEnabled = getUiLocalHideEnabled();
 		draft = getUiPreview();
 	} catch (error) {
 		failed = true;
@@ -222,7 +238,10 @@ onMount(() => {
 	<p class="mb-3 rounded-lg bg-(--btn-plain-bg-hover) p-3 text-xs leading-relaxed text-(--primary)">
 		仅本地开发可见，访客看不到此工具。样式与内容修改可在本地预览；保存并重新构建部署后，访客页面才会应用。
 	</p>
-	<p class="mb-3 text-xs text-75">勾选“隐藏”后本地仍显示，方便继续调整；保存并部署后，正式网站全站隐藏。原配置未启用的功能不会被重新开启。只有勾选“保存此板块”的板块会写入配置，其余修改仅用于本地预览。</p>
+	<label class="mb-2 flex items-center gap-2 text-sm text-90">
+		<input type="checkbox" checked={localHideEnabled} onchange={(event) => changeLocalHide(event.currentTarget.checked)} />本地也隐藏
+	</label>
+	<p class="mb-3 text-xs text-75">开启后，本地同步隐藏勾选的板块；关闭后，本地仍显示，方便继续调整。此开关仅记住当前浏览器的选择，不影响正式网站。隐藏配置保存并部署后，正式网站全站生效。原配置未启用的功能不会被重新开启。只有勾选“保存此板块”的板块会写入配置，其余修改仅用于本地预览。</p>
 	{#each groups as group}
 		<fieldset class="mb-3">
 			<legend class="mb-1 font-semibold text-sm text-90">{group}</legend>

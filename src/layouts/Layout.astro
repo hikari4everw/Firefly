@@ -42,7 +42,7 @@ import { getCanonicalUrl, url } from "@/utils/url-utils";
 
 import "@/styles/main.css";
 import UiDebugPreview from "@/components/controls/UiDebugPreview.astro";
-import { getUiStyleCss, getSavedUiVisibility, getUiVisibilityCss, UI_VISIBILITY_STORAGE_KEY, UI_VISIBILITY_TARGETS } from "@/utils/ui-visibility";
+import { getUiStyleCss, getSavedUiVisibility, getUiVisibilityCss, UI_VISIBILITY_STORAGE_KEY, UI_LOCAL_HIDE_STORAGE_KEY, UI_VISIBILITY_TARGETS } from "@/utils/ui-visibility";
 import "@/styles/immersive-reading.css";
 import "@/styles/variables.styl";
 import "@rehype-callouts-theme";
@@ -175,8 +175,9 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
     <style is:inline>[data-ui-field][hidden], [data-ui-title][hidden] { display: none !important; }</style>
     {import.meta.env.DEV && <UiDebugPreview />}
     {import.meta.env.DEV && (
-      <script is:inline define:vars={{ uiPreviewKey: UI_VISIBILITY_STORAGE_KEY, validUiIds: UI_VISIBILITY_TARGETS.map(item => item.id) }}>
+      <script is:inline define:vars={{ uiPreviewKey: UI_VISIBILITY_STORAGE_KEY, uiLocalHideKey: UI_LOCAL_HIDE_STORAGE_KEY, validUiIds: UI_VISIBILITY_TARGETS.map(item => item.id) }}>
         try {
+          document.documentElement.setAttribute("data-ui-local-hide", String(localStorage.getItem(uiLocalHideKey) === "true"));
           const preview = JSON.parse(localStorage.getItem(uiPreviewKey) || "null");
           if (preview && Array.isArray(preview.hiddenTargets) && preview.hiddenTargets.every(id => typeof id === "string" && validUiIds.includes(id))) {
             document.documentElement.setAttribute("data-ui-hidden", [...new Set(preview.hiddenTargets)].join(" "));
@@ -622,4 +623,8 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 <script>
   import { initLayout } from "@/utils/layout-init";
   initLayout();
+  if (import.meta.env.DEV) {
+    const { initializeAnimeEditor } = await import("@/utils/anime-editor-client");
+    initializeAnimeEditor();
+  }
 </script>

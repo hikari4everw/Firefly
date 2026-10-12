@@ -50,15 +50,15 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		],
 	});
 
+	// 动态作为独立导航入口
+	links.push(LinkPresets.Dynamic);
+
 	// 我的及其子菜单
 	links.push({
 		name: "我的",
 		url: "#",
 		icon: "material-symbols:person",
 		children: [
-			// 动态
-			LinkPresets.Dynamic,
-
 			// 项目
 			LinkPresets.Projects,
 
@@ -68,18 +68,23 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			// 书签导航
 			LinkPresets.Booknav,
 
-			// 哔哩哔哩追番
-			LinkPresets.Bilibili,
-
-			// 番组计划
-			LinkPresets.Bangumi,
-			LinkPresets.Anime,
-
 			// VNDB
 			LinkPresets.VNDB,
 
 			// MyAnimeList
 			LinkPresets.MAL,
+		],
+	});
+
+	// ACG 及其子菜单
+	links.push({
+		name: "ACG",
+		url: "#",
+		icon: "material-symbols:movie",
+		children: [
+			LinkPresets.Bilibili,
+			LinkPresets.Bangumi,
+			LinkPresets.Anime,
 		],
 	});
 
@@ -214,7 +219,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		pageKey: "bilibili",
 	},
 	Bangumi: {
-		name: "番组计划",
+		name: "Bangumi番剧计划",
 		url: "/bangumi/",
 		icon: "material-symbols:movie",
 		pageKey: "bangumi",

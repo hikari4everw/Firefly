@@ -28,6 +28,20 @@
   initial-value: 0px;
 }
 
+.navbar-brand-bar {
+    width: 4px;
+    height: 20px;
+    margin-right: 0.5rem;
+    border-radius: 999px;
+    background: var(--primary);
+    flex-shrink: 0;
+    transition: height 0.2s;
+}
+
+#navbar a:hover .navbar-brand-bar {
+    height: 28px;
+}
+
 @utility navbar-surface-transition {
   transition:
     background-color 0.36s cubic-bezier(0.22, 1, 0.36, 1),
@@ -252,10 +266,10 @@ html:not([data-wallpaper-mode="none"])[data-has-wallpaper]
 html:not([data-wallpaper-mode="none"])
     body.wallpaper-transparent
     :is(.dropdown-content, .float-panel) {
-    background: rgba(255, 255, 255, 0.55) !important;
+    background: color-mix(in oklch, var(--float-panel-bg) 96%, transparent) !important;
     backdrop-filter: blur(var(--navbar-panel-blur, 20px)) saturate(1.5) !important;
     box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
-    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid var(--outline-variant) !important;
 }
 
 /* 暗色主题 */
@@ -264,10 +278,10 @@ html:not([data-wallpaper-mode="none"])
 :root.dark:not([data-wallpaper-mode="none"])
     body.wallpaper-transparent
     :is(.dropdown-content, .float-panel) {
-    background: rgba(23, 23, 23, 0.6) !important;
+    background: color-mix(in oklch, var(--float-panel-bg) 96%, transparent) !important;
     backdrop-filter: blur(var(--navbar-panel-blur, 20px)) saturate(1.5) !important;
     box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid var(--outline-variant) !important;
 }
 
 /* ============================================

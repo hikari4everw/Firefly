@@ -40,24 +40,3 @@ const title = version ? `追番 · ${version.title} · ${version.label}` : "追�
 		</div>
 	</section>
 </MainGridLayout>
-
-<script>
-// 开发条件在构建时裁剪，正式产物不加载编辑器或它的依赖。
-if (import.meta.env.DEV) {
-	let editor: Record<string, unknown> | undefined;
-	let mountedRoot: HTMLElement | null = null;
-	const { mount, unmount } = await import("svelte");
-	const { default: Editor } = await import("./AnimeEditor.svelte");
-	function initEditor() {
-		const root = document.getElementById("anime-editor-root");
-		if (root === mountedRoot) return;
-		if (editor) unmount(editor);
-		editor = undefined; mountedRoot = root;
-		if (root) { root.replaceChildren(); editor = mount(Editor, { target: root, props: { posts: JSON.parse(root.dataset.posts || "[]"), initialBoardId: root.dataset.boardId, initialVersionId: root.dataset.versionId } }); }
-	}
-	initEditor();
-	document.addEventListener("swup:contentReplaced", initEditor);
-	document.addEventListener("astro:page-load", initEditor);
-	window.swup?.hooks.on("page:view", initEditor);
-}
-</script>

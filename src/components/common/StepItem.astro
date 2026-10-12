@@ -90,6 +90,10 @@ const iconHtml = icon ? ICONS[icon] : undefined;
 		font-variant-numeric: tabular-nums;
 	}
 
+	.step-item[data-type="default"] .step-marker {
+		color: var(--on-primary);
+	}
+
 	/* 自动编号在 ::before 上读值 */
 	.step-marker::before {
 		content: counter(step);

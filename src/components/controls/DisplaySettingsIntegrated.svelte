@@ -924,7 +924,7 @@ $effect(() => {
 				class="focus-ring-inset flex-1 flex flex-col items-center justify-center gap-1.5 py-2 px-2 text-xs font-medium transition-colors rounded-lg min-w-0
 					{activeTab === tab.key
 						? 'bg-(--btn-plain-bg-hover) text-(--primary)'
-						: 'text-gray-500 dark:text-gray-400 hover:bg-(--btn-plain-bg-hover) hover:text-gray-700 dark:hover:text-gray-300'}"
+						: 'text-(--on-surface-variant) hover:bg-(--btn-plain-bg-hover) hover:text-(--on-surface)'}"
 				onclick={() => activeTab = tab.key}
 			>
 				<Icon icon={tab.icon} class="text-[1.5rem] shrink-0"></Icon>

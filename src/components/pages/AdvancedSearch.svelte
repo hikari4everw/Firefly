@@ -116,7 +116,7 @@ const handleInput = () => {
     <!-- Title Section -->
     <div class="mb-4">
         <div class="flex items-center gap-3 mb-3">
-            <div class="h-8 w-8 rounded-lg bg-(--primary) flex items-center justify-center text-white dark:text-black/70">
+            <div class="h-8 w-8 rounded-lg bg-(--primary) flex items-center justify-center text-(--on-primary)">
                 <Icon icon="material-symbols:search" class="text-[1.5rem]"></Icon>
             </div>
             <div class="text-3xl font-bold text-90">

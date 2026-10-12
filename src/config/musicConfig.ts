@@ -48,20 +48,19 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	local: {
 		playlist: [
 			{
-				name: "Believe Me",
-				artist: "阿保剛",
-				url: "https://ik.imagekit.io/hikari4ever/Blog/Music/%E9%98%BF%E4%BF%9D%E5%89%9B%20-%20Believe%20Me.mp3?updatedAt=1791469543400",
-				cover: "https://ik.imagekit.io/hikari4ever/Blog/Music/Cover/%E9%98%BF%E4%BF%9D%E5%89%9B%20-%20Believe%20Me.jpg",
-				lrc: "",
-			},
-			{
 				name: "自由の時間",
 				artist: "出羽良彰",
 				url: "https://ik.imagekit.io/hikari4ever/Blog/Music/%E5%87%BA%E7%BE%BD%E8%89%AF%E5%BD%B0%20-%20%E8%87%AA%E7%94%B1%E3%81%AE%E6%99%82%E9%96%93.mp3?updatedAt=1791468893795",
 				cover: "https://ik.imagekit.io/hikari4ever/Blog/Music/Cover/%E5%87%BA%E7%BE%BD%E8%89%AF%E5%BD%B0%20-%20%E8%87%AA%E7%94%B1%E3%81%AE%E6%99%82%E9%96%93.jpg?updatedAt=1791468915013",
 				lrc: "",
 			},
-
+      {
+				name: "『友達』",
+				artist: "出羽良彰",
+				url: "https://ik.imagekit.io/hikari4ever/Blog/Music/%E5%87%BA%E7%BE%BD%E8%89%AF%E5%BD%B0%20-%20_%E5%8F%8B%E9%81%94_.mp3?updatedAt=1791468891814",
+				cover: "https://ik.imagekit.io/hikari4ever/Blog/Music/Cover/%E5%87%BA%E7%BE%BD%E8%89%AF%E5%BD%B0%20-%20_%E5%8F%8B%E9%81%94_.jpg?updatedAt=1791468913965",
+				lrc: "",
+			},
 			{
 				name: "「暦お兄ちゃん」",
 				artist: "神前暁",
@@ -76,18 +75,19 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "https://ik.imagekit.io/hikari4ever/Blog/Music/Cover/%E7%A5%9E%E5%89%8D%E6%9A%81%20-%20%E6%B7%B1%E7%AA%93%E3%81%AE%E4%BB%A4%E5%AC%A2.jpg?updatedAt=1791468914145",
 				lrc: "",
 			},
-			{
-				name: "『友達』",
-				artist: "出羽良彰",
-				url: "https://ik.imagekit.io/hikari4ever/Blog/Music/%E5%87%BA%E7%BE%BD%E8%89%AF%E5%BD%B0%20-%20_%E5%8F%8B%E9%81%94_.mp3?updatedAt=1791468891814",
-				cover: "https://ik.imagekit.io/hikari4ever/Blog/Music/Cover/%E5%87%BA%E7%BE%BD%E8%89%AF%E5%BD%B0%20-%20_%E5%8F%8B%E9%81%94_.jpg?updatedAt=1791468913965",
-				lrc: "",
-			},
+			
 			{
 				name: "殺風景",
 				artist: "神前暁",
 				url: "https://ik.imagekit.io/hikari4ever/Blog/Music/%E7%A5%9E%E5%89%8D%E6%9A%81%20-%20%E6%AE%BA%E9%A2%A8%E6%99%AF.mp3?updatedAt=1791468893818",
 				cover: "https://ik.imagekit.io/hikari4ever/Blog/Music/Cover/%E7%A5%9E%E5%89%8D%E6%9A%81%20-%20%E6%AE%BA%E9%A2%A8%E6%99%AF.jpg?updatedAt=1791468914195",
+				lrc: "",
+			},
+			{
+				name: "Believe Me",
+				artist: "阿保剛",
+				url: "https://ik.imagekit.io/hikari4ever/Blog/Music/%E9%98%BF%E4%BF%9D%E5%89%9B%20-%20Believe%20Me.mp3?updatedAt=1791469543400",
+				cover: "https://ik.imagekit.io/hikari4ever/Blog/Music/Cover/%E9%98%BF%E4%BF%9D%E5%89%9B%20-%20Believe%20Me.jpg",
 				lrc: "",
 			},
 		],

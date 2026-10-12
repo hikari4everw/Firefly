@@ -70,7 +70,7 @@ const jumpHrefFirst = url("/");
         aria-disabled={!page.url.prev ? "true" : "false"}
         tabindex={!page.url.prev ? "-1" : "0"}
         class:list={[
-          "btn-card overflow-hidden rounded-(--radius-large) text-(--primary) w-11 h-11",
+          "btn-card overflow-hidden rounded-(--radius-control) text-(--primary) w-11 h-11",
           {
             disabled: !page.url.prev,
             "opacity-50": !page.url.prev,
@@ -85,7 +85,7 @@ const jumpHrefFirst = url("/");
         />
       </a>
 
-      <div class="btn-card flex items-center rounded-(--radius-large) px-4 h-11 gap-1.5">
+      <div class="btn-card flex items-center rounded-(--radius-control) px-4 h-11 gap-1.5">
         <PageJump
           client:load
           variant="current"
@@ -105,7 +105,7 @@ const jumpHrefFirst = url("/");
         aria-disabled={!page.url.next ? "true" : "false"}
         tabindex={!page.url.next ? "-1" : "0"}
         class:list={[
-          "btn-card overflow-hidden rounded-(--radius-large) text-(--primary) w-11 h-11",
+          "btn-card overflow-hidden rounded-(--radius-control) text-(--primary) w-11 h-11",
           {
             disabled: !page.url.next,
             "opacity-50": !page.url.next,
@@ -130,7 +130,7 @@ const jumpHrefFirst = url("/");
         aria-disabled={!page.url.prev ? "true" : "false"}
         tabindex={!page.url.prev ? "-1" : "0"}
         class:list={[
-          "btn-card overflow-hidden rounded-(--radius-large) text-(--primary) w-11 h-11",
+          "btn-card overflow-hidden rounded-(--radius-control) text-(--primary) w-11 h-11",
           {
             disabled: !page.url.prev,
             "opacity-50": !page.url.prev,
@@ -160,8 +160,8 @@ const jumpHrefFirst = url("/");
           if (p == page.currentPage)
             return (
               <div
-                class="h-11 w-11 rounded-(--radius-large) bg-(--primary) flex items-center justify-center
-                        font-bold text-white dark:text-black/70"
+                class="h-11 w-11 rounded-(--radius-control) bg-(--primary) flex items-center justify-center
+                        font-bold text-(--on-primary)"
                 aria-current="page"
               >
                 {p}
@@ -171,7 +171,7 @@ const jumpHrefFirst = url("/");
             <a
               href={url(getPageUrl(p))}
               aria-label={`${i18n(I18nKey.paginationPage)} ${p}`}
-              class="btn-card w-11 h-11 rounded-(--radius-large) overflow-hidden active:scale-[0.85] font-bold text-neutral-700 dark:text-neutral-300"
+              class="btn-card w-11 h-11 rounded-(--radius-control) overflow-hidden active:scale-[0.85] font-bold text-neutral-700 dark:text-neutral-300"
             >
               {p}
             </a>
@@ -185,7 +185,7 @@ const jumpHrefFirst = url("/");
         aria-disabled={!page.url.next ? "true" : "false"}
         tabindex={!page.url.next ? "-1" : "0"}
         class:list={[
-          "btn-card overflow-hidden rounded-(--radius-large) text-(--primary) w-11 h-11",
+          "btn-card overflow-hidden rounded-(--radius-control) text-(--primary) w-11 h-11",
           {
             disabled: !page.url.next,
             "opacity-50": !page.url.next,

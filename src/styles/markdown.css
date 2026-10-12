@@ -2,6 +2,19 @@
 
 .custom-md {
   overflow-wrap: break-word;
+  color: var(--on-surface);
+  --tw-prose-body: var(--on-surface);
+  --tw-prose-headings: var(--on-surface);
+  --tw-prose-bold: var(--on-surface);
+  --tw-prose-quotes: var(--on-surface-variant);
+  --tw-prose-captions: var(--on-surface-variant);
+  --tw-prose-links: var(--primary);
+  --tw-prose-invert-body: var(--on-surface);
+  --tw-prose-invert-headings: var(--on-surface);
+  --tw-prose-invert-bold: var(--on-surface);
+  --tw-prose-invert-quotes: var(--on-surface-variant);
+  --tw-prose-invert-captions: var(--on-surface-variant);
+  --tw-prose-invert-links: var(--primary);
 
   body.sticky-navbar & {
     [id] {

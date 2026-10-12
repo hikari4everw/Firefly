@@ -259,14 +259,11 @@ html {
         box-shadow: var(--card-elevation-hover);
     }
     .post-card-wrapper {
-        --post-card-hover-shadow: 0 10px 28px rgba(15, 23, 42, 0.16);
-    }
-    .dark .post-card-wrapper {
-        --post-card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+        --post-card-hover-shadow: var(--card-elevation-hover);
     }
     .enable-card-border .post-card-wrapper:focus-within {
-        border-color: var(--primary);
-        box-shadow: inset 0 0 0 1px var(--primary), var(--post-card-hover-shadow);
+        border-color: var(--card-border-hover);
+        box-shadow: var(--post-card-hover-shadow);
     }
     @media (hover: hover) and (pointer: fine) {
         .enable-card-border :is(.card-base, .card-base-transparent, .btn-card):hover {
@@ -274,8 +271,8 @@ html {
             box-shadow: var(--card-elevation-hover);
         }
         .enable-card-border .post-card-wrapper:hover {
-            border-color: var(--primary);
-            box-shadow: inset 0 0 0 1px var(--primary), var(--post-card-hover-shadow);
+            border-color: var(--card-border-hover);
+            box-shadow: var(--post-card-hover-shadow);
         }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -407,7 +404,8 @@ html {
         @apply transition-colors duration-150 rounded-md p-1.5 -m-1.5 expand-animation;
     }
     .float-panel {
-        @apply top-21 rounded-(--radius-large) overflow-hidden bg-(--card-bg) transition-colors duration-150 shadow-xl border border-black/5 dark:border-white/10
+        @apply top-21 rounded-(--radius-large) overflow-hidden bg-(--float-panel-bg) transition-colors duration-150 shadow-xl border;
+        border-color: var(--outline-variant);
     }
     .float-panel-closed {
         @apply -translate-y-1 opacity-0 pointer-events-none
@@ -432,7 +430,7 @@ html {
     }
     .btn-plain {
         @apply transition-colors duration-150 relative flex items-center justify-center bg-none
-        text-black/75 hover:text-(--primary) dark:text-white/75 dark:hover:text-(--primary);
+        text-(--on-surface-variant) hover:text-(--primary);
         &:focus-visible {
             color: var(--primary);
         }
@@ -451,7 +449,25 @@ html {
     }
     .btn-regular {
         @apply transition-colors duration-150 flex items-center justify-center bg-(--btn-regular-bg) hover:bg-(--btn-regular-bg-hover) active:bg-(--btn-regular-bg-active)
-        text-(--btn-content) dark:text-white/75
+        text-(--btn-content);
+    }
+
+    :is(.btn-regular, button.btn-plain):not(.tag-item):not(.rounded-full) {
+        border-radius: var(--radius-control) !important;
+    }
+
+    :is(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]), textarea, select) {
+        border-radius: var(--radius-control);
+        color: var(--on-surface);
+    }
+
+    input::placeholder, textarea::placeholder {
+        color: var(--on-surface-variant);
+        opacity: 1;
+    }
+
+    #search-bar, #search-bar-inside {
+        border: 1px solid var(--outline);
     }
 
     .link-underline {
@@ -472,19 +488,19 @@ html {
 
 
     .text-90 {
-        @apply text-black/90 dark:text-white/90
+        color: var(--on-surface);
     }
     .text-75 {
-        @apply text-black/75 dark:text-white/75
+        color: var(--on-surface-variant);
     }
     .text-50 {
-        @apply text-black/50 dark:text-white/50
+        color: var(--on-surface-variant);
     }
     .text-30 {
-        @apply text-black/30 dark:text-white/30
+        color: var(--on-surface-variant);
     }
     .text-25 {
-        @apply text-black/25 dark:text-white/25
+        color: var(--on-surface-variant);
     }
 
     /* 下拉菜单样式 */

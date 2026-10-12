@@ -1,7 +1,9 @@
 {
 	"hiddenTargets": [
 		"nav-%2Fsponsor%2F",
-		"nav-material-symbols%3Ainfo"
+		"nav-material-symbols%3Ainfo",
+		"sidebar-right-siteInfo",
+		"nav-material-symbols%3Alink"
 	],
 	"overrides": {
 		"sidebar-left-profile": {
