@@ -5,7 +5,11 @@ import type {
 	AnimeSubject,
 } from "../src/types/anime";
 export function createAnimeStore(root: string): {
-	state(): Promise<{ archive: AnimeArchive; drafts: AnimeDraftRecord[] }>;
+	state(): Promise<{
+		features: { tierNames: boolean };
+		archive: AnimeArchive;
+		drafts: AnimeDraftRecord[];
+	}>;
 	saveDraft(
 		id: string,
 		draft: unknown,

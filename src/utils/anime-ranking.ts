@@ -9,8 +9,10 @@ import type {
 
 export const ANIME_TIERS: Record<AnimeMode, string[]> = {
 	plan: ["必追", "想追", "观望"],
-	review: ["神作", "佳作", "还行", "及格", "差"],
+	review: ["神作", "佳作", "还行", "拉"],
 };
+
+const LEGACY_REVIEW_TIERS = ["神作", "佳作", "还行", "及格", "差"];
 
 export function getAnimeTiers(draft: AnimeDraft): string[] {
 	return draft.tiers ?? ANIME_TIERS[draft.mode];
@@ -94,15 +96,27 @@ export function normalizeLegacyDraft(input: unknown): AnimeDraft {
 	const draft = input as AnimeDraft;
 	if (!draft || !Array.isArray(draft.items) || !(draft.mode in ANIME_TIERS))
 		return validateDraft(input);
+	const tiers = draft.tiers ?? (draft.mode === "review" ? LEGACY_REVIEW_TIERS : ANIME_TIERS.plan);
 	return validateDraft({
 		...draft,
+		tiers,
 		items: draft.items.map((item) => {
 			const match = /^boundary:(\d+)$/.exec(item?.placement);
-			if (!match || Number(match[1]) >= getAnimeTiers(draft).length - 1)
+			if (!match || Number(match[1]) >= tiers.length - 1)
 				return item;
 			return { ...item, placement: `tier:${match[1]}` };
 		}),
 	});
+}
+
+export function prepareAnimeDraftForEditing(draft: AnimeDraft): AnimeDraft {
+	if (draft.mode !== "review" || JSON.stringify(getAnimeTiers(draft)) !== JSON.stringify(LEGACY_REVIEW_TIERS)) return draft;
+	return { ...draft, tiers: [...ANIME_TIERS.review], items: draft.items.map((item) => ({ ...item, placement: item.placement === "tier:4" ? "pool" : item.placement })) };
+}
+
+export function searchAnimePool(draft: AnimeDraft, query: string): AnimeItem[] {
+	const name = query.trim().toLocaleLowerCase();
+	return draft.items.filter((item) => item.placement === "pool" && item.title.toLocaleLowerCase().includes(name));
 }
 
 export function moveItem(
@@ -128,7 +142,7 @@ export function moveItem(
 export function convertMode(draft: AnimeDraft, mode: AnimeMode): AnimeDraft {
 	if (mode === draft.mode) return draft;
 	const { tiers: _tiers, ...rest } = draft;
-	return { ...rest, mode, items: draft.items.map((item) => ({ ...item, placement: "pool" })) };
+	return { ...rest, mode, tiers: [...ANIME_TIERS[mode]], items: draft.items.map((item) => ({ ...item, placement: "pool" })) };
 }
 
 export function addAnimeTier(draft: AnimeDraft): AnimeDraft {

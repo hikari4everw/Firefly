@@ -25,6 +25,7 @@ test("custom tiers survive disk reload and each public version keeps its own col
 		const revised = await store.saveDraft("2026-4", { ...draft, tiers: ["最爱"] }, saved.revision);
 		await store.publish("2026-4", revised.revision, "中期");
 		const reloaded = await createAnimeStore(root).state();
+		assert.equal(reloaded.features.tierNames, true);
 		assert.deepEqual(reloaded.drafts[0].draft.tiers, ["最爱"]);
 		assert.deepEqual(reloaded.archive.boards[0].versions[0].tiers, ["必看", "备选"]);
 		assert.deepEqual(reloaded.archive.boards[0].versions[1].tiers, ["最爱"]);
@@ -171,6 +172,7 @@ test("dev API serves normalized trailing-slash paths as JSON", async () => {
 		) => Promise<void> = async () => {};
 		animeDevApi("https://api.example").configureServer({
 			config: { root },
+			ssrLoadModule: () => import("../src/utils/anime-ranking.ts"),
 			middlewares: {
 				use(fn: typeof handler) {
 					handler = fn;
@@ -205,6 +207,7 @@ test("dev API serves normalized trailing-slash paths as JSON", async () => {
 			assert.equal(delegated, false, url);
 			assert.equal(status, 200);
 			assert.deepEqual(JSON.parse(response), {
+				features: { tierNames: true },
 				archive: { boards: [], reviews: {} },
 				drafts: [],
 			});

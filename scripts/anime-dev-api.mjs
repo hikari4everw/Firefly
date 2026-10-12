@@ -35,7 +35,10 @@ async function atomicWrite(file, data) {
 	await rename(temp, file);
 }
 
-export function createAnimeStore(root) {
+export function createAnimeStore(
+	root,
+	ranking = { createSnapshot, normalizeLegacyDraft, validateDraft },
+) {
 	const archiveFile = path.join(root, "src/data/anime.json");
 	const draftDir = path.join(root, ".local/anime");
 	const lockDir = path.join(draftDir, ".write-lock");
@@ -72,7 +75,7 @@ export function createAnimeStore(root) {
 	const getDraft = async (id) => {
 		const record = await readJson(draftFile(id), null);
 		return record
-			? { ...record, draft: normalizeLegacyDraft(record.draft) }
+			? { ...record, draft: ranking.normalizeLegacyDraft(record.draft) }
 			: null;
 	};
 	return {
@@ -85,6 +88,7 @@ export function createAnimeStore(root) {
 				if (error.code !== "ENOENT") throw error;
 			}
 			return {
+				features: { tierNames: true },
 				archive: await archive(),
 				drafts: await Promise.all(
 					files
@@ -96,7 +100,7 @@ export function createAnimeStore(root) {
 		saveDraft(id, input, expectedRevision) {
 			return enqueue(async () => {
 				checkId(id);
-				const draft = validateDraft(input);
+				const draft = ranking.validateDraft(input);
 				if (id !== `${draft.year}-${draft.quarter}`)
 					fail("季度与榜单标识不一致");
 				const current = await getDraft(id);
@@ -120,7 +124,7 @@ export function createAnimeStore(root) {
 					)
 				)
 					fail("这份草稿已经保存为公开版本；调整并保存草稿后可创建新版本", 409);
-				const snapshot = createSnapshot(
+				const snapshot = ranking.createSnapshot(
 					record.draft,
 					label,
 					`v-${record.revision}`,
@@ -278,7 +282,13 @@ export function animeDevApi(apiUrl) {
 			};
 		},
 		configureServer(server) {
-			const store = createAnimeStore(server.config.root);
+			// Vite invalidates this SSR module when its validation changes; keep one write queue.
+			let ranking = { createSnapshot, normalizeLegacyDraft, validateDraft };
+			const store = createAnimeStore(server.config.root, {
+				createSnapshot: (...args) => ranking.createSnapshot(...args),
+				normalizeLegacyDraft: (...args) => ranking.normalizeLegacyDraft(...args),
+				validateDraft: (...args) => ranking.validateDraft(...args),
+			});
 			server.middlewares.use(async (req, res, next) => {
 				if ((req.url || "").split("?")[0].replace(/\/$/, "") !== "/api/anime")
 					return next();
@@ -291,6 +301,7 @@ export function animeDevApi(apiUrl) {
 				if (!isLocalRequest(req))
 					return send(403, { error: "仅允许本机同源访问" });
 				try {
+					ranking = await server.ssrLoadModule("/src/utils/anime-ranking.ts");
 					if (req.method === "GET") return send(200, await store.state());
 					if (req.method !== "POST")
 						return send(405, { error: "仅支持 GET / POST" });
