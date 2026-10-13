@@ -189,6 +189,11 @@ export function createAnimeStore(
 				if (
 					board?.versions.some(
 						(version) => version.id === `v-${record.revision}`,
+					) ||
+					(await readJson(trashFile, [])).some(
+						(item) =>
+							item.boardId === id &&
+							item.snapshot.id === `v-${record.revision}`,
 					)
 				)
 					fail("这份草稿已经保存为公开版本；调整并保存草稿后可创建新版本", 409);
@@ -275,8 +280,9 @@ export function createAnimeStore(
 				const trash = (await readJson(trashFile, [])).filter(
 					(item) => !(item.boardId === id && item.snapshot.id === versionId),
 				);
-				const previousOrder =
-					trash.find((item) => item.boardId === id && item.order)?.order || [];
+				const previousOrder = trash
+					.filter((item) => item.boardId === id)
+					.flatMap((item) => item.order || []);
 				const order = [
 					...new Set([
 						...previousOrder,

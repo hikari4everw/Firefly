@@ -102,7 +102,8 @@ async function saveCurrent() {
 	} else {
 		await api({ action: "update", boardId, versionId: target, draft: $state.snapshot(draft), label, postId, versionRevision });
 	}
-	dirty = false; await refresh(); versionRevision = versionRevisions[`${boardId}/${target}`] || "";
+	dirty = false; await refresh();
+	if (target !== "draft") { load(boardId, target); editingPublic = true; }
 	message = target === "draft" ? "工作草稿已保存到本机" : "此版本修改已保存，部署后同步到线上";
 }
 function resolvePending(save: boolean) {
@@ -116,7 +117,7 @@ async function publish() {
 	if (!draft) return;
 	let snapshot;
 	if (target === "draft") {
-		if (dirty || !revision) await saveCurrent();
+		await saveCurrent();
 		snapshot = await api({ action: "publish", boardId, revision, label });
 	} else snapshot = await api({ action: "copy", boardId, versionId: target, draft: $state.snapshot(draft), label, postId, versionRevision });
 	await refresh(); load(boardId, snapshot.id); message = "新公开版本已保存，部署后同步到线上";

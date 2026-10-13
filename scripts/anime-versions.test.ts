@@ -367,3 +367,78 @@ test("two windows cannot update a public snapshot using the same digest", async 
 		await rm(root, { recursive: true, force: true });
 	}
 });
+
+test("deleted edited snapshots cannot be replaced by republishing an unchanged draft", async () => {
+	const { root, store, second, secondDraft } = await fixture();
+	try {
+		const edited = await store.updateVersion(
+			"2026-10",
+			second.id,
+			{ ...draft, tiers: ["自定义"], items: [] },
+			"修订",
+			"review",
+			await digest(store, second.id),
+		);
+		await store.trashVersion(
+			"2026-10",
+			second.id,
+			await digest(store, second.id),
+		);
+		await assert.rejects(
+			store.publish("2026-10", secondDraft.revision, "重复发布"),
+		);
+		const fresh = await store.saveDraft(
+			"2026-10",
+			secondDraft.draft,
+			secondDraft.revision,
+			"新版本",
+		);
+		const created = await store.publish("2026-10", fresh.revision, "新版本");
+		assert.notEqual(created.id, second.id);
+		assert.deepEqual((await store.state()).trash[0].snapshot, edited);
+		await store.restoreVersion("2026-10", second.id);
+		const state = await store.state();
+		assert.deepEqual(state.archive.boards[0].versions.at(-2), edited);
+		assert.equal(state.archive.reviews[`2026-10/${second.id}`], "review");
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});
+
+test("interleaved publication deletion and restoration retain the full creation order", async () => {
+	const { root, store, first, second, secondDraft } = await fixture();
+	let revision = secondDraft.revision;
+	async function publish(label: string) {
+		const saved = await store.saveDraft("2026-10", draft, revision, label);
+		revision = saved.revision;
+		return store.publish("2026-10", revision, label);
+	}
+	try {
+		const third = await publish("C");
+		await store.trashVersion(
+			"2026-10",
+			second.id,
+			await digest(store, second.id),
+		);
+		const fourth = await publish("D");
+		await store.trashVersion(
+			"2026-10",
+			fourth.id,
+			await digest(store, fourth.id),
+		);
+		const fifth = await publish("E");
+		await store.trashVersion(
+			"2026-10",
+			fifth.id,
+			await digest(store, fifth.id),
+		);
+		for (const item of [fourth, fifth, second])
+			await store.restoreVersion("2026-10", item.id);
+		assert.deepEqual(
+			(await store.state()).archive.boards[0].versions.map((item) => item.id),
+			[first.id, second.id, third.id, fourth.id, fifth.id],
+		);
+	} finally {
+		await rm(root, { recursive: true, force: true });
+	}
+});
