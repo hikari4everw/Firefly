@@ -14,6 +14,7 @@ export type AnimeSnapshot = AnimeDraft & {
 	id: string;
 	label: string;
 	createdAt: string;
+	updatedAt?: string;
 };
 export type AnimeBoard = {
 	id: string;
@@ -29,5 +30,24 @@ export type AnimeArchive = {
 export type AnimeDraftRecord = {
 	boardId: string;
 	revision: string;
+	label?: string;
 	draft: AnimeDraft;
+};
+
+export type AnimeTrashedVersion = {
+	boardId: string;
+	boardTitle: string;
+	year: number;
+	quarter: number;
+	snapshot: AnimeSnapshot;
+	postId: string;
+	deletedAt: string;
+	order: string[];
+};
+export type AnimeDevState = {
+	features: { tierNames: boolean; versionManagement: boolean };
+	archive: AnimeArchive;
+	drafts: AnimeDraftRecord[];
+	versionRevisions: Record<string, string>;
+	trash: AnimeTrashedVersion[];
 };

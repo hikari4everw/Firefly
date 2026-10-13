@@ -5,7 +5,10 @@ import type {
 	AnimeDraftRecord,
 	AnimeSnapshot,
 } from "../src/types/anime";
-import { selectAnimeState } from "../src/utils/anime-selection";
+import {
+	selectAnimeState,
+	selectAnimeWorkbench,
+} from "../src/utils/anime-selection";
 
 const snapshot = (
 	year: number,
@@ -94,5 +97,28 @@ test("empty state does not create a board and selection does not change source o
 	assert.deepEqual(
 		archive.boards.map((x) => x.id),
 		["2026-10", "2027-1"],
+	);
+});
+
+test("workbench explicitly requested history takes priority over a working draft", () => {
+	const result = selectAnimeWorkbench(archive, records, "2027-1", "jan");
+	assert.equal(result.target, "jan");
+	assert.equal(result.version?.id, "jan");
+});
+test("workbench defaults to latest quarter's draft and keeps empty public quarters manageable", () => {
+	assert.equal(selectAnimeWorkbench(archive, records).target, "draft");
+	assert.equal(selectAnimeWorkbench(archive, records).boardId, "2027-4");
+	const empty = {
+		...archive,
+		boards: [
+			...archive.boards,
+			{ id: "2028-1", year: 2028, quarter: 1, title: "保留标题", versions: [] },
+		],
+	};
+	assert.equal(selectAnimeWorkbench(empty, []).boardId, "2028-1");
+	assert.equal(selectAnimeWorkbench(empty, []).target, "");
+	assert.equal(
+		selectAnimeWorkbench(archive, records, "2027-1", "missing").target,
+		"",
 	);
 });

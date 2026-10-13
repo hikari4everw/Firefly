@@ -24,8 +24,8 @@ const reviewId = board && version ? archive.reviews[`${board.id}/${version.id}`]
 const review = posts.find((post) => post.id === reviewId);
 const reviewBody = review && canRenderAnimeReviewBody(review.data, import.meta.env.PROD) ? await render(review) : undefined;
 const ReviewContent = reviewBody?.Content;
-const editorPosts = import.meta.env.DEV ? posts.map((post) => ({ id: post.id, title: post.data.title, draft: post.data.draft, category: post.data.category, series: post.data.series })) : [];
-const title = version ? `追番 · ${version.title} · ${version.label}` : "追番";
+const editorPosts = import.meta.env.DEV ? posts.map((post) => ({ id: post.id, title: post.data.title, draft: post.data.draft, category: post.data.category, series: post.data.series, url: getPostUrlBySlug(post.id), description: post.data.description })) : [];
+const title = version ? `追番 · ${version.year}年${version.quarter}月新番 · ${version.label}` : "追番";
 ---
 <MainGridLayout title={title} description="每一季的追番计划与观看评价，记录随时间变化的喜好。">
 	<section class="anime-page page-shell">
@@ -34,9 +34,10 @@ const title = version ? `追番 · ${version.title} · ${version.label}` : "追�
 			<div class="page-count"><strong>{boards.length}</strong><span>季度</span></div>
 		</header>
 		<div class="card-base anime-panel">
-			{boards.length > 0 && <nav class="anime-version-tabs" aria-label="季度榜单">{boards.map((entry) => <a class:list={["anime-pill", { active: board?.id === entry.id }]} href={animeVersionUrl(entry.id, entry.versions.at(-1)!.id)}>{entry.title}</a>)}</nav>}
+			<div class="anime-public-content">
+			{boards.length > 0 && <nav class="anime-version-tabs" aria-label="季度榜单">{boards.map((entry) => <a class:list={["anime-pill", { active: board?.id === entry.id }]} href={animeVersionUrl(entry.id, entry.versions.at(-1)!.id)}>{entry.year}年{entry.quarter}月新番</a>)}</nav>}
 			{board && version ? <>
-				<div class="anime-toolbar"><div><h3>{version.title}</h3><p class="anime-meta">{version.label} · {formatDateI18n(new Date(version.createdAt))} · {version.items.filter((item) => item.placement !== "pool").length} 部已排名</p></div><span class="anime-meta">{version.mode === "plan" ? "开播前的期待" : "个人观看评价"}</span></div>
+				<div class="anime-toolbar"><div><h3>{version.year}年{version.quarter}月新番</h3><p class="anime-meta">{version.label} · {formatDateI18n(new Date(version.createdAt))} · {version.items.filter((item) => item.placement !== "pool").length} 部已排名</p></div><span class="anime-meta">{version.mode === "plan" ? "开播前的期待" : "个人观看评价"}</span></div>
 				<nav class="anime-version-tabs" aria-label="历史版本">{[...board.versions].reverse().map((entry) => <a class:list={["anime-pill", { active: version.id === entry.id }]} href={animeVersionUrl(board.id, entry.id)}>{entry.label}</a>)}</nav>
 				<div class:list={["anime-public-workspace", { "has-review": !!review }]}>
 					<AnimeBoard draft={version} />
@@ -53,7 +54,8 @@ const title = version ? `追番 · ${version.title} · ${version.label}` : "追�
 					<Markdown class="markdown-content"><ReviewContent /></Markdown>
 				</article>}
 			</> : <div class="anime-empty"><h3>追番记录准备中</h3><p>新的期待与评价，会在这里慢慢积累。</p></div>}
-			{import.meta.env.DEV && <div id="anime-editor-root" data-board-id={boardId} data-version-id={versionId} data-posts={JSON.stringify(editorPosts)}><p class="anime-meta">正在加载本机编辑器…</p></div>}
+			</div>
+			{import.meta.env.DEV && Astro.url.searchParams.get("preview") !== "1" && <div id="anime-editor-root" data-board-id={boardId} data-version-id={versionId} data-posts={JSON.stringify(editorPosts)}><p class="anime-meta">正在加载本机编辑器…</p></div>}
 		</div>
 	</section>
 </MainGridLayout>

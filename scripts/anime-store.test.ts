@@ -61,7 +61,7 @@ test("publishes snapshots once and keeps drafts out of archive; review mapping i
 			{ ...draft, title: "new draft" },
 			saved.revision,
 		);
-		await store.setReview("2026-4", snapshot.id, "testing");
+		await store.setReview("2026-4", snapshot.id, "testing", (await store.state()).versionRevisions[`2026-4/${snapshot.id}`]);
 		const archive = JSON.parse(
 			await readFile(path.join(root, "src/data/anime.json"), "utf8"),
 		);
@@ -207,7 +207,8 @@ test("dev API serves normalized trailing-slash paths as JSON", async () => {
 			assert.equal(delegated, false, url);
 			assert.equal(status, 200);
 			assert.deepEqual(JSON.parse(response), {
-				features: { tierNames: true },
+				features: { tierNames: true, versionManagement: true },
+				versionRevisions: {}, trash: [],
 				archive: { boards: [], reviews: {} },
 				drafts: [],
 			});

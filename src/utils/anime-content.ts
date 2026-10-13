@@ -13,6 +13,7 @@ export function getAnimeArchive(): AnimeArchive {
 					id: version.id,
 					label: version.label,
 					createdAt: version.createdAt,
+					...(version.updatedAt ? { updatedAt: version.updatedAt } : {}),
 				})),
 			}))
 			.sort((a, b) => b.year - a.year || b.quarter - a.quarter),

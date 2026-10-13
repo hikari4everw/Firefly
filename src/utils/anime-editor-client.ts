@@ -6,7 +6,10 @@ export function initializeAnimeEditor(): void {
 	let swupRegistered = false;
 
 	async function initEditor(): Promise<void> {
-		const root = document.getElementById("anime-editor-root");
+		const placeholder = document.getElementById("anime-editor-root");
+		const preview = new URLSearchParams(location.search).get("preview") === "1";
+		if (preview) placeholder?.remove();
+		const root = preview ? null : placeholder;
 		if (root === target) return;
 		target = root;
 		if (editor && dispose) void dispose(editor);
@@ -27,6 +30,12 @@ export function initializeAnimeEditor(): void {
 					posts: JSON.parse(root.dataset.posts || "[]"),
 					initialBoardId: root.dataset.boardId,
 					initialVersionId: root.dataset.versionId,
+					onready: () => {
+						if (root !== target || !root.isConnected) return;
+						const content = root.closest(".anime-panel")?.querySelector<HTMLElement>(".anime-public-content");
+						if (content) content.hidden = true;
+						root.closest(".anime-page")?.classList.add("is-workbench");
+					},
 				},
 			});
 		} catch (error) {

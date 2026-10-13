@@ -94,3 +94,22 @@ test("Vite cannot expose private drafts through static or raw imports", async ()
 		await rm(root, { recursive: true, force: true });
 	}
 });
+
+test("saving public data refreshes SSR without reloading the workbench", async () => {
+	const root = await mkdtemp(path.join(os.tmpdir(), "anime-hmr-"));
+	const file = path.join(root, "src/data/anime.json");
+	await mkdir(path.dirname(file), { recursive: true });
+	await writeFile(file, '{"boards":[],"reviews":{}}');
+	let observe;
+	const observed = new Promise(resolve => { observe = resolve; });
+	const server = await createServer({ root, configFile: false, logLevel: "silent", plugins: [animeDevApi("https://example.invalid"), { name: "observe-anime-hot-update", enforce: "post", handleHotUpdate(ctx) { if (ctx.file.endsWith("/src/data/anime.json")) observe(ctx.modules.length); } }], server: { host: "127.0.0.1", port: 0 }, optimizeDeps: { noDiscovery: true } });
+	try {
+		await server.listen();
+		const base = `http://127.0.0.1:${server.httpServer.address().port}`;
+		await fetch(`${base}/src/data/anime.json?import`);
+		assert.deepEqual((await server.ssrLoadModule("/src/data/anime.json")).default.boards, []);
+		await writeFile(file, '{"boards":[{"id":"2026-10"}],"reviews":{}}');
+		assert.equal(await Promise.race([observed, new Promise((_, reject) => setTimeout(() => reject(new Error("更新事件超时")), 3000))]), 0);
+		assert.equal((await server.ssrLoadModule("/src/data/anime.json")).default.boards[0].id, "2026-10");
+	} finally { await server.close(); await rm(root, { recursive: true, force: true }); }
+});

@@ -35,3 +35,41 @@ export function selectAnimeState(
 			: board?.versions.at(-1),
 	};
 }
+
+// 工作台也保留空季度；指定历史链接始终优先于同季度草稿。
+export function selectAnimeWorkbench(
+	archive: AnimeArchive,
+	records: AnimeDraftRecord[],
+	boardId?: string,
+	versionId?: string,
+): {
+	boardId: string;
+	target: string;
+	version: AnimeSnapshot | undefined;
+	record: AnimeDraftRecord | undefined;
+} {
+	const candidates = [
+		...archive.boards,
+		...records.map((record) => ({
+			id: record.boardId,
+			year: record.draft.year,
+			quarter: record.draft.quarter,
+		})),
+	];
+	const id =
+		boardId ||
+		candidates.sort((a, b) => b.year - a.year || b.quarter - a.quarter)[0]
+			?.id ||
+		"";
+	const { record, version } = selectAnimeState(archive, records, id, versionId);
+	return {
+		boardId: id,
+		record,
+		version,
+		target: versionId
+			? version?.id || ""
+			: record
+				? "draft"
+				: version?.id || "",
+	};
+}

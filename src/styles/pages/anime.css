@@ -75,3 +75,20 @@ button.anime-cover { cursor: grab; touch-action: auto; }
 
 .pool-covers .anime-cover { width: 100%; height: auto; aspect-ratio: 2 / 3; }
 .pool-covers .tier-empty { grid-column: 1 / -1; }
+
+.anime-public-content[hidden], .anime-page.is-workbench .page-count { display: none; }
+.is-workbench .anime-editor { border-top: 0; margin-top: 0; padding-top: 0; }
+.anime-workbench-versions { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1rem 0; }
+.version-choice { display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: .2rem; max-width: 100%; overflow-wrap: anywhere; }
+.version-choice.active .anime-meta { color: inherit; opacity: .85; }
+.anime-current-heading { margin: 1.25rem 0 1rem; overflow-wrap: anywhere; }
+.anime-current-heading p { margin: .35rem 0; color: var(--content-primary); }
+.anime-save-actions { margin-top: 1rem; }
+.anime-confirm { position: sticky; bottom: 1rem; z-index: 20; margin-top: 1rem; padding: 1.25rem; border: 2px solid var(--primary); border-radius: var(--radius-large); background: var(--card-bg); box-shadow: 0 8px 30px #0003; }
+.anime-confirm p { margin: .6rem 0 1rem; overflow-wrap: anywhere; }
+.anime-trash { margin-top: 1.5rem; border-top: 1px solid var(--line-divider); padding-top: 1rem; }
+.anime-trash summary { cursor: pointer; color: var(--content-meta); }
+.anime-trash-entry { display: flex; justify-content: space-between; align-items: center; gap: .8rem; padding: .8rem 0; overflow-wrap: anywhere; }
+.anime-trash-entry > div { min-width: 0; }
+.anime-trash-entry button { flex-shrink: 0; }
+@media(max-width: 640px) { .anime-workbench-versions .version-choice { width: 100%; } .anime-current-heading h3 { font-size: 1rem; } }
