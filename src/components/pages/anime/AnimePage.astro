@@ -1,10 +1,13 @@
 ---
+import { render } from "astro:content";
+import Markdown from "@/components/common/Markdown.astro";
+import { canRenderAnimeReviewBody } from "@/utils/anime-reviews";
 import { Icon } from "astro-icon/components";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { selectAnimeState } from "@/utils/anime-selection";
 import { getAnimeArchive } from "@/utils/anime-content";
 import { animeVersionUrl } from "@/utils/anime-ranking";
-import { getSortedPostsList } from "@/utils/content-utils";
+import { getSortedPosts } from "@/utils/content-utils";
 import { getPostUrlBySlug } from "@/utils/url-utils";
 import { formatDateI18n } from "@/utils/date-utils";
 import AnimeBoard from "./AnimeBoard.svelte";
@@ -16,27 +19,43 @@ const { boardId, versionId } = Astro.props;
 const archive = getAnimeArchive();
 const boards = archive.boards.filter((board) => board.versions.length);
 const { board, version } = selectAnimeState(archive, [], boardId, versionId);
-const posts = await getSortedPostsList();
+const posts = await getSortedPosts();
 const reviewId = board && version ? archive.reviews[`${board.id}/${version.id}`] : "";
 const review = posts.find((post) => post.id === reviewId);
-const editorPosts = import.meta.env.DEV ? posts.map((post) => ({ id: post.id, title: post.data.title, draft: post.data.draft })) : [];
-const title = version ? `追番 · ${version.title} · ${version.label}` : "追番";
+const reviewBody = review && canRenderAnimeReviewBody(review.data, import.meta.env.PROD) ? await render(review) : undefined;
+const ReviewContent = reviewBody?.Content;
+const editorPosts = import.meta.env.DEV ? posts.map((post) => ({ id: post.id, title: post.data.title, draft: post.data.draft, category: post.data.category, series: post.data.series, url: getPostUrlBySlug(post.id), description: post.data.description })) : [];
+const title = version ? `追番 · ${version.year}年${version.quarter}月新番 · ${version.label}` : "追番";
 ---
 <MainGridLayout title={title} description="每一季的追番计划与观看评价，记录随时间变化的喜好。">
 	<section class="anime-page page-shell">
 		<header class="card-base page-header">
-			<div class="page-heading"><div class="page-icon" aria-hidden="true"><Icon name="material-symbols:movie" /></div><div><h2>追番</h2></div></div>
+			<div class="page-heading"><div class="page-icon" aria-hidden="true"><Icon name="material-symbols:live-tv-rounded" /></div><div><h2>追番</h2></div></div>
 			<div class="page-count"><strong>{boards.length}</strong><span>季度</span></div>
 		</header>
 		<div class="card-base anime-panel">
-			{boards.length > 0 && <nav class="anime-version-tabs" aria-label="季度榜单">{boards.map((entry) => <a class:list={["anime-pill", { active: board?.id === entry.id }]} href={animeVersionUrl(entry.id, entry.versions.at(-1)!.id)}>{entry.title}</a>)}</nav>}
+			<div class="anime-public-content">
+			{boards.length > 0 && <nav class="anime-version-tabs" aria-label="季度榜单">{boards.map((entry) => <a class:list={["anime-pill", { active: board?.id === entry.id }]} href={animeVersionUrl(entry.id, entry.versions.at(-1)!.id)}>{entry.year}年{entry.quarter}月新番</a>)}</nav>}
 			{board && version ? <>
-				<div class="anime-toolbar"><div><h3>{version.title}</h3><p class="anime-meta">{version.label} · {formatDateI18n(new Date(version.createdAt))} · {version.items.length} 部</p></div><span class="anime-meta">{version.mode === "plan" ? "开播前的期待" : "个人观看评价"}</span></div>
+				<div class="anime-toolbar"><div><h3>{version.year}年{version.quarter}月新番</h3><p class="anime-meta">{version.label} · {formatDateI18n(new Date(version.createdAt))} · {version.items.filter((item) => item.placement !== "pool").length} 部已排名</p></div><span class="anime-meta">{version.mode === "plan" ? "开播前的期待" : "个人观看评价"}</span></div>
 				<nav class="anime-version-tabs" aria-label="历史版本">{[...board.versions].reverse().map((entry) => <a class:list={["anime-pill", { active: version.id === entry.id }]} href={animeVersionUrl(board.id, entry.id)}>{entry.label}</a>)}</nav>
-				<AnimeBoard draft={version} />
-				{review && <section style="margin-top:1.5rem"><h3>排行解读</h3><a class="anime-review" href={getPostUrlBySlug(review.id)}><strong>{review.data.title} →</strong>{review.data.description && <p>{review.data.description}</p>}</a></section>}
+				<div class:list={["anime-public-workspace", { "has-review": !!review }]}>
+					<AnimeBoard draft={version} />
+					{review && <aside class="anime-review-card" aria-label="对应点评">
+						<p class="anime-meta">排行解读</p><h3><a href={getPostUrlBySlug(review.id)}>{review.data.title}</a></h3>
+						<p class="anime-meta">{formatDateI18n(review.data.published)}{review.data.draft ? " · 文章草稿" : ""}</p>
+						{review.data.description && <p>{review.data.description}</p>}
+						<div class="anime-actions"><a class="anime-pill" href={getPostUrlBySlug(review.id)}>进入文章 →</a>{ReviewContent && <a class="anime-pill" href="#anime-review-body">本页阅读全文 ↓</a>}</div>
+						{review.data.password && <p class="anime-meta">这篇点评需在文章详情页解锁阅读。</p>}
+					</aside>}
+				</div>
+				{review && ReviewContent && <article id="anime-review-body" class="anime-review-body" data-pagefind-ignore>
+					<header><h2>{review.data.title}</h2><p class="anime-meta">{formatDateI18n(review.data.published)} · <a href={getPostUrlBySlug(review.id)}>在文章详情页阅读 →</a></p></header>
+					<Markdown class="markdown-content"><ReviewContent /></Markdown>
+				</article>}
 			</> : <div class="anime-empty"><h3>追番记录准备中</h3><p>新的期待与评价，会在这里慢慢积累。</p></div>}
-			{import.meta.env.DEV && <div id="anime-editor-root" data-board-id={boardId} data-version-id={versionId} data-posts={JSON.stringify(editorPosts)}><p class="anime-meta">正在加载本机编辑器…</p></div>}
+			</div>
+			{import.meta.env.DEV && Astro.url.searchParams.get("preview") !== "1" && <div id="anime-editor-root" data-board-id={boardId} data-version-id={versionId} data-posts={JSON.stringify(editorPosts)}><p class="anime-meta">正在加载本机编辑器…</p></div>}
 		</div>
 	</section>
 </MainGridLayout>

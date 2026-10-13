@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
 	mkdir,
 	readdir,
@@ -35,10 +35,14 @@ async function atomicWrite(file, data) {
 	await rename(temp, file);
 }
 
-export function createAnimeStore(root) {
+export function createAnimeStore(
+	root,
+	ranking = { createSnapshot, normalizeLegacyDraft, validateDraft },
+) {
 	const archiveFile = path.join(root, "src/data/anime.json");
 	const draftDir = path.join(root, ".local/anime");
 	const lockDir = path.join(draftDir, ".write-lock");
+	const trashFile = path.join(root, ".local/anime-trash.json");
 	let writes = Promise.resolve();
 	const enqueue = (operation) => {
 		const result = writes
@@ -72,9 +76,50 @@ export function createAnimeStore(root) {
 	const getDraft = async (id) => {
 		const record = await readJson(draftFile(id), null);
 		return record
-			? { ...record, draft: normalizeLegacyDraft(record.draft) }
+			? { ...record, draft: ranking.normalizeLegacyDraft(record.draft) }
 			: null;
 	};
+	const versionKey = (id, versionId) => `${id}/${versionId}`;
+	const fingerprint = (data, id, snapshot) =>
+		createHash("sha256")
+			.update(
+				JSON.stringify({
+					snapshot,
+					postId: data.reviews[versionKey(id, snapshot.id)] || "",
+				}),
+			)
+			.digest("hex");
+	const findVersion = (data, id, versionId, expectedRevision) => {
+		checkId(id);
+		const board = data.boards.find((item) => item.id === id);
+		const snapshot = board?.versions.find((item) => item.id === versionId);
+		if (!snapshot) fail("公开版本不存在，可能已在其他窗口移入回收站", 409);
+		if (fingerprint(data, id, snapshot) !== expectedRevision)
+			fail("公开版本或点评已在其他窗口更新，请重新载入后再保存", 409);
+		return { board, snapshot };
+	};
+	const setPost = (data, id, versionId, postId) => {
+		if (
+			typeof postId !== "string" ||
+			postId.length > 300 ||
+			[...postId].some((char) => char.charCodeAt(0) < 32)
+		)
+			fail("文章标识无效");
+		const key = versionKey(id, versionId);
+		if (postId) data.reviews[key] = postId;
+		else delete data.reviews[key];
+	};
+	const validateLabel = (label) => {
+		if (typeof label !== "string" || !label.trim() || label.length > 100)
+			fail("请填写 1～100 字的版本名称");
+		return label.trim();
+	};
+	const versionInput = (id, input) => {
+		const draft = ranking.validateDraft(input);
+		if (id !== `${draft.year}-${draft.quarter}`) fail("季度与榜单标识不一致");
+		return draft;
+	};
+
 	return {
 		async state() {
 			await writes.catch(() => {});
@@ -84,8 +129,26 @@ export function createAnimeStore(root) {
 			} catch (error) {
 				if (error.code !== "ENOENT") throw error;
 			}
+			const data = await archive();
+			const versionRevisions = Object.fromEntries(
+				data.boards.flatMap((board) =>
+					board.versions.map((snapshot) => [
+						versionKey(board.id, snapshot.id),
+						fingerprint(data, board.id, snapshot),
+					]),
+				),
+			);
+			const trash = (await readJson(trashFile, [])).filter(
+				(item) =>
+					!data.boards
+						.find((board) => board.id === item.boardId)
+						?.versions.some((snapshot) => snapshot.id === item.snapshot.id),
+			);
 			return {
-				archive: await archive(),
+				features: { tierNames: true, versionManagement: true },
+				archive: data,
+				versionRevisions,
+				trash,
 				drafts: await Promise.all(
 					files
 						.filter((file) => /^\d{4}-(1|4|7|10)\.json$/.test(file))
@@ -93,16 +156,25 @@ export function createAnimeStore(root) {
 				),
 			};
 		},
-		saveDraft(id, input, expectedRevision) {
+		saveDraft(id, input, expectedRevision, label) {
 			return enqueue(async () => {
 				checkId(id);
-				const draft = validateDraft(input);
+				const draft = ranking.validateDraft(input);
 				if (id !== `${draft.year}-${draft.quarter}`)
 					fail("季度与榜单标识不一致");
 				const current = await getDraft(id);
 				if ((current?.revision ?? null) !== expectedRevision)
 					fail("草稿已在其他窗口更新，请重新载入后再保存", 409);
-				const record = { boardId: id, revision: randomUUID(), draft };
+				const record = {
+					boardId: id,
+					revision: randomUUID(),
+					draft,
+					label: validateLabel(
+						label ??
+							current?.label ??
+							(draft.mode === "plan" ? "追番计划" : "中期评价"),
+					),
+				};
 				await atomicWrite(draftFile(id), record);
 				return record;
 			});
@@ -117,12 +189,17 @@ export function createAnimeStore(root) {
 				if (
 					board?.versions.some(
 						(version) => version.id === `v-${record.revision}`,
+					) ||
+					(await readJson(trashFile, [])).some(
+						(item) =>
+							item.boardId === id &&
+							item.snapshot.id === `v-${record.revision}`,
 					)
 				)
 					fail("这份草稿已经保存为公开版本；调整并保存草稿后可创建新版本", 409);
-				const snapshot = createSnapshot(
+				const snapshot = ranking.createSnapshot(
 					record.draft,
-					label,
+					validateLabel(label),
 					`v-${record.revision}`,
 					new Date().toISOString(),
 				);
@@ -142,26 +219,136 @@ export function createAnimeStore(root) {
 				return snapshot;
 			});
 		},
-		setReview(id, versionId, postId) {
+		updateVersion(id, versionId, input, label, postId, expectedRevision) {
+			return enqueue(async () => {
+				const data = await archive();
+				const { board, snapshot } = findVersion(
+					data,
+					id,
+					versionId,
+					expectedRevision,
+				);
+				const updated = {
+					...ranking.createSnapshot(
+						versionInput(id, input),
+						validateLabel(label),
+						snapshot.id,
+						snapshot.createdAt,
+					),
+					updatedAt: new Date().toISOString(),
+				};
+				setPost(data, id, versionId, postId);
+				board.versions[board.versions.indexOf(snapshot)] = updated;
+				await atomicWrite(archiveFile, data);
+				return updated;
+			});
+		},
+		copyVersion(id, versionId, input, label, postId, expectedRevision) {
+			return enqueue(async () => {
+				const data = await archive();
+				const { board } = findVersion(data, id, versionId, expectedRevision);
+				const snapshot = ranking.createSnapshot(
+					versionInput(id, input),
+					validateLabel(label),
+					`v-${randomUUID()}`,
+					new Date().toISOString(),
+				);
+				setPost(data, id, snapshot.id, postId);
+				board.versions.push(snapshot);
+				await atomicWrite(archiveFile, data);
+				return snapshot;
+			});
+		},
+		setReview(id, versionId, postId, expectedRevision) {
+			return enqueue(async () => {
+				const data = await archive();
+				findVersion(data, id, versionId, expectedRevision);
+				setPost(data, id, versionId, postId);
+				await atomicWrite(archiveFile, data);
+			});
+		},
+		trashVersion(id, versionId, expectedRevision) {
+			return enqueue(async () => {
+				const data = await archive();
+				const { board, snapshot } = findVersion(
+					data,
+					id,
+					versionId,
+					expectedRevision,
+				);
+				const index = board.versions.indexOf(snapshot);
+				const trash = (await readJson(trashFile, [])).filter(
+					(item) => !(item.boardId === id && item.snapshot.id === versionId),
+				);
+				const previousOrder = trash
+					.filter((item) => item.boardId === id)
+					.flatMap((item) => item.order || []);
+				const order = [
+					...new Set([
+						...previousOrder,
+						...board.versions.map((version) => version.id),
+					]),
+				];
+				trash.push({
+					order,
+					boardId: id,
+					boardTitle: board.title,
+					year: board.year,
+					quarter: board.quarter,
+					snapshot,
+					postId: data.reviews[versionKey(id, versionId)] || "",
+					deletedAt: new Date().toISOString(),
+				});
+				await atomicWrite(trashFile, trash);
+				board.versions.splice(index, 1);
+				delete data.reviews[versionKey(id, versionId)];
+				await atomicWrite(archiveFile, data);
+			});
+		},
+		restoreVersion(id, versionId) {
 			return enqueue(async () => {
 				checkId(id);
+				const trash = await readJson(trashFile, []);
+				const entry = trash.find(
+					(item) => item.boardId === id && item.snapshot.id === versionId,
+				);
+				if (!entry) fail("已删除版本不存在");
 				const data = await archive();
-				if (
-					!data.boards
-						.find((board) => board.id === id)
-						?.versions.some((version) => version.id === versionId)
-				)
-					fail("公开版本不存在");
-				if (
-					typeof postId !== "string" ||
-					postId.length > 300 ||
-					[...postId].some((char) => char.charCodeAt(0) < 32)
-				)
-					fail("文章标识无效");
-				const key = `${id}/${versionId}`;
-				if (postId) data.reviews[key] = postId;
-				else delete data.reviews[key];
+				let board = data.boards.find((item) => item.id === id);
+				if (!board) {
+					board = {
+						id,
+						title: entry.boardTitle,
+						year: entry.year,
+						quarter: entry.quarter,
+						versions: [],
+					};
+					data.boards.push(board);
+				}
+				if (board.versions.some((snapshot) => snapshot.id === versionId))
+					fail("版本已恢复，请重新载入", 409);
+				const position = entry.order.indexOf(versionId);
+				const next = board.versions.findIndex(
+					(snapshot) =>
+						!entry.order.includes(snapshot.id) ||
+						entry.order.indexOf(snapshot.id) > position,
+				);
+				const index = next >= 0 ? next : board.versions.length;
+				board.versions.splice(index, 0, entry.snapshot);
+				setPost(data, id, versionId, entry.postId);
 				await atomicWrite(archiveFile, data);
+				try {
+					await atomicWrite(
+						trashFile,
+						trash.filter((item) => item !== entry),
+					);
+				} catch {
+					return {
+						snapshot: entry.snapshot,
+						warning: "版本已恢复，私有备份清理失败；该备份不会重复显示",
+					};
+				}
+				return { snapshot: entry.snapshot };
 			});
 		},
 	};
@@ -258,6 +445,17 @@ export function animeDevApi(apiUrl) {
 	return {
 		name: "firefly-anime-dev-api",
 		apply: "serve",
+		handleHotUpdate(context) {
+			if (
+				context.file !==
+				path.join(context.server.config.root, "src/data/anime.json")
+			)
+				return;
+			// 工作台自行刷新数据；只失效 SSR 缓存，避免保存后整页重载丢失选择。
+			for (const module of context.modules)
+				context.server.moduleGraph.invalidateModule(module);
+			return [];
+		},
 		config(config) {
 			return {
 				server: {
@@ -278,7 +476,14 @@ export function animeDevApi(apiUrl) {
 			};
 		},
 		configureServer(server) {
-			const store = createAnimeStore(server.config.root);
+			// Vite invalidates this SSR module when its validation changes; keep one write queue.
+			let ranking = { createSnapshot, normalizeLegacyDraft, validateDraft };
+			const store = createAnimeStore(server.config.root, {
+				createSnapshot: (...args) => ranking.createSnapshot(...args),
+				normalizeLegacyDraft: (...args) =>
+					ranking.normalizeLegacyDraft(...args),
+				validateDraft: (...args) => ranking.validateDraft(...args),
+			});
 			server.middlewares.use(async (req, res, next) => {
 				if ((req.url || "").split("?")[0].replace(/\/$/, "") !== "/api/anime")
 					return next();
@@ -291,6 +496,7 @@ export function animeDevApi(apiUrl) {
 				if (!isLocalRequest(req))
 					return send(403, { error: "仅允许本机同源访问" });
 				try {
+					ranking = await server.ssrLoadModule("/src/utils/anime-ranking.ts");
 					if (req.method === "GET") return send(200, await store.state());
 					if (req.method !== "POST")
 						return send(405, { error: "仅支持 GET / POST" });
@@ -314,7 +520,12 @@ export function animeDevApi(apiUrl) {
 					if (body.action === "save")
 						return send(
 							200,
-							await store.saveDraft(body.boardId, body.draft, body.revision),
+							await store.saveDraft(
+								body.boardId,
+								body.draft,
+								body.revision,
+								body.label,
+							),
 						);
 					if (body.action === "publish")
 						return send(
@@ -322,9 +533,41 @@ export function animeDevApi(apiUrl) {
 							await store.publish(body.boardId, body.revision, body.label),
 						);
 					if (body.action === "review") {
-						await store.setReview(body.boardId, body.versionId, body.postId);
+						await store.setReview(
+							body.boardId,
+							body.versionId,
+							body.postId,
+							body.versionRevision,
+						);
 						return send(200, { ok: true });
 					}
+					if (body.action === "update" || body.action === "copy")
+						return send(
+							200,
+							await store[
+								body.action === "update" ? "updateVersion" : "copyVersion"
+							](
+								body.boardId,
+								body.versionId,
+								body.draft,
+								body.label,
+								body.postId,
+								body.versionRevision,
+							),
+						);
+					if (body.action === "trash") {
+						await store.trashVersion(
+							body.boardId,
+							body.versionId,
+							body.versionRevision,
+						);
+						return send(200, { ok: true });
+					}
+					if (body.action === "restore")
+						return send(
+							200,
+							await store.restoreVersion(body.boardId, body.versionId),
+						);
 					if (body.action === "import")
 						return send(200, {
 							subjects: await importQuarter(apiUrl, body.year, body.quarter),

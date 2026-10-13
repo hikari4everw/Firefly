@@ -36,20 +36,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		],
 	});
 
-	//社交及其子菜单
-	links.push({
-		name: "社交",
-		url: "#",
-		icon: "material-symbols:group",
-		children: [
-			// 友链
-			LinkPresets.Friends,
-
-			// 留言
-			LinkPresets.Guestbook,
-		],
-	});
-
 	// 动态作为独立导航入口
 	links.push(LinkPresets.Dynamic);
 
@@ -73,6 +59,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 			// MyAnimeList
 			LinkPresets.MAL,
+			LinkPresets.About,
 		],
 	});
 
@@ -80,11 +67,25 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 	links.push({
 		name: "ACG",
 		url: "#",
-		icon: "material-symbols:movie",
+		icon: "material-symbols:live-tv-outline-rounded",
 		children: [
 			LinkPresets.Bilibili,
 			LinkPresets.Bangumi,
 			LinkPresets.Anime,
+		],
+	});
+
+	//社交及其子菜单
+	links.push({
+		name: "社交",
+		url: "#",
+		icon: "material-symbols:group",
+		children: [
+			// 友链
+			LinkPresets.Friends,
+
+			// 留言
+			LinkPresets.Guestbook,
 		],
 	});
 
@@ -96,9 +97,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		children: [
 			// 打赏
 			LinkPresets.Sponsor,
-
-			// 关于页面
-			LinkPresets.About,
 		],
 	});
 
@@ -227,7 +225,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 	Anime: {
 		name: "追番",
 		url: "/anime/",
-		icon: "material-symbols:movie",
+		icon: "material-symbols:live-tv-rounded",
 		pageKey: "anime",
 	},
 	VNDB: {
