@@ -1,4 +1,2931 @@
 {
-  "boards": [],
-  "reviews": {}
+	"boards": [
+		{
+			"id": "2026-7",
+			"title": "2026年7月新番",
+			"year": 2026,
+			"quarter": 7,
+			"versions": [
+				{
+					"title": "2026年7月新番完结评价",
+					"year": 2026,
+					"quarter": 7,
+					"mode": "review",
+					"items": [
+						{
+							"id": 541285,
+							"title": "与你相恋到生命尽头",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b3/26/541285_CYBZc.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 495291,
+							"title": "再见菈菈",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/18/af/495291_9WuBW.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 255209,
+							"title": "二十世纪电气目录",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ce/3a/255209_9w0tU.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638497,
+							"title": "相反的你和我 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fa/9b/638497_85455.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 545917,
+							"title": "画完这个再去死",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/8b/c0/545917_GoNvI.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 325767,
+							"title": "感谢对战。 ～大小姐才不玩格斗游戏～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a1/d3/325767_u3pvR.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 496276,
+							"title": "攻壳机动队 THE GHOST IN THE SHELL",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7e/10/496276_Qeu06.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 339515,
+							"title": "幼女战记 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/45/a6/339515_OTG2O.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 587109,
+							"title": "花织即使是转生也想打架",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/59/84/587109_uryz6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 607340,
+							"title": "与奔驰于透明之夜的你，谈一场看不见的恋爱。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/71/44/607340_n8Rrl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617123,
+							"title": "少女怪兽焦糖味",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e3/74/617123_PaMs9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 538760,
+							"title": "猫与龙",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c5/16/538760_T0rxN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 585820,
+							"title": "Clevatess II-魔兽之王与虚假的勇者传承-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1a/a0/585820_NpfLN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530725,
+							"title": "死神 千年血战篇-祸进谭-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ad/f9/530725_CAqWC.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 517106,
+							"title": "擅长逃跑的殿下 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5d/00/517106_Il9mk.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456080,
+							"title": "转学后班上的清纯可爱美少女，竟是小时候玩在一起的哥们儿",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ce/e2/456080_IskBl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 602733,
+							"title": "才女的侍从 在满是高岭之花的贵族学校暗中照顾（毫无生活自理能力的）学院第一大小姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/bd/74/602733_X0NNo.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 590786,
+							"title": "『你们先走我断后』，于是10年后我成为了传说",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/2c/93/590786_vA6R5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 622633,
+							"title": "THE WORLD IS DANCING 世界在起舞",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e5/4e/622633_JNfJt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 558064,
+							"title": "女主角？圣女？不，我是杂役女仆（自豪）！",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/e4/558064_ApStA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 412144,
+							"title": "恋爱游戏世界对路人角色很不友好 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/16/a8/412144_39HJH.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 565701,
+							"title": "乡下大叔成为剑圣 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/85/7f/565701_JKCaL.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 579787,
+							"title": "LV999的村民",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e4/57/579787_9aHqE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630163,
+							"title": "落第贤者的学院无双～第二次转生的S级开外挂魔术师冒险录～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fd/f7/630163_yyAc7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638151,
+							"title": "地狱模式～喜欢挑战特殊成就的玩家在废设定的异世界成为无双～第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fa/0b/638151_q95Ls.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530729,
+							"title": "魔法少女奈叶 EXCEEDS Gun Blaze Vengeance",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/cf/0b/530729_82Fm9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 528828,
+							"title": "骸骨骑士大人异世界冒险中 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1d/71/528828_oQl2M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 572613,
+							"title": "不虐待我的继母与继姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/7e/572613_v58Bn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 571895,
+							"title": "从0位居民开始的边境领主大人",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a2/a1/571895_0KwUw.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 614594,
+							"title": "令和妖神斑小姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/29/c5/614594_f5Szx.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 454083,
+							"title": "碧蓝航线：微速前行！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/12/454083_4DZpt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 625215,
+							"title": "雷霆三人行",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7f/48/625215_HwhCa.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 579246,
+							"title": "暴怒千金发誓复仇。～凭借魔导书之力打垮祖国～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e2/dd/579246_61291.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 584641,
+							"title": "奇招百出的维多利亚",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/5b/584641_150ne.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456081,
+							"title": "最强废渣皇子暗中活跃于帝位之争",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a7/a6/456081_Bs2nE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 583862,
+							"title": "世界最强的后卫 ～迷宫国的新人探索者～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/45/58/583862_6YGGE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 529723,
+							"title": "魔法光源股份有限公司 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/28/ae/529723_9qSo4.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 542603,
+							"title": "暗黑灯火",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1b/75/542603_KZT1m.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621835,
+							"title": "盗墓王",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7a/d3/621835_IFhDH.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 633354,
+							"title": "同一个研讨会的染谷同学是AV女优的事",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f3/66/633354_zm82g.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636067,
+							"title": "无用圣女的异世界美食之旅 凭借隐藏技能召唤露营车",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/75/fd/636067_0uuym.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 563745,
+							"title": "鬼的新娘",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b9/ac/563745_YI26V.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 276787,
+							"title": "梅比乌斯之尘",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/cc/46/276787_4oO0A.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 595106,
+							"title": "Let's Go 怪奇组",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/8d/595106_ll6Jj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 577191,
+							"title": "航海王 女英雄们的故事",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b1/dd/577191_c7zCc.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 613438,
+							"title": "我家的弟弟们真是让您费心了",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/15/fb/613438_pJVpS.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530104,
+							"title": "转生贵族凭鉴定技能扭转人生 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/32/530104_8pzHh.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 627648,
+							"title": "天是红河岸",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/11/b7/627648_huSQf.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 631018,
+							"title": "说了不打算爱我的公爵继承人，不知为何对我宠爱有加",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e9/a8/631018_i8egE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 603352,
+							"title": "文豪野犬 汪！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c2/c8/603352_n5RgE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 569671,
+							"title": "斗球女弹子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5a/fe/569671_c1VqG.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621843,
+							"title": "岩元前辈的推荐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a7/0a/621843_5tN5J.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637124,
+							"title": "花样少年少女 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/20/0f/637124_6DDda.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638995,
+							"title": "拯救替身千金的是冷酷无情冰之王子的爱",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/96/aa/638995_mM0aJ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 618199,
+							"title": "名侦探柯南 第30号杀人事件",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b2/b0/618199_qbkB1.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 612697,
+							"title": "魔真神坛斗士 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c5/ce/612697_fvrFF.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630164,
+							"title": "彻底对你成瘾",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/48/2b/630164_rIi5N.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637339,
+							"title": "北斗神拳 拳王军杂兵们的挽歌 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d0/a9/637339_93zPo.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 586941,
+							"title": "新网球王子 U-17 世界杯 决赛成员选拔赛",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/58/86/586941_GOh8v.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 662006,
+							"title": "暗芝居 第十七季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/b0/662006_tnf6N.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 675448,
+							"title": "Ghost Meets Gal!",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b8/83/675448_GDFw2.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 633711,
+							"title": "プラノサウルス ガチコセイブツ部",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ea/4c/633711_V28UU.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 532053,
+							"title": "地球大好き！きっくん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a3/dd/532053_NK9BA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 619052,
+							"title": "做得很好！名作君 完全新作",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/dd/82/619052_B0qAA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 651872,
+							"title": "パンの赤ちゃん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/bd/2d/651872_0FMCj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 659686,
+							"title": "トミカとトム シーズン2",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/67/28/659686_001De.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 695684,
+							"title": "硫磺岛的白旗",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/97/56/695684_v2fEC.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 598058,
+							"title": "超超超超超喜欢你的100个女朋友 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/96/f8/598058_R7dl3.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 501963,
+							"title": "无职转生 第三季 ～到了异世界就拿出真本事～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1f/9e/501963_bXlEP.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 571784,
+							"title": "在超市后门吸烟的二人",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6f/42/571784_leRlL.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 569116,
+							"title": "碧蓝之海 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f1/bf/569116_n6dPq.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 633836,
+							"title": "Re：从零开始的异世界生活 第四季 夺还篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/43/ca/633836_ql0f3.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 583729,
+							"title": "BanG Dream! YUME∞MITA",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1c/e4/583729_KxOZV.jpg",
+							"placement": "tier:3"
+						},
+						{
+							"id": 545008,
+							"title": "恶女不才，请多关照 ～雏宫蝶鼠换身传～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/14/a1/545008_pNnzQ.jpg",
+							"placement": "tier:4"
+						},
+						{
+							"id": 552533,
+							"title": "穹庐下的魔女",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/28/41/552533_E9DF9.jpg",
+							"placement": "tier:4"
+						},
+						{
+							"id": 615835,
+							"title": "炒翻天",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/27/b5/615835_IbNAh.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 570583,
+							"title": "Grow Up Show ～向日葵马戏团～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0c/cf/570583_d3QZD.jpg",
+							"placement": "tier:1"
+						},
+						{
+							"id": 627136,
+							"title": "从后面来的神威先生",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/01/8f/627136_hb0Jd.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 511177,
+							"title": "遭到流放的转生重骑士凭借游戏知识大开无双",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/8f/47/511177_JOC1M.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 451757,
+							"title": "瑞克和莫蒂 第九季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/87/a0/451757_qpMMi.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 607915,
+							"title": "凡人修仙传 第五季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ac/c9/607915_RBL8u.jpg",
+							"placement": "tier:1"
+						},
+						{
+							"id": 622206,
+							"title": "尼古喵喵",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6a/b3/622206_dpWcC.jpg",
+							"placement": "tier:0"
+						}
+					],
+					"id": "v-3601bc67-9ebe-4a73-8c37-ff4e29392615",
+					"label": "中期评价",
+					"createdAt": "2026-10-12T10:13:50.383Z"
+				},
+				{
+					"title": "2026年7月新番完结评价",
+					"year": 2026,
+					"quarter": 7,
+					"mode": "review",
+					"tiers": [
+						"神作",
+						"佳作",
+						"还行",
+						"拉"
+					],
+					"items": [
+						{
+							"id": 541285,
+							"title": "与你相恋到生命尽头",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b3/26/541285_CYBZc.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 495291,
+							"title": "再见菈菈",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/18/af/495291_9WuBW.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 255209,
+							"title": "二十世纪电气目录",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ce/3a/255209_9w0tU.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638497,
+							"title": "相反的你和我 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fa/9b/638497_85455.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 545917,
+							"title": "画完这个再去死",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/8b/c0/545917_GoNvI.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 325767,
+							"title": "感谢对战。 ～大小姐才不玩格斗游戏～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a1/d3/325767_u3pvR.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 496276,
+							"title": "攻壳机动队 THE GHOST IN THE SHELL",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7e/10/496276_Qeu06.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 339515,
+							"title": "幼女战记 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/45/a6/339515_OTG2O.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 587109,
+							"title": "花织即使是转生也想打架",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/59/84/587109_uryz6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 607340,
+							"title": "与奔驰于透明之夜的你，谈一场看不见的恋爱。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/71/44/607340_n8Rrl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617123,
+							"title": "少女怪兽焦糖味",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e3/74/617123_PaMs9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 538760,
+							"title": "猫与龙",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c5/16/538760_T0rxN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 585820,
+							"title": "Clevatess II-魔兽之王与虚假的勇者传承-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1a/a0/585820_NpfLN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530725,
+							"title": "死神 千年血战篇-祸进谭-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ad/f9/530725_CAqWC.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 517106,
+							"title": "擅长逃跑的殿下 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5d/00/517106_Il9mk.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456080,
+							"title": "转学后班上的清纯可爱美少女，竟是小时候玩在一起的哥们儿",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ce/e2/456080_IskBl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 602733,
+							"title": "才女的侍从 在满是高岭之花的贵族学校暗中照顾（毫无生活自理能力的）学院第一大小姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/bd/74/602733_X0NNo.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 590786,
+							"title": "『你们先走我断后』，于是10年后我成为了传说",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/2c/93/590786_vA6R5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 622633,
+							"title": "THE WORLD IS DANCING 世界在起舞",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e5/4e/622633_JNfJt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 558064,
+							"title": "女主角？圣女？不，我是杂役女仆（自豪）！",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/e4/558064_ApStA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 412144,
+							"title": "恋爱游戏世界对路人角色很不友好 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/16/a8/412144_39HJH.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 565701,
+							"title": "乡下大叔成为剑圣 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/85/7f/565701_JKCaL.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 579787,
+							"title": "LV999的村民",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e4/57/579787_9aHqE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630163,
+							"title": "落第贤者的学院无双～第二次转生的S级开外挂魔术师冒险录～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fd/f7/630163_yyAc7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638151,
+							"title": "地狱模式～喜欢挑战特殊成就的玩家在废设定的异世界成为无双～第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fa/0b/638151_q95Ls.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530729,
+							"title": "魔法少女奈叶 EXCEEDS Gun Blaze Vengeance",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/cf/0b/530729_82Fm9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 528828,
+							"title": "骸骨骑士大人异世界冒险中 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1d/71/528828_oQl2M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 572613,
+							"title": "不虐待我的继母与继姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/7e/572613_v58Bn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 571895,
+							"title": "从0位居民开始的边境领主大人",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a2/a1/571895_0KwUw.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 614594,
+							"title": "令和妖神斑小姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/29/c5/614594_f5Szx.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 454083,
+							"title": "碧蓝航线：微速前行！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/12/454083_4DZpt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 625215,
+							"title": "雷霆三人行",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7f/48/625215_HwhCa.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 579246,
+							"title": "暴怒千金发誓复仇。～凭借魔导书之力打垮祖国～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e2/dd/579246_61291.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 584641,
+							"title": "奇招百出的维多利亚",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/5b/584641_150ne.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456081,
+							"title": "最强废渣皇子暗中活跃于帝位之争",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a7/a6/456081_Bs2nE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 583862,
+							"title": "世界最强的后卫 ～迷宫国的新人探索者～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/45/58/583862_6YGGE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 529723,
+							"title": "魔法光源股份有限公司 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/28/ae/529723_9qSo4.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 542603,
+							"title": "暗黑灯火",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1b/75/542603_KZT1m.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621835,
+							"title": "盗墓王",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7a/d3/621835_IFhDH.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 633354,
+							"title": "同一个研讨会的染谷同学是AV女优的事",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f3/66/633354_zm82g.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636067,
+							"title": "无用圣女的异世界美食之旅 凭借隐藏技能召唤露营车",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/75/fd/636067_0uuym.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 563745,
+							"title": "鬼的新娘",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b9/ac/563745_YI26V.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 276787,
+							"title": "梅比乌斯之尘",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/cc/46/276787_4oO0A.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 595106,
+							"title": "Let's Go 怪奇组",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/8d/595106_ll6Jj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 577191,
+							"title": "航海王 女英雄们的故事",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b1/dd/577191_c7zCc.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 613438,
+							"title": "我家的弟弟们真是让您费心了",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/15/fb/613438_pJVpS.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530104,
+							"title": "转生贵族凭鉴定技能扭转人生 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/32/530104_8pzHh.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 627648,
+							"title": "天是红河岸",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/11/b7/627648_huSQf.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 631018,
+							"title": "说了不打算爱我的公爵继承人，不知为何对我宠爱有加",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e9/a8/631018_i8egE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 603352,
+							"title": "文豪野犬 汪！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c2/c8/603352_n5RgE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 569671,
+							"title": "斗球女弹子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5a/fe/569671_c1VqG.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621843,
+							"title": "岩元前辈的推荐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a7/0a/621843_5tN5J.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637124,
+							"title": "花样少年少女 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/20/0f/637124_6DDda.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638995,
+							"title": "拯救替身千金的是冷酷无情冰之王子的爱",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/96/aa/638995_mM0aJ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 618199,
+							"title": "名侦探柯南 第30号杀人事件",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b2/b0/618199_qbkB1.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 612697,
+							"title": "魔真神坛斗士 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c5/ce/612697_fvrFF.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630164,
+							"title": "彻底对你成瘾",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/48/2b/630164_rIi5N.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637339,
+							"title": "北斗神拳 拳王军杂兵们的挽歌 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d0/a9/637339_93zPo.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 586941,
+							"title": "新网球王子 U-17 世界杯 决赛成员选拔赛",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/58/86/586941_GOh8v.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 662006,
+							"title": "暗芝居 第十七季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/b0/662006_tnf6N.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 675448,
+							"title": "Ghost Meets Gal!",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b8/83/675448_GDFw2.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 633711,
+							"title": "プラノサウルス ガチコセイブツ部",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ea/4c/633711_V28UU.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 532053,
+							"title": "地球大好き！きっくん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a3/dd/532053_NK9BA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 619052,
+							"title": "做得很好！名作君 完全新作",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/dd/82/619052_B0qAA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 651872,
+							"title": "パンの赤ちゃん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/bd/2d/651872_0FMCj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 659686,
+							"title": "トミカとトム シーズン2",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/67/28/659686_001De.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 695684,
+							"title": "硫磺岛的白旗",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/97/56/695684_v2fEC.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 598058,
+							"title": "超超超超超喜欢你的100个女朋友 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/96/f8/598058_R7dl3.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 501963,
+							"title": "无职转生 第三季 ～到了异世界就拿出真本事～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1f/9e/501963_bXlEP.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 571784,
+							"title": "在超市后门吸烟的二人",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6f/42/571784_leRlL.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 569116,
+							"title": "碧蓝之海 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f1/bf/569116_n6dPq.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 633836,
+							"title": "Re：从零开始的异世界生活 第四季 夺还篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/43/ca/633836_ql0f3.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 583729,
+							"title": "BanG Dream! YUME∞MITA",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1c/e4/583729_KxOZV.jpg",
+							"placement": "tier:3"
+						},
+						{
+							"id": 545008,
+							"title": "恶女不才，请多关照 ～雏宫蝶鼠换身传～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/14/a1/545008_pNnzQ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 552533,
+							"title": "穹庐下的魔女",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/28/41/552533_E9DF9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 615835,
+							"title": "炒翻天",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/27/b5/615835_IbNAh.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 570583,
+							"title": "Grow Up Show ～向日葵马戏团～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0c/cf/570583_d3QZD.jpg",
+							"placement": "tier:1"
+						},
+						{
+							"id": 627136,
+							"title": "从后面来的神威先生",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/01/8f/627136_hb0Jd.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 511177,
+							"title": "遭到流放的转生重骑士凭借游戏知识大开无双",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/8f/47/511177_JOC1M.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 451757,
+							"title": "瑞克和莫蒂 第九季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/87/a0/451757_qpMMi.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 607915,
+							"title": "凡人修仙传 第五季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ac/c9/607915_RBL8u.jpg",
+							"placement": "tier:1"
+						},
+						{
+							"id": 622206,
+							"title": "尼古喵喵",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6a/b3/622206_dpWcC.jpg",
+							"placement": "tier:0"
+						}
+					],
+					"id": "v-43cb733d-cf94-4b98-a04a-8139709613c8",
+					"label": "完结评价",
+					"createdAt": "2026-10-13T06:25:34.424Z"
+				},
+				{
+					"title": "2026年7月新番",
+					"year": 2026,
+					"quarter": 7,
+					"mode": "review",
+					"tiers": [
+						"神作",
+						"佳作",
+						"还行",
+						"拉"
+					],
+					"items": [
+						{
+							"id": 541285,
+							"title": "与你相恋到生命尽头",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b3/26/541285_CYBZc.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 495291,
+							"title": "再见菈菈",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/18/af/495291_9WuBW.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 255209,
+							"title": "二十世纪电气目录",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ce/3a/255209_9w0tU.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638497,
+							"title": "相反的你和我 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fa/9b/638497_85455.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 545917,
+							"title": "画完这个再去死",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/8b/c0/545917_GoNvI.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 325767,
+							"title": "感谢对战。 ～大小姐才不玩格斗游戏～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a1/d3/325767_u3pvR.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 496276,
+							"title": "攻壳机动队 THE GHOST IN THE SHELL",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7e/10/496276_Qeu06.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 339515,
+							"title": "幼女战记 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/45/a6/339515_OTG2O.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 587109,
+							"title": "花织即使是转生也想打架",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/59/84/587109_uryz6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 607340,
+							"title": "与奔驰于透明之夜的你，谈一场看不见的恋爱。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/71/44/607340_n8Rrl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617123,
+							"title": "少女怪兽焦糖味",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e3/74/617123_PaMs9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 538760,
+							"title": "猫与龙",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c5/16/538760_T0rxN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 585820,
+							"title": "Clevatess II-魔兽之王与虚假的勇者传承-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1a/a0/585820_NpfLN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530725,
+							"title": "死神 千年血战篇-祸进谭-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ad/f9/530725_CAqWC.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 517106,
+							"title": "擅长逃跑的殿下 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5d/00/517106_Il9mk.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456080,
+							"title": "转学后班上的清纯可爱美少女，竟是小时候玩在一起的哥们儿",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ce/e2/456080_IskBl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 602733,
+							"title": "才女的侍从 在满是高岭之花的贵族学校暗中照顾（毫无生活自理能力的）学院第一大小姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/bd/74/602733_X0NNo.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 590786,
+							"title": "『你们先走我断后』，于是10年后我成为了传说",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/2c/93/590786_vA6R5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 622633,
+							"title": "THE WORLD IS DANCING 世界在起舞",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e5/4e/622633_JNfJt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 558064,
+							"title": "女主角？圣女？不，我是杂役女仆（自豪）！",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/e4/558064_ApStA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 412144,
+							"title": "恋爱游戏世界对路人角色很不友好 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/16/a8/412144_39HJH.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 565701,
+							"title": "乡下大叔成为剑圣 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/85/7f/565701_JKCaL.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 579787,
+							"title": "LV999的村民",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e4/57/579787_9aHqE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630163,
+							"title": "落第贤者的学院无双～第二次转生的S级开外挂魔术师冒险录～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fd/f7/630163_yyAc7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638151,
+							"title": "地狱模式～喜欢挑战特殊成就的玩家在废设定的异世界成为无双～第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fa/0b/638151_q95Ls.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530729,
+							"title": "魔法少女奈叶 EXCEEDS Gun Blaze Vengeance",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/cf/0b/530729_82Fm9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 528828,
+							"title": "骸骨骑士大人异世界冒险中 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1d/71/528828_oQl2M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 572613,
+							"title": "不虐待我的继母与继姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/7e/572613_v58Bn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 571895,
+							"title": "从0位居民开始的边境领主大人",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a2/a1/571895_0KwUw.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 614594,
+							"title": "令和妖神斑小姐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/29/c5/614594_f5Szx.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 454083,
+							"title": "碧蓝航线：微速前行！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/12/454083_4DZpt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 625215,
+							"title": "雷霆三人行",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7f/48/625215_HwhCa.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 579246,
+							"title": "暴怒千金发誓复仇。～凭借魔导书之力打垮祖国～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e2/dd/579246_61291.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 584641,
+							"title": "奇招百出的维多利亚",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/5b/584641_150ne.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456081,
+							"title": "最强废渣皇子暗中活跃于帝位之争",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a7/a6/456081_Bs2nE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 583862,
+							"title": "世界最强的后卫 ～迷宫国的新人探索者～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/45/58/583862_6YGGE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 529723,
+							"title": "魔法光源股份有限公司 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/28/ae/529723_9qSo4.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 542603,
+							"title": "暗黑灯火",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1b/75/542603_KZT1m.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621835,
+							"title": "盗墓王",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7a/d3/621835_IFhDH.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 633354,
+							"title": "同一个研讨会的染谷同学是AV女优的事",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f3/66/633354_zm82g.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636067,
+							"title": "无用圣女的异世界美食之旅 凭借隐藏技能召唤露营车",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/75/fd/636067_0uuym.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 563745,
+							"title": "鬼的新娘",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b9/ac/563745_YI26V.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 276787,
+							"title": "梅比乌斯之尘",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/cc/46/276787_4oO0A.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 595106,
+							"title": "Let's Go 怪奇组",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/8d/595106_ll6Jj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 577191,
+							"title": "航海王 女英雄们的故事",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b1/dd/577191_c7zCc.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 613438,
+							"title": "我家的弟弟们真是让您费心了",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/15/fb/613438_pJVpS.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 530104,
+							"title": "转生贵族凭鉴定技能扭转人生 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/32/530104_8pzHh.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 627648,
+							"title": "天是红河岸",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/11/b7/627648_huSQf.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 631018,
+							"title": "说了不打算爱我的公爵继承人，不知为何对我宠爱有加",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e9/a8/631018_i8egE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 603352,
+							"title": "文豪野犬 汪！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c2/c8/603352_n5RgE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 569671,
+							"title": "斗球女弹子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5a/fe/569671_c1VqG.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621843,
+							"title": "岩元前辈的推荐",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a7/0a/621843_5tN5J.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637124,
+							"title": "花样少年少女 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/20/0f/637124_6DDda.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638995,
+							"title": "拯救替身千金的是冷酷无情冰之王子的爱",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/96/aa/638995_mM0aJ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 618199,
+							"title": "名侦探柯南 第30号杀人事件",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b2/b0/618199_qbkB1.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 612697,
+							"title": "魔真神坛斗士 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c5/ce/612697_fvrFF.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630164,
+							"title": "彻底对你成瘾",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/48/2b/630164_rIi5N.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637339,
+							"title": "北斗神拳 拳王军杂兵们的挽歌 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d0/a9/637339_93zPo.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 586941,
+							"title": "新网球王子 U-17 世界杯 决赛成员选拔赛",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/58/86/586941_GOh8v.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 662006,
+							"title": "暗芝居 第十七季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/04/b0/662006_tnf6N.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 675448,
+							"title": "Ghost Meets Gal!",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b8/83/675448_GDFw2.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 633711,
+							"title": "プラノサウルス ガチコセイブツ部",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ea/4c/633711_V28UU.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 532053,
+							"title": "地球大好き！きっくん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/a3/dd/532053_NK9BA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 619052,
+							"title": "做得很好！名作君 完全新作",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/dd/82/619052_B0qAA.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 651872,
+							"title": "パンの赤ちゃん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/bd/2d/651872_0FMCj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 659686,
+							"title": "トミカとトム シーズン2",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/67/28/659686_001De.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 695684,
+							"title": "硫磺岛的白旗",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/97/56/695684_v2fEC.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 598058,
+							"title": "超超超超超喜欢你的100个女朋友 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/96/f8/598058_R7dl3.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 501963,
+							"title": "无职转生 第三季 ～到了异世界就拿出真本事～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1f/9e/501963_bXlEP.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 571784,
+							"title": "在超市后门吸烟的二人",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6f/42/571784_leRlL.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 569116,
+							"title": "碧蓝之海 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f1/bf/569116_n6dPq.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 633836,
+							"title": "Re：从零开始的异世界生活 第四季 夺还篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/43/ca/633836_ql0f3.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 583729,
+							"title": "BanG Dream! YUME∞MITA",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1c/e4/583729_KxOZV.jpg",
+							"placement": "tier:3"
+						},
+						{
+							"id": 545008,
+							"title": "恶女不才，请多关照 ～雏宫蝶鼠换身传～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/14/a1/545008_pNnzQ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 552533,
+							"title": "穹庐下的魔女",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/28/41/552533_E9DF9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 615835,
+							"title": "炒翻天",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/27/b5/615835_IbNAh.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 570583,
+							"title": "Grow Up Show ～向日葵马戏团～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0c/cf/570583_d3QZD.jpg",
+							"placement": "tier:1"
+						},
+						{
+							"id": 627136,
+							"title": "从后面来的神威先生",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/01/8f/627136_hb0Jd.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 511177,
+							"title": "遭到流放的转生重骑士凭借游戏知识大开无双",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/8f/47/511177_JOC1M.jpg",
+							"placement": "tier:2"
+						},
+						{
+							"id": 451757,
+							"title": "瑞克和莫蒂 第九季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/87/a0/451757_qpMMi.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 607915,
+							"title": "凡人修仙传 第五季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ac/c9/607915_RBL8u.jpg",
+							"placement": "tier:1"
+						},
+						{
+							"id": 622206,
+							"title": "尼古喵喵",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6a/b3/622206_dpWcC.jpg",
+							"placement": "tier:0"
+						}
+					],
+					"id": "v-2a037213-e087-4beb-aa01-a5f292e40532",
+					"label": "中期评价",
+					"createdAt": "2026-10-13T08:45:22.311Z"
+				}
+			]
+		},
+		{
+			"id": "2026-10",
+			"title": "2026年10月新番",
+			"year": 2026,
+			"quarter": 10,
+			"versions": [
+				{
+					"title": "2026年10月新番追番",
+					"year": 2026,
+					"quarter": 10,
+					"mode": "plan",
+					"items": [
+						{
+							"id": 568244,
+							"title": "药屋少女的呢喃 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/55/e2/568244_0D00X.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 537738,
+							"title": "某暗部的少女共栖",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1c/9b/537738_6rr67.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 625799,
+							"title": "被放逐的作弊赋予魔术师享受随心所欲的第二人生。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/3a/625799_ycox6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630160,
+							"title": "黑暗召唤师在地下恋爱中",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/9e/b5/630160_tL25y.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 624085,
+							"title": "乱世千金倪亚‧利斯顿转生为娇弱千金的弑神武人华丽无双录",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c6/8d/624085_5dXDL.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 665390,
+							"title": "冰之城墙 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e4/41/665390_UCHPM.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 548156,
+							"title": "青之箱 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f1/6c/548156_L3fC6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637802,
+							"title": "乱马1/2 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7a/49/637802_YVTam.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 656083,
+							"title": "不擅交际的未亡人雪女与诅咒戒指",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/7e/656083_B22Yt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 412008,
+							"title": "转生就是剑 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ee/ed/412008_vuyt4.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 584847,
+							"title": "弹珠汽水瓶里的千岁同学 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/83/49/584847_5nM0F.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 624923,
+							"title": "你好，我是受心上人所托来做恋爱药的魔女。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/73/99/624923_4u99L.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 393010,
+							"title": "侦探已经死了。 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/65/61/393010_EIOi9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 590553,
+							"title": "铁旅！meet with 铁道少女",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b6/e8/590553_Xz5PO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 647220,
+							"title": "女友的朋友",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/24/df/647220_cZZjY.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 418229,
+							"title": "魔法少女育成计划 restart",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/52/fe/418229_gcFij.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634708,
+							"title": "冷淡的佐藤同学只对我撒娇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/39/84/634708_NnWAS.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 586255,
+							"title": "僵尸搜寻中",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/9e/00/586255_FcfsN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 646154,
+							"title": "世界最强的魔女，就此开始",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/89/fc/646154_uQi81.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 511936,
+							"title": "罗梅莉亚战记",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/dc/f7/511936_XDkXO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636512,
+							"title": "至高之力",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/42/ae/636512_oOtDt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 486456,
+							"title": "佐佐木与文鸟小哔 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fc/aa/486456_XO5B0.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456078,
+							"title": "魔法★探险家",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f5/6b/456078_jtjPi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 555605,
+							"title": "青之芦苇 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/67/5a/555605_cLCw5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636023,
+							"title": "战车椅子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/94/c9/636023_iF8j7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 536270,
+							"title": "一觉醒来就有了最强装备跟太空船 决定以自家独栋建筑为目标当佣兵自由过活",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3e/fc/536270_51P45.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 567896,
+							"title": "黑色五叶草 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/be/e7/567896_RWffW.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 593565,
+							"title": "超巡！超条前辈",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/c1/593565_nno0j.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 606716,
+							"title": "用【循环利息】强制收回借出的魔力",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/15/11/606716_Om183.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621108,
+							"title": "萤火虫的出嫁",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5c/04/621108_guUyJ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 542007,
+							"title": "转生后的大圣女，极力隐瞒圣女的身分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/81/542007_wNKJa.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657656,
+							"title": "装备我最强",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/82/02/657656_z4b72.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657778,
+							"title": "兽王武神丹帝拜恩",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3b/a5/657778_7HXP5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634587,
+							"title": "转生哥布林有问题吗？",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/05/25/634587_8k4k7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 505550,
+							"title": "Dark Machine The Animation",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/84/86/505550_OLQmz.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 654294,
+							"title": "冰剑的魔术师将要统一世界 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/2f/654294_ckrD9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621073,
+							"title": "和没有信徒的女神大人一起攻略异世界",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/f9/621073_oFcZ3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 502123,
+							"title": "魔法骑士雷阿斯 (2026)",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e1/6f/502123_IiVB6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634210,
+							"title": "魔法姐妹露露特莉莉 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/44/ed/634210_O7aNK.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 471844,
+							"title": "归还者的魔法要特别 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1d/7c/471844_5G6H8.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 568525,
+							"title": "朱色假面",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3a/11/568525_ovn2M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 664389,
+							"title": "夜樱家的大作战 第二季 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/95/5d/664389_zP36V.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 541538,
+							"title": "幻想水浒传",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ee/12/541538_LxzAg.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 623249,
+							"title": "龙珠超 比鲁斯",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0f/0f/623249_zCdly.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 613256,
+							"title": "恐怖收集者",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7b/a7/613256_fxVvG.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617273,
+							"title": "Keroro军曹☆",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/60/14/617273_YNyyP.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 596771,
+							"title": "极致软弱千金小姐，不小心答应了精明未婚夫的赌局",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/39/bd/596771_y75Tw.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 614640,
+							"title": "PSYREN -决战游戏-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1b/1e/614640_ESMLl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 499474,
+							"title": "东京复仇者 三天战争篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0f/d4/499474_bheyE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657084,
+							"title": "七叶树王国的七名骑士",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ed/4a/657084_PZj4J.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 605533,
+							"title": "大叔喜欢可爱小玩意",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d1/e7/605533_97NSn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 551304,
+							"title": "我的幸福婚姻 特别篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ac/40/551304_5sWb1.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636058,
+							"title": "来自远方",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/58/0c/636058_bDwNj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 589775,
+							"title": "杀手旅店 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5d/8c/589775_QZq4Z.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701782,
+							"title": "苍蓝传承 威尔什&榭达",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e8/30/701782_CGGYY.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617948,
+							"title": "桃源暗鬼 ～日光・华严之泷篇～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/70/c2/617948_Mm3mn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 544378,
+							"title": "战斗之魂[Re] 绝界之空",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/af/544378_j3ouu.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 664395,
+							"title": "钻石王牌 act2 第二季 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/d5/664395_diPLi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 650428,
+							"title": "黑化吧！圣女大人 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/77/63/650428_G3GgP.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638081,
+							"title": "小狸猫与小狐狸",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/49/6a/638081_tc7A0.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 563508,
+							"title": "神秘面包小子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/56/5e/563508_t2XEq.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637206,
+							"title": "しろたん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/62/0c/637206_BoQXi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 640765,
+							"title": "卡片战斗先导者 Divinez 命运星战篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/34/f8/640765_IRR1M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 661278,
+							"title": "ゆるゆる図鑑",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e3/df/661278_g29RR.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 635258,
+							"title": "啵普与帕噗与珀尔嗒",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/df/29/635258_JqFf3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 688204,
+							"title": "ゆうさんち！from 遊ハち",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0b/d4/688204_mSshl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 694622,
+							"title": "ねずみくんのチョッキ 第2期",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fe/1b/694622_NhQb3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701565,
+							"title": "ふんばるず",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/79/c2/701565_WkAaz.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701779,
+							"title": "マゼンチュ",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/78/a0/701779_0phov.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 646586,
+							"title": "ぷにるんず ぷに４",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b7/a4/646586_DcbJB.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 704737,
+							"title": "シルバニアファミリー フレアのカラフル・エブリデイ",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7d/06/704737_iWzS7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 709475,
+							"title": "ゲルぴよ 第2期",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6f/24/709475_zpW8A.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 622288,
+							"title": "FX战士久留美",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d3/99/622288_nmbC3.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 554779,
+							"title": "学生会也有洞！",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/17/c7/554779_oPitO.jpg",
+							"placement": "tier:0"
+						},
+						{
+							"id": 616808,
+							"title": "野生的大魔王出现了！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f9/ae/616808_F80Sl.jpg",
+							"placement": "tier:0"
+						}
+					],
+					"id": "v-2223aad0-993b-4897-bb35-05e6d4599bf4",
+					"label": "追番计划",
+					"createdAt": "2026-10-12T10:15:47.110Z"
+				},
+				{
+					"title": "2026年10月新番完结评价",
+					"year": 2026,
+					"quarter": 10,
+					"mode": "review",
+					"items": [
+						{
+							"id": 568244,
+							"title": "药屋少女的呢喃 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/55/e2/568244_0D00X.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 537738,
+							"title": "某暗部的少女共栖",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1c/9b/537738_6rr67.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 625799,
+							"title": "被放逐的作弊赋予魔术师享受随心所欲的第二人生。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/3a/625799_ycox6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630160,
+							"title": "黑暗召唤师在地下恋爱中",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/9e/b5/630160_tL25y.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 624085,
+							"title": "乱世千金倪亚‧利斯顿转生为娇弱千金的弑神武人华丽无双录",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c6/8d/624085_5dXDL.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 665390,
+							"title": "冰之城墙 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e4/41/665390_UCHPM.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 548156,
+							"title": "青之箱 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f1/6c/548156_L3fC6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637802,
+							"title": "乱马1/2 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7a/49/637802_YVTam.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 656083,
+							"title": "不擅交际的未亡人雪女与诅咒戒指",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/7e/656083_B22Yt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 412008,
+							"title": "转生就是剑 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ee/ed/412008_vuyt4.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 584847,
+							"title": "弹珠汽水瓶里的千岁同学 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/83/49/584847_5nM0F.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 624923,
+							"title": "你好，我是受心上人所托来做恋爱药的魔女。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/73/99/624923_4u99L.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 393010,
+							"title": "侦探已经死了。 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/65/61/393010_EIOi9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 590553,
+							"title": "铁旅！meet with 铁道少女",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b6/e8/590553_Xz5PO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 647220,
+							"title": "女友的朋友",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/24/df/647220_cZZjY.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 418229,
+							"title": "魔法少女育成计划 restart",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/52/fe/418229_gcFij.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634708,
+							"title": "冷淡的佐藤同学只对我撒娇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/39/84/634708_NnWAS.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 586255,
+							"title": "僵尸搜寻中",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/9e/00/586255_FcfsN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 646154,
+							"title": "世界最强的魔女，就此开始",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/89/fc/646154_uQi81.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 511936,
+							"title": "罗梅莉亚战记",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/dc/f7/511936_XDkXO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636512,
+							"title": "至高之力",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/42/ae/636512_oOtDt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 486456,
+							"title": "佐佐木与文鸟小哔 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fc/aa/486456_XO5B0.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456078,
+							"title": "魔法★探险家",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f5/6b/456078_jtjPi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 555605,
+							"title": "青之芦苇 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/67/5a/555605_cLCw5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636023,
+							"title": "战车椅子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/94/c9/636023_iF8j7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 536270,
+							"title": "一觉醒来就有了最强装备跟太空船 决定以自家独栋建筑为目标当佣兵自由过活",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3e/fc/536270_51P45.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 567896,
+							"title": "黑色五叶草 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/be/e7/567896_RWffW.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 593565,
+							"title": "超巡！超条前辈",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/c1/593565_nno0j.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 606716,
+							"title": "用【循环利息】强制收回借出的魔力",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/15/11/606716_Om183.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621108,
+							"title": "萤火虫的出嫁",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5c/04/621108_guUyJ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 542007,
+							"title": "转生后的大圣女，极力隐瞒圣女的身分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/81/542007_wNKJa.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657656,
+							"title": "装备我最强",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/82/02/657656_z4b72.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657778,
+							"title": "兽王武神丹帝拜恩",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3b/a5/657778_7HXP5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634587,
+							"title": "转生哥布林有问题吗？",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/05/25/634587_8k4k7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 505550,
+							"title": "Dark Machine The Animation",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/84/86/505550_OLQmz.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 654294,
+							"title": "冰剑的魔术师将要统一世界 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/2f/654294_ckrD9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621073,
+							"title": "和没有信徒的女神大人一起攻略异世界",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/f9/621073_oFcZ3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 502123,
+							"title": "魔法骑士雷阿斯 (2026)",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e1/6f/502123_IiVB6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634210,
+							"title": "魔法姐妹露露特莉莉 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/44/ed/634210_O7aNK.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 471844,
+							"title": "归还者的魔法要特别 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1d/7c/471844_5G6H8.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 568525,
+							"title": "朱色假面",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3a/11/568525_ovn2M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 664389,
+							"title": "夜樱家的大作战 第二季 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/95/5d/664389_zP36V.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 541538,
+							"title": "幻想水浒传",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ee/12/541538_LxzAg.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 623249,
+							"title": "龙珠超 比鲁斯",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0f/0f/623249_zCdly.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 613256,
+							"title": "恐怖收集者",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7b/a7/613256_fxVvG.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617273,
+							"title": "Keroro军曹☆",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/60/14/617273_YNyyP.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 596771,
+							"title": "极致软弱千金小姐，不小心答应了精明未婚夫的赌局",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/39/bd/596771_y75Tw.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 614640,
+							"title": "PSYREN -决战游戏-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1b/1e/614640_ESMLl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 499474,
+							"title": "东京复仇者 三天战争篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0f/d4/499474_bheyE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657084,
+							"title": "七叶树王国的七名骑士",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ed/4a/657084_PZj4J.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 605533,
+							"title": "大叔喜欢可爱小玩意",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d1/e7/605533_97NSn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 551304,
+							"title": "我的幸福婚姻 特别篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ac/40/551304_5sWb1.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636058,
+							"title": "来自远方",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/58/0c/636058_bDwNj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 589775,
+							"title": "杀手旅店 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5d/8c/589775_QZq4Z.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701782,
+							"title": "苍蓝传承 威尔什&榭达",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e8/30/701782_CGGYY.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617948,
+							"title": "桃源暗鬼 ～日光・华严之泷篇～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/70/c2/617948_Mm3mn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 544378,
+							"title": "战斗之魂[Re] 绝界之空",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/af/544378_j3ouu.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 664395,
+							"title": "钻石王牌 act2 第二季 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/d5/664395_diPLi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 650428,
+							"title": "黑化吧！圣女大人 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/77/63/650428_G3GgP.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638081,
+							"title": "小狸猫与小狐狸",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/49/6a/638081_tc7A0.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 563508,
+							"title": "神秘面包小子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/56/5e/563508_t2XEq.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637206,
+							"title": "しろたん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/62/0c/637206_BoQXi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 640765,
+							"title": "卡片战斗先导者 Divinez 命运星战篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/34/f8/640765_IRR1M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 661278,
+							"title": "ゆるゆる図鑑",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e3/df/661278_g29RR.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 635258,
+							"title": "啵普与帕噗与珀尔嗒",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/df/29/635258_JqFf3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 688204,
+							"title": "ゆうさんち！from 遊ハち",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0b/d4/688204_mSshl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 694622,
+							"title": "ねずみくんのチョッキ 第2期",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fe/1b/694622_NhQb3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701565,
+							"title": "ふんばるず",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/79/c2/701565_WkAaz.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701779,
+							"title": "マゼンチュ",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/78/a0/701779_0phov.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 646586,
+							"title": "ぷにるんず ぷに４",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b7/a4/646586_DcbJB.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 704737,
+							"title": "シルバニアファミリー フレアのカラフル・エブリデイ",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7d/06/704737_iWzS7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 709475,
+							"title": "ゲルぴよ 第2期",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6f/24/709475_zpW8A.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 554779,
+							"title": "学生会也有洞！",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/17/c7/554779_oPitO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 616808,
+							"title": "野生的大魔王出现了！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f9/ae/616808_F80Sl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 622288,
+							"title": "FX战士久留美",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d3/99/622288_nmbC3.jpg",
+							"placement": "tier:0"
+						}
+					],
+					"id": "v-925bbe12-9f74-4c23-9482-9d8eccfdb2fa",
+					"label": "中期评价",
+					"createdAt": "2026-10-12T10:20:40.641Z"
+				},
+				{
+					"title": "2026年10月新番",
+					"year": 2026,
+					"quarter": 10,
+					"mode": "review",
+					"tiers": [
+						"神作",
+						"佳作",
+						"还行",
+						"拉"
+					],
+					"items": [
+						{
+							"id": 568244,
+							"title": "药屋少女的呢喃 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/55/e2/568244_0D00X.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 537738,
+							"title": "某暗部的少女共栖",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1c/9b/537738_6rr67.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 625799,
+							"title": "被放逐的作弊赋予魔术师享受随心所欲的第二人生。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/3a/625799_ycox6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 630160,
+							"title": "黑暗召唤师在地下恋爱中",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/9e/b5/630160_tL25y.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 624085,
+							"title": "乱世千金倪亚‧利斯顿转生为娇弱千金的弑神武人华丽无双录",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/c6/8d/624085_5dXDL.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 665390,
+							"title": "冰之城墙 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e4/41/665390_UCHPM.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 548156,
+							"title": "青之箱 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f1/6c/548156_L3fC6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637802,
+							"title": "乱马1/2 第三季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7a/49/637802_YVTam.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 656083,
+							"title": "不擅交际的未亡人雪女与诅咒戒指",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/7e/656083_B22Yt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 412008,
+							"title": "转生就是剑 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ee/ed/412008_vuyt4.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 584847,
+							"title": "弹珠汽水瓶里的千岁同学 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/83/49/584847_5nM0F.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 624923,
+							"title": "你好，我是受心上人所托来做恋爱药的魔女。",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/73/99/624923_4u99L.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 393010,
+							"title": "侦探已经死了。 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/65/61/393010_EIOi9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 590553,
+							"title": "铁旅！meet with 铁道少女",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b6/e8/590553_Xz5PO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 647220,
+							"title": "女友的朋友",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/24/df/647220_cZZjY.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 418229,
+							"title": "魔法少女育成计划 restart",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/52/fe/418229_gcFij.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634708,
+							"title": "冷淡的佐藤同学只对我撒娇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/39/84/634708_NnWAS.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 586255,
+							"title": "僵尸搜寻中",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/9e/00/586255_FcfsN.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 646154,
+							"title": "世界最强的魔女，就此开始",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/89/fc/646154_uQi81.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 511936,
+							"title": "罗梅莉亚战记",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/dc/f7/511936_XDkXO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636512,
+							"title": "至高之力",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/42/ae/636512_oOtDt.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 486456,
+							"title": "佐佐木与文鸟小哔 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fc/aa/486456_XO5B0.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 456078,
+							"title": "魔法★探险家",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f5/6b/456078_jtjPi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 555605,
+							"title": "青之芦苇 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/67/5a/555605_cLCw5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636023,
+							"title": "战车椅子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/94/c9/636023_iF8j7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 536270,
+							"title": "一觉醒来就有了最强装备跟太空船 决定以自家独栋建筑为目标当佣兵自由过活",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3e/fc/536270_51P45.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 567896,
+							"title": "黑色五叶草 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/be/e7/567896_RWffW.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 593565,
+							"title": "超巡！超条前辈",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/af/c1/593565_nno0j.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 606716,
+							"title": "用【循环利息】强制收回借出的魔力",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/15/11/606716_Om183.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621108,
+							"title": "萤火虫的出嫁",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5c/04/621108_guUyJ.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 542007,
+							"title": "转生后的大圣女，极力隐瞒圣女的身分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/81/542007_wNKJa.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657656,
+							"title": "装备我最强",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/82/02/657656_z4b72.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657778,
+							"title": "兽王武神丹帝拜恩",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3b/a5/657778_7HXP5.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634587,
+							"title": "转生哥布林有问题吗？",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/05/25/634587_8k4k7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 505550,
+							"title": "Dark Machine The Animation",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/84/86/505550_OLQmz.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 654294,
+							"title": "冰剑的魔术师将要统一世界 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/2f/654294_ckrD9.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 621073,
+							"title": "和没有信徒的女神大人一起攻略异世界",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/f9/621073_oFcZ3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 502123,
+							"title": "魔法骑士雷阿斯 (2026)",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e1/6f/502123_IiVB6.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 634210,
+							"title": "魔法姐妹露露特莉莉 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/44/ed/634210_O7aNK.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 471844,
+							"title": "归还者的魔法要特别 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1d/7c/471844_5G6H8.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 568525,
+							"title": "朱色假面",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/3a/11/568525_ovn2M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 664389,
+							"title": "夜樱家的大作战 第二季 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/95/5d/664389_zP36V.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 541538,
+							"title": "幻想水浒传",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ee/12/541538_LxzAg.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 623249,
+							"title": "龙珠超 比鲁斯",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0f/0f/623249_zCdly.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 613256,
+							"title": "恐怖收集者",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7b/a7/613256_fxVvG.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617273,
+							"title": "Keroro军曹☆",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/60/14/617273_YNyyP.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 596771,
+							"title": "极致软弱千金小姐，不小心答应了精明未婚夫的赌局",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/39/bd/596771_y75Tw.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 614640,
+							"title": "PSYREN -决战游戏-",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/1b/1e/614640_ESMLl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 499474,
+							"title": "东京复仇者 三天战争篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0f/d4/499474_bheyE.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 657084,
+							"title": "七叶树王国的七名骑士",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ed/4a/657084_PZj4J.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 605533,
+							"title": "大叔喜欢可爱小玩意",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d1/e7/605533_97NSn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 551304,
+							"title": "我的幸福婚姻 特别篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ac/40/551304_5sWb1.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 636058,
+							"title": "来自远方",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/58/0c/636058_bDwNj.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 589775,
+							"title": "杀手旅店 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/5d/8c/589775_QZq4Z.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701782,
+							"title": "苍蓝传承 威尔什&榭达",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e8/30/701782_CGGYY.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 617948,
+							"title": "桃源暗鬼 ～日光・华严之泷篇～",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/70/c2/617948_Mm3mn.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 544378,
+							"title": "战斗之魂[Re] 绝界之空",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/ec/af/544378_j3ouu.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 664395,
+							"title": "钻石王牌 act2 第二季 第2部分",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/61/d5/664395_diPLi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 650428,
+							"title": "黑化吧！圣女大人 第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/77/63/650428_G3GgP.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 638081,
+							"title": "小狸猫与小狐狸",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/49/6a/638081_tc7A0.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 563508,
+							"title": "神秘面包小子",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/56/5e/563508_t2XEq.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 637206,
+							"title": "しろたん",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/62/0c/637206_BoQXi.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 640765,
+							"title": "卡片战斗先导者 Divinez 命运星战篇",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/34/f8/640765_IRR1M.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 661278,
+							"title": "ゆるゆる図鑑",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/e3/df/661278_g29RR.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 635258,
+							"title": "啵普与帕噗与珀尔嗒",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/df/29/635258_JqFf3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 688204,
+							"title": "ゆうさんち！from 遊ハち",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/0b/d4/688204_mSshl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 694622,
+							"title": "ねずみくんのチョッキ 第2期",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/fe/1b/694622_NhQb3.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701565,
+							"title": "ふんばるず",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/79/c2/701565_WkAaz.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 701779,
+							"title": "マゼンチュ",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/78/a0/701779_0phov.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 646586,
+							"title": "ぷにるんず ぷに４",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/b7/a4/646586_DcbJB.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 704737,
+							"title": "シルバニアファミリー フレアのカラフル・エブリデイ",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/7d/06/704737_iWzS7.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 709475,
+							"title": "ゲルぴよ 第2期",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/6f/24/709475_zpW8A.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 554779,
+							"title": "学生会也有洞！",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/17/c7/554779_oPitO.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 616808,
+							"title": "野生的大魔王出现了！第二季",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/f9/ae/616808_F80Sl.jpg",
+							"placement": "pool"
+						},
+						{
+							"id": 622288,
+							"title": "FX战士久留美",
+							"cover": "https://lain.bangumi.vip/r/400/pic/cover/l/d3/99/622288_nmbC3.jpg",
+							"placement": "tier:0"
+						}
+					],
+					"id": "v-93cd07d7-fb3b-4c26-b9cc-d2fa97007091",
+					"label": "中期评价",
+					"createdAt": "2026-10-13T08:45:10.709Z"
+				}
+			]
+		}
+	],
+	"reviews": {}
 }
