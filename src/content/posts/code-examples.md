@@ -10,7 +10,7 @@ category: 文章示例
 image: ./images/firefly3.avif
 slug: code-examples
 series: Firefly 功能示例2
-seriesOrder: 5
+seriesOrder: 12
 draft: true
 ---
 
