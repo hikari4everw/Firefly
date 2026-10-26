@@ -165,7 +165,7 @@ export const siteConfig: SiteConfig = {
 		// 默认布局模式："list" 列表模式（单列布局），"grid" 网格模式（多列布局）
 		defaultMode: "list",
 		// 移动端默认布局模式，不设置则跟随 defaultMode
-		mobileDefaultMode: "grid",
+		mobileDefaultMode: "list",
 		// 列表模式下封面图显示在哪一侧："right" 右侧，"left" 左侧
 		// 网格模式的封面固定在卡片顶部，不受此项影响
 		coverPosition: "right",
@@ -209,7 +209,7 @@ export const siteConfig: SiteConfig = {
 		// 网格布局配置，仅在 defaultMode 为 "grid" 或允许切换布局时生效
 		grid: {
 			// 是否开启瀑布流布局，同时有封面图和无封面图的混合文章推荐开启
-			masonry: false,
+			masonry: true,
 			// 网格模式卡片最小宽度(px)，浏览器根据容器宽度自动计算列数
 			columnWidth: 320,
 			// 网格模式封面是否撑满卡片贴边
@@ -288,11 +288,11 @@ export const siteConfig: SiteConfig = {
 		// 未列出的类型将按默认顺序排在后面
 		categoryOrder: ["anime", "book", "music", "game"],
 		// 控制各分类的启用状态（true/false），未指定的分类默认启用
-		// categories: {
-		// 	game: false, // 禁用游戏分类显示
-		// },
+		categories: {
+			game: true, // 禁用游戏分类显示
+		},
 		// NSFW 处理："off" 不过滤 | "blur" 仅模糊封面 | "hide" 隐藏条目
-		nsfw: "hide",
+		nsfw: "blur",
 	},
 
 	// ── VNDB配置 ──────────────────────────────────
